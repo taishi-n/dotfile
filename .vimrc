@@ -1,4 +1,5 @@
 " Basic Settings
+set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
 set fileformats=unix,dos,mac
 syntax on
@@ -7,6 +8,7 @@ set autoindent
 set wildmenu
 set showcmd
 set title
+set expandtab
 "set cursorline
 filetype on
 set hlsearch
@@ -16,7 +18,7 @@ set backspace=start,eol,indent
 set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
-"set encoding=utf-8
+colorscheme solarized
 
 " Omni completion setting
 filetype plugin on
