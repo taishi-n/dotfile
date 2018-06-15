@@ -151,6 +151,28 @@ unlet s:cpo_save
 " au FileType ruby setlocal makeprg=ruby\ -c\ %
 " au FileType ruby setlocal errorformat=%m\ in\ %f\ on\ line\ %l
 
-
 " vimtex setting
-let g:vimtex_compiler_latexmk = {'callback' : 0}
+let g:tex_flavor = "latex"
+let g:vimtex_compiler_latexmk = {
+         \ 'callback' : 0,
+         \ 'options' : [
+         \   '-pdfdvi',
+         \   '-latex=uplatex',
+         \   '-synctex=1',
+         \   '-halt-on-error',
+         \   '-e "$dvipdf=q/dvipdfmx %O -o %D %S/;$bibtex=q/upbibtex/;$biber=q/biber --bblencoding=utf8 -u -U --output_safechars/;$makeindex=q/mendex %O -o %D %S/;"',
+         \ ],
+         \}
+let g:latex_latexmk_enabled = 1
+let g:vimtex_view_general_viewer
+      \ = '/Applications/Preview.app/Contents/MacOS/Preview'
+"let g:vimtex_view_general_options = '-ga'
+"let g:latex_latexmk_options = '-pdfdvi -latex=uplatex -synctex=1 -halt-on-error'
+let g:latex_view_method = 'general'
+"let g:latex_view_general_viewer = 'open'
+" vimtex for neocomplete
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
+let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
