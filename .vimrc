@@ -19,6 +19,7 @@ set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
 colorscheme solarized
+highlight Search ctermbg=82 ctermfg=18
 
 " Omni completion setting
 filetype plugin on
