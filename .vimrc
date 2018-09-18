@@ -18,7 +18,7 @@ set backspace=start,eol,indent
 set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
-colorscheme solarized
+"colorscheme solarized
 highlight Search ctermbg=82 ctermfg=18
 
 " Omni completion setting
