@@ -90,7 +90,7 @@ NeoBundle 'thinca/vim-quickrun'
 "NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lervag/vimtex'
 NeoBundle 'majutsushi/tagbar.git'
-NeoBundle 'fatih/vim-go.git'
+NeoBundle 'fatih/vim-go'
 
 call neobundle#end()
 
