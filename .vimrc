@@ -18,8 +18,14 @@ set backspace=start,eol,indent
 set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
-"colorscheme solarized
 highlight Search ctermbg=82 ctermfg=18
+
+" 日本語入力ON時のカーソルの色を設定
+if has('multi_byte_ime') || has('xim')
+    highlight CursorIM guibg=Orange guifg=NONE
+endif
+let &t_SI = "\e]50;CursorShape=1\x7"
+let &t_EI = "\e]50;CursorShape=0\x7"
 
 " Omni completion setting
 filetype plugin on
@@ -36,9 +42,9 @@ if $SHELL =~ 'fish'
 endif
 
 "不可視文字表示
-set list
-set listchars=tab:⇢-
-hi SpecialKey cterm=NONE ctermfg=252
+"set list
+"set listchars=tab:⇢-
+"hi SpecialKey cterm=NONE ctermfg=252
 
 " Coloring tab
 "autocmd VimEnter,Colorscheme * highlight SpecialKey cterm=NONE ctermfg=244 ctermbg=222
@@ -80,9 +86,11 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
+"NeoBundle 'Shougo/neosnippet'
+"NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lervag/vimtex'
+NeoBundle 'majutsushi/tagbar.git'
+NeoBundle 'fatih/vim-go.git'
 
 call neobundle#end()
 
@@ -93,9 +101,9 @@ NeoBundleCheck
 " https://sites.google.com/site/fudist/Home/vim-nihongo-ban/-vimrc-sample
 
 " snipett setting
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/mysnippets/'
+"imap <C-k> <Plug>(neosnippet_expand_or_jump)
+"smap <C-k> <Plug>(neosnippet_expand_or_jump)
+"let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/mysnippets/'
 
 
 """"""Automatic Binary file reading"""""""
@@ -119,6 +127,7 @@ augroup fileTypeIndent
 	autocmd!
 	autocmd BufNewFile,BufRead *.py  setl tabstop=4 softtabstop=4 shiftwidth=4 commentstring=#%s
 	autocmd BufNewFile,BufRead *.rb  setl tabstop=2 softtabstop=2 shiftwidth=2
+	autocmd BufNewFile,BufRead *.go  setl tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 " 	autocmd BufNewFile,BufRead *.tex setl tabstop=2 softtabstop=2 shiftwidth=2 smarttab 2 commentstring=%%s
 augroup END
 
