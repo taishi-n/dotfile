@@ -19,22 +19,16 @@ set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
 highlight Search ctermbg=82 ctermfg=18
+" Deactivate SwapFile etc..
+set nowritebackup
+set noswapfile
+set nobackup
 
-" 日本語入力ON時のカーソルの色を設定
-if has('multi_byte_ime') || has('xim')
-    highlight CursorIM guibg=Orange guifg=NONE
-endif
-let &t_SI = "\e]50;CursorShape=1\x7"
-let &t_EI = "\e]50;CursorShape=0\x7"
 
 " Omni completion setting
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
-" Deactivate SwapFile etc..
-set nowritebackup
-set noswapfile
-set nobackup
 
 " Shell Setting
 if $SHELL =~ 'fish'
@@ -75,35 +69,44 @@ set t_Co=256
 set background=light
 "==============================================
 
-"NeoBundleSetting==============================
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
 
-NeoBundleFetch 'Shougo/neobundle.vim'
-"NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'tpope/vim-endwise' " Ruby向けにendを自動挿入
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'thinca/vim-quickrun'
-"NeoBundle 'Shougo/neosnippet'
-"NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'lervag/vimtex'
-NeoBundle 'majutsushi/tagbar.git'
-NeoBundle 'fatih/vim-go'
 
-call neobundle#end()
+" dein setting
+if &compatible
+ set nocompatible
+endif
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-filetype plugin indent on
+if dein#load_state('~/.cache/dein')
+ call dein#begin('~/.cache/dein')
 
-NeoBundleCheck
-"==============================================
-" https://sites.google.com/site/fudist/Home/vim-nihongo-ban/-vimrc-sample
+ call dein#add('~/.cache/dein')
+ call dein#add('bronson/vim-trailing-whitespace')
+ call dein#add('fatih/vim-go')
+ call dein#add('majutsushi/tagbar.git')
+ call dein#add('nathanaelkane/vim-indent-guides')
+ call dein#add('lervag/vimtex')
+ call dein#add('Shougo/deoplete.nvim')
+ call dein#add('thinca/vim-quickrun')
+ call dein#add('tpope/vim-endwise')
+ call dein#add('tpope/vim-commentary')
 
-" snipett setting
-"imap <C-k> <Plug>(neosnippet_expand_or_jump)
-"smap <C-k> <Plug>(neosnippet_expand_or_jump)
-"let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/mysnippets/'
+ if !has('nvim')
+   call dein#add('roxma/nvim-yarp')
+   call dein#add('roxma/vim-hug-neovim-rpc')
+ endif
+
+ call dein#end()
+ call dein#save_state()
+endif
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
 
 
 """"""Automatic Binary file reading"""""""
@@ -131,6 +134,7 @@ augroup fileTypeIndent
 " 	autocmd BufNewFile,BufRead *.tex setl tabstop=2 softtabstop=2 shiftwidth=2 smarttab 2 commentstring=%%s
 augroup END
 
+
 "=========================
 "=====Python SETTINGS
 "=========================
@@ -154,6 +158,7 @@ let b:current_after_syntax = 'python'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
 
 "=========================
 "=======Ruby SETTINGS
@@ -186,3 +191,4 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
 let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
+
