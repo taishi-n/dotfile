@@ -18,7 +18,7 @@ set backspace=start,eol,indent
 set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
-highlight Search cterm=reverse ctermbg=14 ctermfg=LightGray
+highlight Search ctermbg=lightgreen ctermfg=black
 " Deactivate SwapFile etc..
 set nowritebackup
 set noswapfile
