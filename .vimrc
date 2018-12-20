@@ -1,6 +1,6 @@
 " Basic Settings
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
 syntax on
 set number
@@ -168,14 +168,14 @@ unlet s:cpo_save
 " au FileType ruby setlocal errorformat=%m\ in\ %f\ on\ line\ %l
 
 " vimtex setting
-let g:tex_flavor = "latex"
-let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
-let g:latex_latexmk_enabled = 1
-let g:vimtex_view_general_viewer
-      \ = '/Applications/Preview.app/Contents/MacOS/Preview'
+"let g:tex_flavor = "latex"
+"let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
+"let g:latex_latexmk_enabled = 1
+"let g:vimtex_view_general_viewer
+"      \ = '/Applications/Preview.app/Contents/MacOS/Preview'
 "let g:vimtex_view_general_options = '-ga'
 "let g:latex_latexmk_options = '-pdfdvi -latex=uplatex -synctex=1 -halt-on-error'
-let g:latex_view_method = 'general'
+"let g:latex_view_method = 'general'
 "let g:latex_view_general_viewer = 'open'
 
 " vimtex for neocomplete
