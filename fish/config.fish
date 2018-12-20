@@ -37,3 +37,7 @@ set -x PYENV_ROOT $HOME/.pyenv
 #set -x PATH $PYENV_ROOT/bin $PATH
 . (pyenv init - | psub)
 set -x PATH $HOME/.pyenv/shims $PATH
+
+# go setting
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
