@@ -92,6 +92,8 @@ if dein#load_state('~/.cache/dein')
  call dein#add('tpope/vim-endwise')
  call dein#add('tpope/vim-commentary')
  call dein#add('cohama/lexima.vim')
+ call dein#add('mattn/emmet-vim')
+   let g:user_emmet_settings = { 'lang' : 'ja' }
 
  if !has('nvim')
    call dein#add('roxma/nvim-yarp')
