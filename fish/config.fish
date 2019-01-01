@@ -31,6 +31,16 @@ find -E . -regex "^.+%[0-9A-Z][0-9A-Z]+.*" -exec bash -c "mv {} `echo {} | nkf -
 end
 funcsave urlenc
 
+function replaceTenForComma
+sed -i '' -e 's/、/，/g' $argv
+end
+funcsave replaceTenForComma
+
+function replaceMaruForPeriod
+sed -i '' -e 's/。/．/g' $argv
+end
+funcsave replaceMaruForPeriod
+
 # pyenv setting
 set -x PYENV_ROOT $HOME/.pyenv
 #set -x PATH $HOME/.pyenv/bin $PATH
