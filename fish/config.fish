@@ -51,3 +51,7 @@ set -x PATH $HOME/.pyenv/shims $PATH
 # go setting
 set -x GOPATH $HOME/go
 set -x PATH $PATH $GOPATH/bin
+
+# key-bind setting
+fish_vi_key_bindings
+bind -M insert \ce forward-char
