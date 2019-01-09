@@ -53,5 +53,7 @@ set -x GOPATH $HOME/go
 set -x PATH $PATH $GOPATH/bin
 
 # key-bind setting
-fish_vi_key_bindings
-bind -M insert \cf forward-char
+function fish_user_key_bindings
+   fish_vi_key_bindings
+   bind -M insert \cf forward-char
+end
