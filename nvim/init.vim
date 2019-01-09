@@ -11,12 +11,12 @@ set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
 set wildmenu
 set showcmd
-filetype on
 set mouse=a
 set backspace=start,eol,indent
 set matchpairs& matchpairs+=<:>
 set synmaxcol=200
 scriptencoding utf-8
+filetype on
 highlight Search ctermbg=lightgreen ctermfg=black
 nnoremap j gj
 nnoremap k gk
@@ -45,25 +45,16 @@ if $SHELL =~ 'fish'
 endif
 
 
-"インデント関係==============================
+" Indent setting
 set tabstop=3
 set shiftwidth=3
 set autoindent
 set expandtab
-"let g:indent_guides_enable_on_vim_startup = 1
-"let g:indent_guides_auto_colors = 0
-"let g:indent_guides_color_change_percent = 30
-"let g:indent_guides_start_level=2
-"let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2e9afe ctermbg=gray
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#0040ff ctermbg=darkgray
-"============================================
 
 
-"Color setting=================================
+" Color setting
 set t_Co=256
 set background=light
-"==============================================
 
 
 " dein setting
@@ -87,8 +78,8 @@ if dein#check_install()
 endif
 
 
-""""""Automatic Binary file reading"""""""
-""""""vim -b -> xxd mode""""""""""""""""""""""
+" Automatic Binary file reading
+" vim -b -> xxd mode
 augroup BinaryXXD
 	autocmd!
 	autocmd BufReadPre *.bin let &binary =1
@@ -98,24 +89,20 @@ augroup BinaryXXD
 	autocmd BufWritePost * if &binary | silent %!xxd -g 1
 	autocmd BufWritePost * set nomod | endif
 augroup END
-"reference:http://d.hatena.ne.jp/rdera/20081022/1224682665
+"reference: http://d.hatena.ne.jp/rdera/20081022/1224682665
 
 
-"=========================
-"===FileType SETTINGS
-"=========================
+" FileType SETTINGS
 augroup fileTypeIndent
 	autocmd!
 	autocmd BufNewFile,BufRead *.py  setl tabstop=4 softtabstop=4 shiftwidth=4 commentstring=#%s
 	autocmd BufNewFile,BufRead *.rb  setl tabstop=2 softtabstop=2 shiftwidth=2 smartindent
 	autocmd BufNewFile,BufRead *.go  setl tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
- 	autocmd BufNewFile,BufRead *.tex setl tabstop=2 softtabstop=2 shiftwidth=2 smarttab 2 commentstring=%%s
+ 	autocmd BufNewFile,BufRead *.tex setl tabstop=2 softtabstop=2 shiftwidth=2 smarttab smartindent commentstring=%%s
 augroup END
 
 
-"=========================
-"=====Python SETTINGS
-"=========================
+" Python SETTINGS
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 if version < 600
@@ -136,18 +123,3 @@ let b:current_after_syntax = 'python'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-
-"=========================
-"=======Ruby SETTINGS
-"=========================
-" au FileType ruby setlocal makeprg=ruby\ -c\ %
-" au FileType ruby setlocal errorformat=%m\ in\ %f\ on\ line\ %l
-
-
-" vimtex for neocomplete
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
-let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
