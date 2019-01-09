@@ -1,0 +1,56 @@
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]]
+repo = 'fatih/vim-go'
+
+[[plugins]]
+repo = 'majutsushi/tagbar.git'
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+   let g:user_emmet_settings = { 'lang' : 'ja' }
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+   set signcolumn=yes
+   set updatetime=1000
+
+   nnoremap [gitgutter] <Nop>
+   nmap <C-h> [gitgutter]
+   nmap [gitgutter]j <Plug>GitGutterNextHunk
+   nmap [gitgutter]k <Plug>GitGutterPrevHunk
+   nmap [gitgutter]u <Plug>GitGutterUndoHunk
+'''
+
+[[plugins]]
+repo = 'lervag/vimtex'
+hook_add = '''
+   let g:tex_flavor = "latex"
+   let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
+   let g:latex_latexmk_enabled = 1
+   let g:vimtex_view_general_viewer
+         \ = '/Applications/Preview.app/Contents/MacOS/Preview'
+   let g:vimtex_view_general_options = '-ga'
+   let g:latex_latexmk_options = '-pdfdvi -latex=uplatex -synctex=1 -halt-on-error'
+   let g:latex_view_method = 'general'
+   let g:latex_view_general_viewer = 'open'
+'''

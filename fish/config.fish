@@ -16,7 +16,7 @@ set __fish_git_prompt_char_upstream_ahead '+'
 set __fish_git_prompt_char_upstream_behind '-'
 
 # Alias
-alias vi /usr/local/bin/vim
+alias vi (which nvim)
 
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
