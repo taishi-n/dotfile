@@ -84,6 +84,7 @@ nmap <silent> [figitive]l :<C-u>Glog<CR>
 
 [[plugins]]
 repo = 'lervag/vimtex'
+on_ft = ['tex']
 hook_add = '''
    let g:tex_flavor = "latex"
    let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
@@ -94,4 +95,11 @@ hook_add = '''
    let g:latex_latexmk_options = '-pdfdvi -latex=uplatex -synctex=1 -halt-on-error'
    let g:latex_view_method = 'general'
    let g:latex_view_general_viewer = 'open'
+
+   " for neocomplete
+   if !exists('g:neocomplete#sources#omni#input_patterns')
+     let g:neocomplete#sources#omni#input_patterns = {}
+   endif
+   let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
+   let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
 '''
