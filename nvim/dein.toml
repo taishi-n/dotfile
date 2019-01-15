@@ -21,6 +21,11 @@ repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
+hook_add = '''
+   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+   call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+'''
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
@@ -40,15 +45,6 @@ let g:airline_mode_map = {
     \ 's'  : 'S',
     \ 'S'  : 'S',
     \ }
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'badwolf'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
-let g:airline#extensions#virtualenv#enabled = 1
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#ale#error_symbol = 'E:'
-let g:airline#extensions#ale#warning_symbol = 'W:'
 '''
 
 [[plugins]]
