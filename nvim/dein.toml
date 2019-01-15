@@ -23,6 +23,35 @@ repo = 'tpope/vim-commentary'
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'V',
+    \ ''   : 'V',
+    \ 's'  : 'S',
+    \ 'S'  : 'S',
+    \ }
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'badwolf'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#error_symbol = 'E:'
+let g:airline#extensions#ale#warning_symbol = 'W:'
+'''
+
+[[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
    let g:user_emmet_settings = { 'lang' : 'ja' }
@@ -39,6 +68,18 @@ hook_add = '''
    nmap [gitgutter]j <Plug>GitGutterNextHunk
    nmap [gitgutter]k <Plug>GitGutterPrevHunk
    nmap [gitgutter]u <Plug>GitGutterUndoHunk
+'''
+
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+nmap [figitive] <Nop>
+map <Leader>g [figitive]
+nmap <silent> [figitive]s :<C-u>Gstatus<CR>
+nmap <silent> [figitive]d :<C-u>Gdiff<CR>
+nmap <silent> [figitive]b :<C-u>Gblame<CR>
+nmap <silent> [figitive]l :<C-u>Glog<CR>
 '''
 
 [[plugins]]
