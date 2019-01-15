@@ -22,9 +22,9 @@ repo = 'tpope/vim-commentary'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 hook_add = '''
-   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
-   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
-   call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'tex'})
+   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'tex'})
+   call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'tex'})
 '''
 
 [[plugins]]
@@ -64,18 +64,6 @@ hook_add = '''
    nmap [gitgutter]j <Plug>GitGutterNextHunk
    nmap [gitgutter]k <Plug>GitGutterPrevHunk
    nmap [gitgutter]u <Plug>GitGutterUndoHunk
-'''
-
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-hook_add = '''
-nmap [figitive] <Nop>
-map <Leader>g [figitive]
-nmap <silent> [figitive]s :<C-u>Gstatus<CR>
-nmap <silent> [figitive]d :<C-u>Gdiff<CR>
-nmap <silent> [figitive]b :<C-u>Gblame<CR>
-nmap <silent> [figitive]l :<C-u>Glog<CR>
 '''
 
 [[plugins]]
