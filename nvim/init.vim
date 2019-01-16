@@ -98,7 +98,7 @@ augroup fileTypeIndent
 	autocmd BufNewFile,BufRead *.py  setl tabstop=4 softtabstop=4 shiftwidth=4 commentstring=#%s
 	autocmd BufNewFile,BufRead *.rb  setl tabstop=2 softtabstop=2 shiftwidth=2 smartindent
 	autocmd BufNewFile,BufRead *.go  setl tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
- 	autocmd BufNewFile,BufRead *.tex setl tabstop=2 softtabstop=2 shiftwidth=2 smarttab smartindent commentstring=%%s
+ 	autocmd BufNewFile,BufRead *.tex setl tabstop=4 softtabstop=4 shiftwidth=4 smartindent commentstring=%%s
 augroup END
 
 
