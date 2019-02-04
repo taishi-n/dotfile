@@ -58,3 +58,7 @@ function fish_user_key_bindings
    fish_vi_key_bindings
    bind -M insert \cf forward-char
 end
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/taishi/Downloads/google-cloud-sdk/path.fish.inc' ]; . '/Users/taishi/Downloads/google-cloud-sdk/path.fish.inc'; end
+set -x CLOUDSDK_PYTHON $HOME/.pyenv/versions/2.7.15/bin/python $CLOUDSDK_PYTHON

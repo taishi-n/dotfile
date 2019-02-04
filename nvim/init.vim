@@ -18,11 +18,11 @@ set synmaxcol=200
 scriptencoding utf-8
 filetype on
 highlight Search ctermbg=lightgreen ctermfg=black
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
-inoremap jj <Esc>
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
+imap jj <Esc>
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 nnoremap <Tab> %
 vnoremap <Tab> %
@@ -95,7 +95,6 @@ augroup END
 " FileType SETTINGS
 augroup fileTypeIndent
 	autocmd!
-	autocmd BufNewFile,BufRead *.py  setl tabstop=4 softtabstop=4 shiftwidth=4 commentstring=#%s
 	autocmd BufNewFile,BufRead *.rb  setl tabstop=2 softtabstop=2 shiftwidth=2 smartindent
 	autocmd BufNewFile,BufRead *.go  setl tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
  	autocmd BufNewFile,BufRead *.tex setl tabstop=4 softtabstop=4 shiftwidth=4 smartindent commentstring=%%s
