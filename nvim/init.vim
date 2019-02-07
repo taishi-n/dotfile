@@ -122,3 +122,5 @@ let b:current_after_syntax = 'python'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+let g:tex_conceal=""

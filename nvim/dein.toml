@@ -1,4 +1,7 @@
 [[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
 
 [[plugins]]
