@@ -28,6 +28,10 @@ nmap <silent> <Esc><Esc> :nohlsearch<CR>
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+function! ImInActivate()
+  call system('fcitx-remote -c')
+endfunction
+inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
 
 " Deactivate SwapFile etc..
 set nowritebackup
