@@ -26,26 +26,6 @@ repo = 'tpope/vim-commentary'
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
-repo = 'vim-airline/vim-airline-themes'
-
-[[plugins]]
-repo = 'vim-airline/vim-airline'
-hook_add = '''
-let g:airline_mode_map = {
-    \ '__' : '-',
-    \ 'n'  : 'N',
-    \ 'i'  : 'I',
-    \ 'R'  : 'R',
-    \ 'c'  : 'C',
-    \ 'v'  : 'V',
-    \ 'V'  : 'V',
-    \ ''   : 'V',
-    \ 's'  : 'S',
-    \ 'S'  : 'S',
-    \ }
-'''
-
-[[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
    let g:user_emmet_settings = { 'lang' : 'ja' }
