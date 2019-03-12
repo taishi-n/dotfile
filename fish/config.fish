@@ -42,6 +42,11 @@ sed -i '' -e 's/。/．/g' $argv
 end
 funcsave replaceMaruForPeriod
 
+set os (uname)
+if test $os = Linux
+   alias open xdg-open
+end
+
 # pyenv setting
 set -x PYENV_ROOT $HOME/.pyenv
 #set -x PATH $HOME/.pyenv/bin $PATH
