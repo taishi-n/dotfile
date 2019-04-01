@@ -42,6 +42,17 @@ sed -i '' -e 's/。/．/g' $argv
 end
 funcsave replaceMaruForPeriod
 
+function tex-gitignore
+   echo "*.aux" >> .gitignore
+   echo "*.dvi" >> .gitignore
+   echo "*.fdb_latexmk" >> .gitignore
+   echo "*.fls" >> .gitignore
+   echo "*.log" >> .gitignore
+   echo "*.pdf" >> .gitignore
+   echo "*.synctex.gz" >> .gitignore
+   echo "*.DS_Store" >> .gitignore
+end
+
 set os (uname)
 if test $os = Linux
    alias open xdg-open
