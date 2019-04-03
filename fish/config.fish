@@ -21,8 +21,6 @@ alias vi (which nvim)
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
 #set -x PATH $HOME/.rvm/bin $PATH # Add RVM to PATH for scripting
-set -x PATH $HOME/.rbenv/bin $PATH
-rbenv init - | source
 set -x PATH /usr/local/bin $PATH
 set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
@@ -58,6 +56,13 @@ set os (uname)
 if test $os = Linux
    alias open xdg-open
 end
+
+# conda setting
+source (conda info --root)/etc/fish/conf.d/conda.fish
+
+# rbenv setting
+status --is-interactive; and source (rbenv init -|psub)
+set -x PATH $HOME/.rbenv/bin $PATH
 
 # pyenv setting
 set -x PYENV_ROOT $HOME/.pyenv
