@@ -21,7 +21,8 @@ alias vi (which nvim)
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
 #set -x PATH $HOME/.rvm/bin $PATH # Add RVM to PATH for scripting
-#set -x PATH $HOME/.rbenv/bin $PATH
+set -x PATH $HOME/.rbenv/bin $PATH
+rbenv init - | source
 set -x PATH /usr/local/bin $PATH
 set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
