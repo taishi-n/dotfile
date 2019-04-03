@@ -63,7 +63,7 @@ end
 set -x PYENV_ROOT $HOME/.pyenv
 #set -x PATH $HOME/.pyenv/bin $PATH
 #set -x PATH $PYENV_ROOT/bin $PATH
-. (pyenv init - | psub)
+status --is-interactive; and source (pyenv init -|psub)
 set -x PATH $HOME/.pyenv/shims $PATH
 
 # go setting
