@@ -26,12 +26,6 @@ repo = 'tpope/vim-commentary'
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
-repo = 'godlygeek/tabular'
-
-[[plugins]]
-repo = 'plasticboy/vim-markdown'
-
-[[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
    let g:user_emmet_settings = { 'lang' : 'ja' }
