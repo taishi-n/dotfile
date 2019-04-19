@@ -17,13 +17,17 @@ set __fish_git_prompt_char_upstream_behind '-'
 
 # Alias
 alias vi (which nvim)
+alias cdd='cd ~/dotfile'
+alias gdiff='git diff'
+alias gits='git status'
+alias gitc='git commit'
+alias gitA='git add -A'
 
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
 #set -x PATH $HOME/.rvm/bin $PATH # Add RVM to PATH for scripting
 set -x PATH /usr/local/bin $PATH
 set -x PATH /usr/local/opt/mysql@5.7/bin $PATH
-set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 # My commands
@@ -56,6 +60,7 @@ end
 set os (uname)
 if test $os = Linux
    alias open xdg-open
+   set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
 end
 
 # conda setting
@@ -73,15 +78,11 @@ status --is-interactive; and source (pyenv init -|psub)
 set -x PATH $HOME/.pyenv/shims $PATH
 
 # go setting
-set -x GOPATH $HOME/go
-set -x PATH $PATH $GOPATH/bin
+#set -x GOPATH $HOME/go
+#set -x PATH $PATH $GOPATH/bin
 
 # key-bind setting
 function fish_user_key_bindings
    fish_vi_key_bindings
    bind -M insert \cf forward-char
 end
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/taishi/Downloads/google-cloud-sdk/path.fish.inc' ]; . '/Users/taishi/Downloads/google-cloud-sdk/path.fish.inc'; end
-set -x CLOUDSDK_PYTHON $HOME/.pyenv/versions/2.7.15/bin/python $CLOUDSDK_PYTHON
