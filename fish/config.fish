@@ -28,6 +28,7 @@ alias gitA='git add -A'
 #set -x PATH $HOME/.rvm/bin $PATH # Add RVM to PATH for scripting
 set -x PATH /usr/local/bin $PATH
 set -x PATH /usr/local/opt/mysql@5.7/bin $PATH
+set -x PATH $HOME/.nodebrew/current/bin $PATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 # My commands
