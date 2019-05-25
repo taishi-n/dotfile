@@ -36,9 +36,9 @@ endfunction
 inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
 
 " Deactivate SwapFile etc..
-set nowritebackup
-set noswapfile
-set nobackup
+" set nowritebackup
+" set noswapfile
+" set nobackup
 
 
 " Omni completion setting
@@ -125,6 +125,16 @@ hi link pythonSpecialWord    Special
 hi link pythonDelimiter      Special
 
 let b:current_after_syntax = 'python'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_python_checkers = ["pycodestyle"]
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

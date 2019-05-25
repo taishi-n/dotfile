@@ -5,7 +5,21 @@ repo = 'Shougo/neosnippet-snippets'
 repo = 'bronson/vim-trailing-whitespace'
 
 [[plugins]]
+repo = 'dkarter/bullets.vim'
+hook_add = '''
+   let g:bullets_enabled_file_types = [
+       \ 'markdown',
+       \ 'text',
+       \ 'gitcommit',
+       \ 'scratch'
+       \]
+'''
+
+[[plugins]]
 repo = 'fatih/vim-go'
+
+[[plugins]]
+repo = 'godlygeek/tabular'
 
 [[plugins]]
 repo = 'majutsushi/tagbar.git'
@@ -14,13 +28,31 @@ repo = 'majutsushi/tagbar.git'
 repo = 'nathanaelkane/vim-indent-guides'
 
 [[plugins]]
+repo = 'plasticboy/vim-markdown'
+hook_add = '''
+   let g:vim_markdown_conceal = 0
+   let g:vim_markdown_folding_disabled = 1
+   let g:vim_markdown_new_list_item_indent = 2
+   let g:vim_markdown_auto_insert_bullets = 1
+   let g:vim_markdown_new_list_item_indent = 1
+   let g:vim_markdown_emphasis_multiline = 0
+'''
+on_ft = ['markdown','mkd']
+
+[[plugins]]
 repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
 
 [[plugins]]
 repo = 'tpope/vim-endwise'
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
@@ -75,4 +107,50 @@ hook_add = '''
    endif
    let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
    let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+let g:airline_powerline_fonts = 1
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+   " 保存時のみ実行する
+   let g:ale_lint_on_text_changed = 0
+   " 表示に関する設定
+   let g:ale_sign_error = ''
+   let g:ale_sign_warning = ''
+   let g:ale_echo_msg_format = '[%linter%]%code: %%s'
+   let g:airline#extensions#ale#close_lnum_symbol = ')'
+   let g:airline#extensions#ale#enabled = 1
+   let g:airline#extensions#ale#error_symbol = 'E:'
+   let g:airline#extensions#ale#open_lnum_symbol = '('
+   let g:airline#extensions#ale#warning_symbol = 'W:'
+   let g:airline#extensions#tabline#enabled = 1
+   let g:airline_theme='bubblegum'
+   let g:airline_solarized_bg='dark'
+   let g:airline_powerline_fonts = 1
+   let g:airline_mode_map = {
+       \ '__' : '-',
+       \ 'n'  : 'N',
+       \ 'i'  : 'I',
+       \ 'R'  : 'R',
+       \ 'c'  : 'C',
+       \ 'v'  : 'V',
+       \ 'V'  : 'V',
+       \ 's'  : 'S',
+       \ 'S'  : 'S',
+       \ }
+   highlight link ALEErrorSign Tag
+   highlight link ALEWarningSign StorageClass
+   " Ctrl + kで次の指摘へ、Ctrl + jで前の指摘へ移動
+   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+   nmap <silent> <C-j> <Plug>(ale_next_wrap)
+   " モードの表示名を定義(デフォルトだと長くて横幅を圧迫するので略称にしている)
 '''
