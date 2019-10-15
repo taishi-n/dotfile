@@ -17,11 +17,13 @@ set __fish_git_prompt_char_upstream_behind '-'
 
 # Alias
 alias vi (which nvim)
+alias rm rmtrash
 alias cdd='cd ~/dotfile'
 alias gdiff='git diff'
 alias gits='git status'
 alias gitc='git commit'
 alias gitA='git add -A'
+alias memo='vi ~/Desktop/memo.md'
 
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
@@ -31,6 +33,9 @@ set -x PATH /usr/local/opt/mysql@5.7/bin $PATH
 set -x PATH $HOME/.nodebrew/current/bin $PATH
 set -x PYTHONPATH $HOME/onolab/pyroomacoustics $PYTHONPATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+set -x PATH $HOME/Downloads/kaldi/tools/python $PATH
+set -x IRSTLM $HOME/Downloads/kaldi/tools/irstlm
+set -x PATH $PATH $IRSTLM/bin
 
 # My commands
 function urlenc
@@ -50,13 +55,29 @@ funcsave replaceMaruForPeriod
 
 function tex-gitignore
    echo "*.aux" >> .gitignore
+   echo "*.bbl" >> .gitignore
+   echo "*.blg" >> .gitignore
    echo "*.dvi" >> .gitignore
    echo "*.fdb_latexmk" >> .gitignore
    echo "*.fls" >> .gitignore
    echo "*.log" >> .gitignore
+   echo "*.nab" >> .gitignore
    echo "*.pdf" >> .gitignore
    echo "*.synctex.gz" >> .gitignore
-   echo "*.DS_Store" >> .gitignore
+end
+
+function tex-template
+   mkdir fig
+   mkdir sections
+   touch ref.bib
+   touch (basename (pwd)).tex
+   touch sections/abstract.tex
+   touch sections/introduction.tex
+   touch sections/conventional.tex
+   touch sections/proposed.tex
+   touch sections/experiment.tex
+   touch sections/conclusion.tex
+   touch sections/acknowledgement.tex
 end
 
 set os (uname)
@@ -64,9 +85,6 @@ if test $os = Linux
    alias open xdg-open
    set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
 end
-
-# conda setting
-source (conda info --root)/etc/fish/conf.d/conda.fish
 
 # rbenv setting
 status --is-interactive; and source (rbenv init -|psub)
@@ -87,4 +105,8 @@ set -x PATH $HOME/.pyenv/shims $PATH
 function fish_user_key_bindings
    fish_vi_key_bindings
    bind -M insert \cf forward-char
+   bind \cd delete-char
 end
+
+# conda setting
+source (conda info --root)/etc/fish/conf.d/conda.fish

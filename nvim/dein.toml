@@ -37,7 +37,7 @@ hook_add = '''
    let g:vim_markdown_new_list_item_indent = 1
    let g:vim_markdown_emphasis_multiline = 0
 '''
-on_ft = ['markdown','mkd']
+on_ft = ['md','markdown','mkd']
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
