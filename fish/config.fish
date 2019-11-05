@@ -1,6 +1,3 @@
-# ls color setting
-export LSCOLORS=gxfxcxdxbxegedabagacad
-
 # Fish git prompt
 set __fish_git_prompt_showdirtystate 'yes'
 set __fish_git_prompt_showstashstate 'yes'
@@ -14,7 +11,7 @@ set __fish_git_prompt_color_upstream_behind red
 set __fish_git_prompt_char_dirtystate '☠︎ '
 set __fish_git_prompt_char_stagedstate '→'
 set __fish_git_prompt_char_untrackedfiles '⚠︎ '
-set __fish_git_prompt_char_stashstate '↩ '
+set __fish_git_prompt_char_stashstate '↩'
 set __fish_git_prompt_char_upstream_ahead '+'
 set __fish_git_prompt_char_upstream_behind '-'
 
@@ -36,8 +33,6 @@ set -x PATH /usr/local/opt/mysql@5.7/bin $PATH
 set -x PATH $HOME/.nodebrew/current/bin $PATH
 set -x PYTHONPATH $HOME/onolab/pyroomacoustics $PYTHONPATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-set -x PATH $HOME/Downloads/kaldi/tools/python $PATH
-set -x IRSTLM $HOME/Downloads/kaldi/tools/irstlm
 set -x PATH $PATH $IRSTLM/bin
 
 # My commands
