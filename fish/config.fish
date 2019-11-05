@@ -1,3 +1,6 @@
+# ls color setting
+export LSCOLORS=gxfxcxdxbxegedabagacad
+
 # Fish git prompt
 set __fish_git_prompt_showdirtystate 'yes'
 set __fish_git_prompt_showstashstate 'yes'
@@ -61,7 +64,10 @@ function tex-gitignore
    echo "*.fdb_latexmk" >> .gitignore
    echo "*.fls" >> .gitignore
    echo "*.log" >> .gitignore
-   echo "*.nab" >> .gitignore
+   echo "*.nav" >> .gitignore
+   echo "*.out" >> .gitignore
+   echo "*.snm" >> .gitignore
+   echo "*.toc" >> .gitignore
    echo "*.pdf" >> .gitignore
    echo "*.synctex.gz" >> .gitignore
 end
