@@ -49,6 +49,7 @@ set -x PYTHONPATH $HOME/onolab/pyroomacoustics $PYTHONPATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 set -x PATH $PATH $IRSTLM/bin
 set -x PATH ~/Documents/programming/util $PATH
+set -x PATH ~/.cargo/bin $PATH
 
 # My commands
 function urlenc
@@ -130,3 +131,4 @@ eval /Users/taishi/.pyenv/versions/anaconda3-5.3.1/bin/conda "shell.fish" "hook"
 # <<< conda initialize <<<
 
 # starship init fish | source
+set -g fish_user_paths "/usr/local/opt/openssl@1.1/bin" $fish_user_paths

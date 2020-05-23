@@ -130,7 +130,7 @@ hi link pythonDelimiter      Special
 let b:current_after_syntax = 'python'
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+set statusline^=%{coc#status()}
 set statusline+=%*
 
 let &cpo = s:cpo_save
@@ -146,3 +146,27 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete のプレビューウインドウを出さない
 set completeopt=menuone
+
+" lightline setting
+" let g:lightline = {
+" \ 'mode_map': {
+" \    '__' : '-',
+" \    'n'  : 'N',
+" \    'i'  : 'I',
+" \    'R'  : 'R',
+" \    'c'  : 'C',
+" \    'v'  : 'V',
+" \    'V'  : 'V',
+" \    's'  : 'S',
+" \    'S'  : 'S',
+" \ },
+" \ 'active': {
+" \   'left': [ [ 'mode', 'paste' ],
+" \             [ 'readonly', 'filename', 'modified' ],
+" \             [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
+" \   'right': [ ['coc'] ]
+" \ },
+" \ 'component_function': {
+" \   'coc': 'coc#status'
+" \ },
+" \ }
