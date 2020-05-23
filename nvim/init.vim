@@ -23,12 +23,12 @@ nmap j gj
 nmap k gk
 vmap j gj
 vmap k gk
-imap jj <Esc>
 imap jk <Esc>
-imap kk <Esc>
+imap kj <Esc>
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 nnoremap <Tab> %
 vnoremap <Tab> %
+nnoremap Y y$
 
 function! ImInActivate()
   call system('fcitx-remote -c')
@@ -83,6 +83,7 @@ syntax enable
 if dein#check_install()
   call dein#install()
 endif
+let g:dein#auto_recache = 1
 
 
 " Automatic Binary file reading
@@ -102,6 +103,7 @@ augroup END
 " FileType SETTINGS
 augroup fileTypeIndent
 	autocmd!
+	autocmd BufNewFile,BufRead *.cpp setl tabstop=4 softtabstop=4 shiftwidth=4 smartindent
 	autocmd BufNewFile,BufRead *.rb  setl tabstop=2 softtabstop=2 shiftwidth=2 smartindent
 	autocmd BufNewFile,BufRead *.go  setl tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 	autocmd BufNewFile,BufRead *.tex setl tabstop=2 softtabstop=2 shiftwidth=2
@@ -131,13 +133,16 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_python_checkers = ["pycodestyle"]
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
 let &cpo = s:cpo_save
 unlet s:cpo_save
 
+" tex setting
 let g:tex_conceal=""
+let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '@line @pdf @tex'
+
+" deoplete のプレビューを自動で閉じる
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete のプレビューウインドウを出さない
+set completeopt=menuone
