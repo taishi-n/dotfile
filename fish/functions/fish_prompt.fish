@@ -13,7 +13,7 @@ function fish_prompt
    set_color normal
    printf '@'
 
-   set_color red
+   set_color red --bold
    echo -n (prompt_hostname)
    set_color normal
    printf ' in '
