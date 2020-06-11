@@ -46,22 +46,6 @@ repo = 'tpope/vim-commentary'
 repo = 'tpope/vim-surround'
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-hook_add = '''
-   " TODO: dein_lazy.toml へ移動
-   " REF: https://github.com/monaqa/dotfiles/blob/master/.config/nvim/plugins/rc/dein_lazy.toml
-   let g:lexima_enable_endwise_rules = 1
-   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'tex'})
-   call lexima#add_rule({'char': '$', 'at': '%#$', 'leave': 1, 'filetype': 'tex'})
-   call lexima#add_rule({'char': '', 'at': '$%#$', 'delete': 1, 'filetype': 'tex'})
-
-   " to avoid the confliction of deoplete
-   " let g:lexima_no_default_rules = 1
-   " call lexima#set_default_rules()
-   imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-'''
-
-[[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
    let g:user_emmet_settings = { 'lang' : 'ja' }
@@ -199,3 +183,6 @@ hook_add = '''
          \     'linter_ok': 'left',
          \ }
 '''
+
+[[plugins]]
+repo = 'cespare/vim-toml'

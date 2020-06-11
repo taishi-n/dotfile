@@ -1,0 +1,19 @@
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_i = 1
+hook_post_source = '''
+   let g:lexima_enable_endwise_rules = 1
+   call lexima#add_rule({'char': '', 'at': '$%#$', 'delete': 1, 'filetype': 'tex'})
+   call lexima#add_rule({'at': '\%#[-0-9a-zA-Z_]', 'char': '{', 'input': '{'})
+   call lexima#add_rule({'at': '\%#\\', 'char': '{', 'input': '{', 'filetype': ['latex', 'tex']})
+   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': ['latex', 'tex']})
+   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': ['latex', 'tex']})
+   call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': ['latex', 'tex']})
+   call lexima#add_rule({'char': "'", 'input':  "'", 'filetype': ['latex', 'tex', 'satysfi']})
+   call lexima#add_rule({'char': '``', 'input_after': '``', 'filetype': ['rst']})
+
+   " to avoid the confliction of deoplete
+   " let g:lexima_no_default_rules = 1
+   " call lexima#set_default_rules()
+   imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+'''
