@@ -1,0 +1,44 @@
+{
+  "suggest.snippetIndicator": "►",
+  "suggest.acceptSuggestionOnCommitCharacter": false,
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.errorSign": "☣",
+  "codeLens.enable": true,
+
+  "list.insertMappings": {
+    "<C-j>": "normal:j",
+    "<C-k>": "normal:k"
+  },
+
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["-l", "88"],
+  "python.formatting.blackPath": "/Users/taishi/.pyenv/shims/black",
+  "python.jediEnabled": true,
+  "python.linting.mypyPath": "mypy",
+  "python.linting.flake8Path": "flake8",
+  "python.linting.flake8Enabled": false,
+  "python.linting.mypyEnabled": false,
+  "python.linting.flake8CategorySeverity.E": "Warning",
+  "python.linting.flake8CategorySeverity.F": "Warning",
+  "python.linting.pep8CategorySeverity.E": "Warning",
+
+  "languageserver": {
+    "clangd": {
+      "command": "clangd",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+    },
+    "latex": {
+      "command": "",
+      "ignoredRootPaths": [
+        "~"
+      ],
+      "filetypes": [
+        "tex",
+        "bib",
+        "plaintex",
+        "context"
+      ]
+    }
+  }
+}
