@@ -9,4 +9,5 @@ $max_repeat     = 5;
 $pdf_mode       = 3;
 $pvc_view_file_via_temporary = 0;
 $pdf_previewer  = "open -ga /Applications/Skim.app";
-$clean_ext = 'synctex.gz synctex.gz(busy) bbl fdb_latexmk snm nav'
+$clean_ext = 'synctex.gz synctex.gz(busy) bbl fdb_latexmk snm nav';
+$preview_mode = 1;
