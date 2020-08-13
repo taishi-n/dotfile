@@ -69,22 +69,6 @@ sed -i '' -e 's/。/．/g' $argv
 end
 funcsave replaceMaruForPeriod
 
-function tex-gitignore
-   echo "*.aux" >> .gitignore
-   echo "*.bbl" >> .gitignore
-   echo "*.blg" >> .gitignore
-   echo "*.dvi" >> .gitignore
-   echo "*.fdb_latexmk" >> .gitignore
-   echo "*.fls" >> .gitignore
-   echo "*.log" >> .gitignore
-   echo "*.nav" >> .gitignore
-   echo "*.out" >> .gitignore
-   echo "*.snm" >> .gitignore
-   echo "*.toc" >> .gitignore
-   echo "*.pdf" >> .gitignore
-   echo "*.synctex.gz" >> .gitignore
-end
-
 function tex-template
    mkdir fig
    mkdir sections
