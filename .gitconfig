@@ -1,0 +1,17 @@
+[user]
+	name = taishi-n
+	email = taishi.m.and.p@gmail.com
+
+[core]
+	excludesfile = /Users/taishi/.gitignore_global
+   pager = delta --plus-color="#c9ffc9" --minus-color="#ffc9c9" --theme='GitHub'
+	quotepath = false
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[interactive]
+   diffFilter = delta --color-only --theme='GitHub'

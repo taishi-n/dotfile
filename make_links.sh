@@ -15,3 +15,9 @@ ln -s ~/dotfile/nvim/coc-settings.vim ~/.config/nvim/coc-settings.vim
 ln -s ~/dotfile/nvim/dein.toml ~/.config/nvim/dein.toml
 ln -s ~/dotfile/nvim/dein_lazy.toml ~/.config/nvim/dein_lazy.toml
 ln -s ~/dotfile/nvim/init.vim ~/.config/nvim/init.vim
+
+echo "linking git settings..."
+ln -s ~/dotfile/.gitconfig ~/.gitconfig
+ln -s ~/dotfile/.gitignore_global ~/.gitignore_global
+
+echo "Done!!!"
