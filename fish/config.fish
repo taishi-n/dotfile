@@ -38,6 +38,8 @@ alias memo='nvim ~/Desktop/memo/memo.md'
 alias mv='mv -in'
 alias vitex='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
 alias g++='g++ -std=c++11'
+alias vc='scutil --nc start TMU-VPN'
+alias vd='scutil --nc stop TMU-VPN'
 
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
