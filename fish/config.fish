@@ -74,13 +74,13 @@ function tex-template
    mkdir sections
    touch ref.bib
    touch (basename (pwd)).tex
-   touch sections/abstract.tex
-   touch sections/introduction.tex
-   touch sections/conventional.tex
-   touch sections/proposed.tex
-   touch sections/experiment.tex
-   touch sections/conclusion.tex
-   touch sections/acknowledgement.tex
+   touch sections/00-abstract.tex
+   touch sections/01-introduction.tex
+   touch sections/02-conventional.tex
+   touch sections/03-proposed.tex
+   touch sections/04-experiment.tex
+   touch sections/05-conclusion.tex
+   touch sections/06-acknowledgement.tex
 end
 
 set os (uname)
