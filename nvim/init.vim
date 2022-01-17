@@ -35,11 +35,6 @@ function! ImInActivate()
 endfunction
 inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
 
-" Deactivate SwapFile etc..
-" set nowritebackup
-" set noswapfile
-" set nobackup
-
 
 " Omni completion setting
 filetype plugin on
@@ -147,26 +142,17 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " deoplete のプレビューウインドウを出さない
 set completeopt=menuone
 
-" lightline setting
-" let g:lightline = {
-" \ 'mode_map': {
-" \    '__' : '-',
-" \    'n'  : 'N',
-" \    'i'  : 'I',
-" \    'R'  : 'R',
-" \    'c'  : 'C',
-" \    'v'  : 'V',
-" \    'V'  : 'V',
-" \    's'  : 'S',
-" \    'S'  : 'S',
-" \ },
-" \ 'active': {
-" \   'left': [ [ 'mode', 'paste' ],
-" \             [ 'readonly', 'filename', 'modified' ],
-" \             [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
-" \   'right': [ ['coc'] ]
-" \ },
-" \ 'component_function': {
-" \   'coc': 'coc#status'
-" \ },
-" \ }
+" beamer用 md2tex
+augroup texfile
+   autocmd BufRead,BufNewFile *.tex set filetype=tex
+   let md_to_latex  = "pandoc --from=markdown-auto_identifiers --to=beamer --wrap=preserve"
+   autocmd Filetype tex let &formatprg=md_to_latex
+augroup END
+
+" bibtex formatter
+augroup filetype
+  autocmd!
+  " bib file
+  autocmd BufRead,BufNewFile *.bib set filetype=bib
+  autocmd Filetype bib let &formatprg="bibclean --max-width 180 -no-check-values"
+augroup END
