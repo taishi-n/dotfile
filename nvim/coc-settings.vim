@@ -1,4 +1,4 @@
-imap <C-q> <Plug>(coc-snippets-expand)
+imap <C-l> <Plug>(coc-snippets-expand)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -24,16 +24,16 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-augroup rc_coc
-  autocmd!
-  autocmd Filetype java nnoremap <Space>i :CocCommand java.action.organizeImports<CR>
-augroup END
+" augroup rc_coc
+"   autocmd!
+"   autocmd Filetype java nnoremap <Space>i :CocCommand java.action.organizeImports<CR>
+" augroup END
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-q>'
+" let g:coc_snippet_next = '<c-q>'
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-s-q>'
+" let g:coc_snippet_prev = '<c-s-q>'
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>

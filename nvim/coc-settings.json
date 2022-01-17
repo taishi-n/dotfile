@@ -11,30 +11,20 @@
   },
 
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["-l", "88"],
-  "python.formatting.blackPath": "~/.pyenv/shims/black",
-  "python.jediEnabled": true,
-  "python.jediPath": "~/.pyenv/versions/anaconda3-2020.02/lib/python3.7/site-packages",
-  "python.linting.mypyPath": "mypy",
-  "python.linting.flake8Path": "flake8",
-  "python.linting.flake8Enabled": false,
-  "python.linting.mypyEnabled": false,
-  "python.linting.flake8CategorySeverity.E": "Warning",
-  "python.linting.flake8CategorySeverity.F": "Warning",
-  "python.linting.pep8CategorySeverity.E": "Warning",
-  "python.setInterpreter": "~/.pyenv/versions/anaconda3-2020.02/bin/python",
+  "python.formatting.blackArgs": ["--line-length", "119"],
+  "python.linting.pydocstyleEnabled": true,
+
+  "latex.build.args": ["-r latexmkrc"],
+
+  "eslint.autoFixOnSave": true,
 
   "languageserver": {
     "clangd": {
       "command": "clangd",
       "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
-    },
-    "latex": {
-      "command": "",
-      "ignoredRootPaths": ["~"],
-      "filetypes": [ "tex", "bib", "plaintex", "context"
-      ]
     }
-  }
+  },
+
+  "coc.preferences.formatOnSaveFiletypes": ["python", "cpp", "css", "markdown"]
 }
