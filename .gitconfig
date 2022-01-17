@@ -6,6 +6,7 @@
 	excludesfile = /Users/taishi/.gitignore_global
    pager = delta
 	quotepath = false
+	editor = nvim -c \"set fenc=utf-8\"
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -15,6 +16,14 @@
 
 [interactive]
    diffFilter = delta --color-only
+[init]
+	defaultBranch = main
+[gpg]
+	program = gpg
+[credential]
+	helper = osxkeychain
+[commit]
+	gpgsign = true
 [delta]
    line-numbers = true
    plus-style = syntax "#c9ffc9"
