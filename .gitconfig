@@ -4,7 +4,7 @@
 
 [core]
 	excludesfile = /Users/taishi/.gitignore_global
-   pager = delta --plus-color="#c9ffc9" --minus-color="#ffc9c9" --theme='GitHub'
+   pager = delta
 	quotepath = false
 
 [filter "lfs"]
@@ -14,4 +14,10 @@
 	required = true
 
 [interactive]
-   diffFilter = delta --color-only --theme='GitHub'
+   diffFilter = delta --color-only
+[delta]
+   line-numbers = true
+   plus-style = syntax "#c9ffc9"
+   minus-style = normal "#ffc9c9"
+   side-by-side = true
+   syntax-theme = "GitHub"
