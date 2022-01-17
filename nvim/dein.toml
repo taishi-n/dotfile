@@ -37,13 +37,21 @@ on_ft = ['md','markdown','mkd']
 repo = 'thinca/vim-quickrun'
 
 [[plugins]]
-repo = 'ambv/black'
+repo = 'averms/black-nvim'
+on_ft = ['python']
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+on_idle = 1
+
+[[plugins]]
+repo = 'tpope/vim-speeddating'
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
@@ -103,34 +111,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'w0rp/ale'
-hook_add = '''
-   " Ctrl + kで次の指摘へ、Ctrl + jで前の指摘へ移動
-   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-   nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-   " Lint only file saved
-   let g:ale_lint_on_text_changed = 0
-   let g:ale_linters = {
-      \ 'cpp': ['gcc'],
-      \ 'python': ['black'],
-      \ 'tex': ['alex', 'chktex'],
-      \ }
-   let g:ale_fixers = {
-      \ 'python': ['black'],
-      \ 'tex': ['chktex'],
-      \ }
-
-   " モードの表示名を定義(デフォルトだと長くて横幅を圧迫するので略称にしている)
-   highlight link ALEErrorSign Tag
-   highlight link ALEWarningSign StorageClass
-
-   let g:ale_sign_error = '✘'
-   let g:ale_sign_warning = '⚠'
-   let g:ale_echo_msg_format = '[%linter%]%code: %%s'
-'''
-
-[[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
    let g:indentLine_setConceal = 0
@@ -142,6 +122,7 @@ rev = 'release'
 on_i = 1
 merged = '0'
 hook_add = '''
+   command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
    source ~/.config/nvim/coc-settings.vim
 '''
 
