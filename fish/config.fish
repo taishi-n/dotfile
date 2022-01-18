@@ -28,7 +28,7 @@
 
 # Alias
 alias vi (which nvim)
-alias rm rmtrash
+alias rm trash
 alias cdd='cd ~/dotfile'
 alias gdiff='git diff'
 alias gits='git status'
@@ -37,9 +37,11 @@ alias gitA='git add -A'
 alias memo='nvim ~/Desktop/memo/memo.md'
 alias mv='mv -in'
 alias vitex='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
-alias g++='g++ -std=c++11'
-alias vc='scutil --nc start TMU-VPN'
-alias vd='scutil --nc stop TMU-VPN'
+alias g++='g++ -std=gnu++17'
+
+# VPN alias
+set -x DEFAULT_VPN "TMU"
+alias onolab='cd ~/onolab'
 
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
@@ -47,11 +49,11 @@ alias vd='scutil --nc stop TMU-VPN'
 set -x PATH /usr/local/bin $PATH
 set -x PATH /usr/local/opt/mysql@5.7/bin $PATH
 set -x PATH $HOME/.nodebrew/current/bin $PATH
-set -x PYTHONPATH $HOME/onolab/pyroomacoustics $PYTHONPATH
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 set -x PATH $PATH $IRSTLM/bin
 set -x PATH ~/Documents/programming/util $PATH
 set -x PATH ~/.cargo/bin $PATH
+set -x PATH /Applications/Julia-1.6.app/Contents/Resources/julia/bin $PATH
 
 # My commands
 function urlenc
@@ -90,15 +92,8 @@ if test $os = Linux
 end
 
 # rbenv setting
-status --is-interactive; and source (rbenv init -|psub)
-set -x PATH $HOME/.rbenv/bin $PATH
-
-# pyenv setting
-set -x PYENV_ROOT $HOME/.pyenv
-#set -x PATH $HOME/.pyenv/bin $PATH
-#set -x PATH $PYENV_ROOT/bin $PATH
-status --is-interactive; and source (pyenv init -|psub)
-set -x PATH $HOME/.pyenv/shims $PATH
+# status --is-interactive; and source (rbenv init -|psub)
+# set -x PATH $HOME/.rbenv/bin $PATH
 
 # go setting
 #set -x GOPATH $HOME/go
@@ -111,11 +106,18 @@ function fish_user_key_bindings
    bind \cd delete-char
 end
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-eval /Users/taishi/.pyenv/versions/anaconda3-5.3.1/bin/conda "shell.fish" "hook" $argv | source
-# <<< conda initialize <<<
-
 # starship init fish | source
 set -g fish_user_paths "/usr/local/opt/openssl@1.1/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/llvm/bin" $fish_user_paths
+
+set -Ux PYENV_ROOT $HOME/.pyenv
+set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
+
+status is-interactive; and pyenv init --path | source
+pyenv init - | source
+
+# gpg
+set -x GPG_TTY (tty)
+
+# opam configuration
+source /Users/taishi/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
