@@ -1,24 +1,10 @@
-set number
-set clipboard+=unnamed
-set clipboard+=unnamedplus
-set hlsearch
-set ignorecase
-set smartcase
-set wrapscan
-set incsearch
-set inccommand=split
 set encoding=utf-8
-set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
-set fileformats=unix,dos,mac
-set wildmenu
-set showcmd
-set mouse=a
-set backspace=start,eol,indent
-set matchpairs& matchpairs+=<:>
-set synmaxcol=200
 scriptencoding utf-8
-filetype on
-highlight Search ctermbg=lightgreen ctermfg=black
+
+source ~/.config/nvim/set.vim
+
+filetype off
+highlight Search cterm=BOLD,underline ctermfg=0 ctermbg=144
 nmap j gj
 nmap k gk
 vmap j gj
@@ -30,12 +16,6 @@ nnoremap <Tab> %
 vnoremap <Tab> %
 nnoremap Y y$
 
-function! ImInActivate()
-  call system('fcitx-remote -c')
-endfunction
-inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
-
-
 " Omni completion setting
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
@@ -45,18 +25,6 @@ set omnifunc=syntaxcomplete#Complete
 if $SHELL =~ 'fish'
   set shell=/bin/sh
 endif
-
-
-" Indent setting
-set tabstop=3
-set shiftwidth=3
-set autoindent
-set expandtab
-
-
-" Color setting
-set t_Co=256
-set background=light
 
 
 " dein setting
