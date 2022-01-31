@@ -1,6 +1,7 @@
 set encoding=utf-8
 scriptencoding utf-8
 
+" settings
 source ~/.config/nvim/set.vim
 
 filetype off

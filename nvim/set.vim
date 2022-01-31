@@ -9,7 +9,7 @@ set incsearch
 set inccommand=split
 set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
-" set ambiwidth=single
+set ambiwidth=single
 set wildmenu
 set showcmd
 set mouse=a
