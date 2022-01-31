@@ -8,18 +8,8 @@ hook_add = '''
        \ 'markdown',
        \ 'text',
        \ 'gitcommit',
-       \ 'scratch'
        \]
 '''
-
-[[plugins]]
-repo = 'fatih/vim-go'
-
-[[plugins]]
-repo = 'godlygeek/tabular'
-
-[[plugins]]
-repo = 'majutsushi/tagbar'
 
 [[plugins]]
 repo = 'plasticboy/vim-markdown'
@@ -27,11 +17,13 @@ hook_add = '''
    let g:vim_markdown_conceal = 0
    let g:vim_markdown_folding_disabled = 1
    let g:vim_markdown_new_list_item_indent = 2
-   let g:vim_markdown_auto_insert_bullets = 1
-   let g:vim_markdown_new_list_item_indent = 1
+   let g:vim_markdown_auto_insert_bullets = 0
    let g:vim_markdown_emphasis_multiline = 0
 '''
-on_ft = ['md','markdown','mkd']
+on_ft = ['md','markdown']
+
+[[plugins]]
+repo = 'cespare/vim-toml'
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
@@ -52,12 +44,6 @@ on_idle = 1
 
 [[plugins]]
 repo = 'tpope/vim-speeddating'
-
-[[plugins]]
-repo = 'mattn/emmet-vim'
-hook_add = '''
-   let g:user_emmet_settings = { 'lang' : 'ja' }
-'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
@@ -111,9 +97,9 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'Yggdroot/indentLine'
+repo = 'lukas-reineke/indent-blankline.nvim'
 hook_add = '''
-   let g:indentLine_setConceal = 0
+   highlight IndentBlanklineChar ctermfg=248
 '''
 
 [[plugins]]
@@ -164,6 +150,3 @@ hook_add = '''
          \     'linter_ok': 'left',
          \ }
 '''
-
-[[plugins]]
-repo = 'cespare/vim-toml'
