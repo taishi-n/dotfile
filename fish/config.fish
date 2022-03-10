@@ -1,32 +1,36 @@
+# Fish char settings
+set fish_ambiguous_width 2
+set fish_emoji_width 2
+
 # Fish git prompt
-# set __fish_git_prompt_showdirtystate 'yes'
-# set __fish_git_prompt_showstashstate 'yes'
-# set __fish_git_prompt_showuntrackedfiles 'yes'
-# set __fish_git_prompt_showupstream 'yes'
-# set __fish_git_prompt_color_branch yellow
-# set __fish_git_prompt_color_upstream_ahead green
-# set __fish_git_prompt_color_upstream_behind red
+set __fish_git_prompt_showdirtystate 'yes'
+set __fish_git_prompt_showstashstate 'yes'
+set __fish_git_prompt_showuntrackedfiles 'yes'
+set __fish_git_prompt_showupstream 'yes'
 
-# # Git status chars
-# set __fish_git_prompt_show_informative_status 1
-# set __fish_git_prompt_hide_untrackedfiles 1
+set __fish_git_prompt_color_branch yellow --bold
+set __fish_git_prompt_color_upstream_ahead green
+set __fish_git_prompt_color_upstream_behind red
 
-# set __fish_git_prompt_color_branch magenta --bold
-# set __fish_git_prompt_char_cleanstate ' 👍  '
-# set __fish_git_prompt_char_conflictedstate ' ⚠️  '
-# set __fish_git_prompt_char_dirtystate ' 💩  '
-# # set __fish_git_prompt_char_dirtystate ' ☠︎ '
-# set __fish_git_prompt_char_invalidstate ' 🤮  '
-# set __fish_git_prompt_char_stagedstate ' ⇢ '
-# set __fish_git_prompt_char_stashstate ' ↩ '
-# set __fish_git_prompt_char_stateseparator ' | '
-# set __fish_git_prompt_char_untrackedfiles ' ⚠︎ '
-# set __fish_git_prompt_char_upstream_ahead ' ⤴︎ '
-# set __fish_git_prompt_char_upstream_behind ' ⤵︎ '
-# set __fish_git_prompt_char_upstream_equal ' ✓ '
-# set __fish_git_prompt_char_upstream_diverged ' ∞ '
+set __fish_git_prompt_show_informative_status 1
+set __fish_git_prompt_hide_untrackedfiles 1
+
+set __fish_git_prompt_char_cleanstate ' ☺︎ '
+set __fish_git_prompt_char_conflictedstate ' ⚤ '
+set __fish_git_prompt_char_dirtystate ' ☠︎ '
+
+set __fish_git_prompt_char_invalidstate ' ✗ '
+set __fish_git_prompt_char_stagedstate ' ⇢ '
+set __fish_git_prompt_char_stashstate ' ↩ '
+set __fish_git_prompt_char_stateseparator ' | '
+set __fish_git_prompt_char_untrackedfiles ' ⚡︎ '
+set __fish_git_prompt_char_upstream_ahead ' ⤴︎ '
+set __fish_git_prompt_char_upstream_behind ' ⤵︎ '
+set __fish_git_prompt_char_upstream_equal ' ✓ '
+set __fish_git_prompt_char_upstream_diverged ' ♾ '
 
 # Alias
+alias ls='exa --icons --group-directories-first'
 alias vi (which nvim)
 alias rm trash
 alias cdd='cd ~/dotfile'
@@ -54,6 +58,8 @@ set -x PATH $PATH $IRSTLM/bin
 set -x PATH ~/Documents/programming/util $PATH
 set -x PATH ~/.cargo/bin $PATH
 set -x PATH /Applications/Julia-1.6.app/Contents/Resources/julia/bin $PATH
+set -x PATH /opt/local/bin $PATH
+set -x PATH /opt/local/sbin:$PATH
 
 # My commands
 function urlenc
@@ -121,3 +127,6 @@ set -x GPG_TTY (tty)
 
 # opam configuration
 source /Users/taishi/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+# exa
+set -x EXA_ICON_SPACING 0
