@@ -7,19 +7,7 @@ source ~/.config/nvim/set.vim
 " mappings
 source ~/.config/nvim/maps.vim
 
-filetype off
 highlight Search cterm=BOLD,underline ctermfg=0 ctermbg=144
-
-" Omni completion setting
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-
-
-" Shell Setting
-if $SHELL =~ 'fish'
-  set shell=/bin/sh
-endif
-
 
 " dein setting
 if &compatible
@@ -33,6 +21,7 @@ if dein#load_state('~/.cache/dein')
  call dein#end()
  call dein#save_state()
 endif
+
 filetype plugin indent on
 syntax enable
 

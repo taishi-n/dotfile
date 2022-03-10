@@ -9,7 +9,7 @@ set incsearch
 set inccommand=split
 set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
-set ambiwidth=single
+set ambiwidth=double
 set wildmenu
 set showcmd
 set mouse=a
@@ -26,3 +26,10 @@ set expandtab
 " Color setting
 set t_Co=256
 set background=light
+
+set omnifunc=syntaxcomplete#Complete
+
+" Shell Setting
+if $SHELL =~ 'fish'
+  set shell=/bin/sh
+endif
