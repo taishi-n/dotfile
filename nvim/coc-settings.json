@@ -1,4 +1,5 @@
 {
+  "coc.preferences.formatOnSaveFiletypes": ["python", "cpp", "css", "markdown"],
   "suggest.snippetIndicator": "►",
   "suggest.acceptSuggestionOnCommitCharacter": false,
   "diagnostic.warningSign": "⚠",
@@ -13,6 +14,8 @@
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length", "119"],
   "python.linting.pydocstyleEnabled": true,
+  "python.sortImports.path": "isort",
+  "pyright.organizeimports.provider": "isort",
 
   "latex.build.args": ["-r latexmkrc"],
 
@@ -24,7 +27,5 @@
       "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     }
-  },
-
-  "coc.preferences.formatOnSaveFiletypes": ["python", "cpp", "css", "markdown"]
+  }
 }

@@ -97,12 +97,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'lukas-reineke/indent-blankline.nvim'
-hook_add = '''
-   highlight IndentBlanklineChar ctermfg=248
-'''
-
-[[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 on_i = 1
@@ -150,3 +144,6 @@ hook_add = '''
          \     'linter_ok': 'left',
          \ }
 '''
+
+[[plugins]]
+repo = 'khaveesh/vim-fish-syntax'
