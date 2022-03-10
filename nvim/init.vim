@@ -1,6 +1,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
+source ~/.github_token.vim
+
 " settings
 source ~/.config/nvim/set.vim
 
@@ -106,4 +108,11 @@ augroup filetype
   " bib file
   autocmd BufRead,BufNewFile *.bib set filetype=bib
   autocmd Filetype bib let &formatprg="bibclean --max-width 180 -no-check-values"
+augroup END
+
+" pdfpc formatter
+augroup filetype
+  autocmd!
+  autocmd BufRead,BufNewFile *.pdfpc set filetype=pdfpc
+  autocmd Filetype pdfpc let &formatprg="jq"
 augroup END
