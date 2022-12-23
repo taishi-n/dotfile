@@ -24,9 +24,10 @@
 	helper = osxkeychain
 [commit]
 	gpgsign = true
+[tag]
+	gpgsign = true
 [delta]
-   line-numbers = true
-   plus-style = syntax "#c9ffc9"
-   minus-style = normal "#ffc9c9"
-   side-by-side = true
-   syntax-theme = "GitHub"
+	line-numbers = true
+	plus-style = syntax "#c9ffc9"
+	minus-style = normal "#ffc9c9"
+	syntax-theme = "GitHub"
