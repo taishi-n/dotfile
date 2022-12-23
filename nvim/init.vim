@@ -103,16 +103,13 @@ augroup texfile
 augroup END
 
 " bibtex formatter
-augroup filetype
-  autocmd!
-  " bib file
+augroup bibfile
   autocmd BufRead,BufNewFile *.bib set filetype=bib
   autocmd Filetype bib let &formatprg="bibclean --max-width 180 -no-check-values"
 augroup END
 
 " pdfpc formatter
-augroup filetype
-  autocmd!
+augroup pdfpc
   autocmd BufRead,BufNewFile *.pdfpc set filetype=pdfpc
   autocmd Filetype pdfpc let &formatprg="jq"
 augroup END
