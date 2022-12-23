@@ -33,19 +33,20 @@ set __fish_git_prompt_char_upstream_diverged ' ♾ '
 alias ls='exa --icons --group-directories-first'
 alias vi (which nvim)
 alias rm trash
-alias cdd='cd ~/dotfile'
-alias gdiff='git diff'
 alias gits='git status'
-alias gitc='git commit'
-alias gitA='git add -A'
-alias memo='nvim ~/Desktop/memo/memo.md'
+alias memo='vi ~/Downloads/memo.md'
 alias mv='mv -in'
 alias vitex='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
 alias g++='g++ -std=gnu++17'
 
+# Abbreviations
+abbr --add diary 'vi ~/diary/(date "+%Y-%m-%d").md'
+abbr --add todo 'vi ~/diary/00_todo.md'
+
 # VPN alias
 set -x DEFAULT_VPN "TMU"
 alias onolab='cd ~/onolab'
+
 
 # PATH
 # EXAMPLE: set -x PATH /usr/local/bin $PATH
