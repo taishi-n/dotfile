@@ -9,8 +9,6 @@ source ~/.config/nvim/set.vim
 " mappings
 source ~/.config/nvim/maps.vim
 
-highlight Search cterm=BOLD,underline ctermfg=0 ctermbg=144
-
 " dein setting
 if &compatible
  set nocompatible
@@ -51,6 +49,7 @@ augroup END
 " FileType SETTINGS
 augroup fileTypeIndent
 	autocmd!
+	autocmd BufNewFile,BufRead *.md  setl tabstop=2 softtabstop=2 shiftwidth=2 smartindent
 	autocmd BufNewFile,BufRead *.cpp setl tabstop=4 softtabstop=4 shiftwidth=4 smartindent
 	autocmd BufNewFile,BufRead *.rb  setl tabstop=2 softtabstop=2 shiftwidth=2 smartindent
 	autocmd BufNewFile,BufRead *.go  setl tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab

@@ -12,22 +12,15 @@ set fileformats=unix,dos,mac
 set ambiwidth=double
 set wildmenu
 set showcmd
-set mouse=a
 set backspace=start,eol,indent
 set matchpairs& matchpairs+=<:>
 set synmaxcol=200
+set termguicolors
+set matchpairs+=「:」,『:』,（:）,【:】,《:》,〈:〉,［:］,‘:’,“:”
 
 " Indent setting
-set tabstop=3
-set shiftwidth=3
 set autoindent
 set expandtab
-
-" Color setting
-set t_Co=256
-set background=light
-
-set omnifunc=syntaxcomplete#Complete
 
 " Shell Setting
 if $SHELL =~ 'fish'
