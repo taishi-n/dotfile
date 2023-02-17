@@ -1,31 +1,94 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["python", "cpp", "css", "markdown"],
-  "suggest.snippetIndicator": "►",
-  "suggest.acceptSuggestionOnCommitCharacter": false,
-  "diagnostic.warningSign": "⚠",
-  "diagnostic.errorSign": "☣",
-  "codeLens.enable": true,
+  "highlight.colorNames.enable": false,
 
-  "list.insertMappings": {
-    "<C-j>": "normal:j",
-    "<C-k>": "normal:k"
-  },
-
+  "python.formatting.blackPath": "black",
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--line-length", "119"],
-  "python.linting.pydocstyleEnabled": true,
+  "python.linting.flake8Enabled": false,
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyPath": "mypy",
+  "python.pythonPath": "python",
   "python.sortImports.path": "isort",
-  "pyright.organizeimports.provider": "isort",
 
-  "latex.build.args": ["-r latexmkrc"],
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.checkOnSave.target": [],
+  "rust-analyzer.completion.privateEditable.enable": true,
+  "rust-analyzer.lens.enable": false,
+  "rust-analyzer.procMacro.enable": true,
+  "rust-analyzer.updates.channel": "stable",
 
-  "eslint.autoFixOnSave": true,
+  "snippets.ultisnips.pythonPrompt": false,
 
   "languageserver": {
     "clangd": {
       "command": "clangd",
       "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+    },
+    "efm": {
+      "command": "efm-langserver",
+      "args": [],
+      "filetypes": ["satysfi"]
+    },
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"]
+    },
+    "satysfi-ls": {
+        "command": "satysfi-language-server",
+        "args": [],
+        "filetypes": ["satysfi"],
+        "trace.server": "verbose"
     }
+  },
+
+  "[python]": {"coc.preferences.formatOnSave": true },
+  "[css]": {"coc.preferences.formatOnSave": true },
+
+  "codeLens.enable": true,
+  "codeLens.position": "right_align",
+
+  "diagnostic.messageTarget": "float",
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualTextPrefix": " ",
+  "diagnostic.warningSign": "🐤",
+  "diagnostic.errorSign": "🚨",
+  "diagnostic.infoSign": "ℹ️ ",
+  "diagnostic.hintSign": "ℹ️ ",
+  "diagnostic.signLevel": "error",
+
+  "suggest.floatConfig": {
+    "winblend": 10
+  },
+
+  "diagnostic.floatConfig": {
+    "winblend": 15
+  },
+
+  "hover.floatConfig": {
+    "winblend": 10,
+    "shadow": false
+  },
+
+  "prettier.trailingComma": "all",
+
+  "suggest.snippetIndicator": "►",
+  "suggest.acceptSuggestionOnCommitCharacter": false,
+  "suggest.asciiCharactersOnly": true,
+  "suggest.invalidInsertCharacters": [
+      "(",
+      "<",
+      "{",
+      "[",
+      "\r",
+      "\n"
+  ],
+  "suggest.noselect": true,
+  "suggest.enablePreselect": false,
+
+  "list.insertMappings": {
+    "<C-j>": "normal:j",
+    "<C-k>": "normal:k"
   }
 }
