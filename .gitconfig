@@ -1,6 +1,7 @@
 [user]
 	name = taishi-n
 	email = taishi.m.and.p@gmail.com
+	signingkey = 0B97266F17A010B0
 
 [core]
 	excludesfile = /Users/taishi/.gitignore_global
