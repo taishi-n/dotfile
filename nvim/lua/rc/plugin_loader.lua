@@ -52,6 +52,9 @@ require("jetpack.packer").startup(function(use)
     -- tree-sitter
     add { "nvim-treesitter/nvim-treesitter", hook_after = config.treesitter }
 
+    -- color scheme
+    add { "sainnhe/everforest", hook_after = config.everforest }
+
     -- old
     add { "dkarter/bullets.vim", hook_after = config.bullets }
     add { "tpope/vim-commentary" }

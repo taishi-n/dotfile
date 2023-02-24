@@ -70,6 +70,7 @@ vim.opt.diffopt:append { "vertical", "algorithm:histogram" }
 -- §§1 編集関係
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
+vim.cmd [[ colorscheme everforest ]]
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4

@@ -48,7 +48,7 @@ function M.lualine()
             },
         },
         options = {
-            theme = "dracula",
+            theme = "everforest",
             section_separators = { "", "" },
             component_separators = { "", "" },
             globalstatus = true,
@@ -490,6 +490,10 @@ function M.treesitter()
     end, { expr = true })
 
     vim.keymap.set("n", "ts", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+end
+
+function M.everforest()
+    -- 色の微調整など
 end
 
 function M.telescope()
