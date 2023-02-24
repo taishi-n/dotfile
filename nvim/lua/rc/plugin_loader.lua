@@ -65,12 +65,19 @@ require("jetpack.packer").startup(function(use)
 
     -- coc
     add { "neoclide/coc.nvim", branch = "release", hook_after = config.coc, opt = 1 }
+    add { "rafcamlet/coc-nvim-lua", opt = 1 }
+    add { "fannheyward/telescope-coc.nvim", opt = 1 }
 
     -- filetype
     add { "cespare/vim-toml" }
     add { "ekalinin/Dockerfile.vim" }
     add { "justinmk/vim-syntax-extra" }
     add { "vim-python/python-syntax", hook_after = config.python }
+
+    -- telescope
+    add { "nvim-telescope/telescope.nvim", hook_after = config.telescope }
+    add { "nvim-lua/popup.nvim" }
+    add { "nvim-lua/plenary.nvim" }
 
     -- misc
     add { "monaqa/dial.nvim", hook_after = config.dial }

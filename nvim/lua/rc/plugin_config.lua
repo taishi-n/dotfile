@@ -274,6 +274,9 @@ function M.coc()
         return
     end
     vim.cmd.packadd "coc.nvim"
+    vim.cmd.packadd "coc-nvim-lua"
+    vim.cmd.packadd "telescope-coc.nvim"
+    require('telescope').load_extension "coc"
     coc_config()
 end
 
@@ -409,6 +412,45 @@ function M.dial()
             vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual "markdown", { noremap = true })
         end,
     }
+end
+
+function M.telescope()
+    local actions = require "telescope.actions"
+    local builtin = require "telescope.builtin"
+
+    -- Global remapping
+    require("telescope").setup {
+        defaults = {
+            vimgrep_arguments = {
+                "rg",
+                "--line-number",
+                "--no-heading",
+                "--color=never",
+                "--hidden",
+                "--with-filename",
+                "--column",
+                -- '--smart-case'
+            },
+            prompt_prefix = "𝜻",
+            find_command = {
+                "rg",
+                "--ignore",
+                "--hidden",
+                "--files",
+            },
+            mappings = {
+                n = {
+                    ["<Esc>"] = actions.close,
+                },
+            },
+        },
+    }
+
+    vim.keymap.set("n", "so", "<Cmd>Telescope git_files<cr>")
+    vim.keymap.set("n", "sO", "<Cmd>Telescope find_files<cr>")
+    vim.keymap.set("n", "sb", "<Cmd>Telescope buffers<cr>")
+    vim.keymap.set("n", "sg", "<Cmd>Telescope live_grep<cr>")
+    vim.keymap.set("n", "tq", "<Cmd>Telescope quickfix<cr>")
 end
 
 return M
