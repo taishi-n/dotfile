@@ -14,6 +14,7 @@ vim.keymap.set("v", "k", "gj")
 vim.keymap.set("n", "<Tab>", "%")
 vim.keymap.set("v", "<Tab>", "%")
 vim.keymap.set("n", "Y", "y$")
+vim.keymap.set('n', 's', '<NOP>', { noremap = true }) -- for telescope
 --
 
 vim.keymap.set("c", "<C-c>", "<C-f>")
@@ -293,13 +294,13 @@ vim.keymap.set(
     { "n", "x", "o" },
     "<C-j>",
     util.cmdcr "call v:lua.vimrc.motion.smart_par(v:true)"
-        .. util.cmdcr "lua _G.vimrc.state.par_motion_continuous = true"
+    .. util.cmdcr "lua _G.vimrc.state.par_motion_continuous = true"
 )
 vim.keymap.set(
     { "n", "x", "o" },
     "<C-k>",
     util.cmdcr "call v:lua.vimrc.motion.smart_par(v:false)"
-        .. util.cmdcr "lua _G.vimrc.state.par_motion_continuous = true"
+    .. util.cmdcr "lua _G.vimrc.state.par_motion_continuous = true"
 )
 
 -- vertical f motion

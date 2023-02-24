@@ -414,6 +414,84 @@ function M.dial()
     }
 end
 
+function M.treesitter()
+    local parser_install_dir = vim.fn.stdpath "data" .. "/treesitter"
+    vim.opt.runtimepath:prepend(parser_install_dir)
+
+    require("nvim-treesitter.configs").setup {
+        parser_install_dir = parser_install_dir,
+        ensure_installed = {
+            "bash",
+            "css",
+            "dot",
+            "html",
+            "json",
+            "latex",
+            "lua",
+            "markdown",
+            "markdown_inline",
+            "python",
+            "query",
+            "rust",
+            "toml",
+            "yaml",
+        },
+        highlight = {
+            enable = true,
+            -- disable = { "help" },
+            disable = function(lang, buf)
+                if lang == "help" then
+                    return true
+                end
+                local max_filesize = 256 * 1024 -- 256 KB
+                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                if ok and stats and stats.size > max_filesize then
+                    util.print_error("File too large: tree-sitter disabled.", "WarningMsg")
+                    return true
+                end
+            end,
+            additional_vim_regex_highlighting = false,
+        },
+        indent = {
+            enable = true,
+            disable = {
+                "bash",
+                "css",
+                "html",
+                "json",
+                "lua",
+                "python",
+                "query",
+                "toml",
+                "typescript",
+                "yaml",
+            },
+        },
+        incremental_selection = {
+            enable = true,
+        },
+        query_linter = {
+            enable = true,
+            use_virtual_text = true,
+            lint_events = { "BufWrite", "CursorHold", "InsertLeave" },
+        },
+    }
+
+    vim.keymap.set("x", "v", function()
+        if vim.fn.mode() == "v" then
+            return ":lua require'nvim-treesitter.incremental_selection'.node_incremental()<CR>"
+        else
+            return "v"
+        end
+    end, { expr = true })
+
+    vim.keymap.set("x", "<C-o>", function()
+        return ":lua require'nvim-treesitter.incremental_selection'.node_decremental()<CR>"
+    end, { expr = true })
+
+    vim.keymap.set("n", "ts", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+end
+
 function M.telescope()
     local actions = require "telescope.actions"
     local builtin = require "telescope.builtin"
