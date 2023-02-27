@@ -64,6 +64,8 @@ end
 
 -- §§1 paren
 function M.lexima()
+    vim.g["lexima_enable_endwise_rules"] = 1
+    vim.g["lexima_enable_space_rules"] = 0
     vim.g["lexima_no_default_rules"] = 1
     vim.fn["lexima#set_default_rules"]()
 
