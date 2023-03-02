@@ -33,3 +33,13 @@ util.autocmd_vimrc { "BufRead", "BufNewFile" } {
         vim.opt.smartindent = true
     end,
 }
+
+-- LaTeX
+util.autocmd_vimrc { "BufRead", "BufNewFile" } {
+    pattern = "*.tex",
+    callback = function()
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+        vim.opt.shiftwidth = 2
+    end,
+}
