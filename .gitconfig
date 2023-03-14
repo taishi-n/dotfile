@@ -64,5 +64,14 @@
 	blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "
 	blame-palette = "#101010 #200020 #002800 #000028 #202000 #280000 #002020 #002800 #202020"
 
+[pretty]
+    tree = format:"%x09%C(auto) %h %Cgreen %ad %Creset%x09by '%C(cyan ul)%an%Creset' %x09%C(auto)%s %d"
+
+[log]
+    date = format:'%Y-%m-%d %H:%M'
+
+[format]
+    pretty = tree
+
 [alias]
-    tree = log --graph --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%x09%C(auto) %h %Cgreen %ad %Creset%x09by "%C(cyan ul)%an%Creset" %x09%C(auto)%s %d'
+    tree = log --graph --pretty=tree
