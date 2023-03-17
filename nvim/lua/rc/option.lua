@@ -71,6 +71,7 @@ vim.opt.diffopt:append { "vertical", "algorithm:histogram" }
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.cmd [[ colorscheme everforest ]]
+vim.cmd [[ hi Whitespace gui=undercurl guifg=#fefefe ]]
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
