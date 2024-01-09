@@ -14,6 +14,11 @@ function M.bullets()
     vim.g.bullets_outline_levels = {}
 end
 
+function M.textcase()
+    vim.api.nvim_set_keymap('n', 'gat', "<cmd>lua require('textcase').quick_replace('to_title_case')<CR>", { desc = "Telescope Quick Change" })
+    vim.api.nvim_set_keymap('v', 'gat', "<cmd>lua require('textcase').quick_replace('to_title_case')<CR>", { desc = "Telescope Quick Change" })
+end
+
 function M.lualine()
     _G.debug_lualine = {}
     require("lualine").setup {

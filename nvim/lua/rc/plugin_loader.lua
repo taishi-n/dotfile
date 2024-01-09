@@ -87,6 +87,7 @@ require("jetpack.packer").startup(function(use)
 
     -- misc
     add { "monaqa/dial.nvim", hook_after = config.dial }
+    add { "johmsalas/text-case.nvim", hook_after = config.textcase }
 end)
 
 for _, name in ipairs(vim.fn["jetpack#names"]()) do
