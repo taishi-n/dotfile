@@ -15,9 +15,7 @@ vim.keymap.set("n", "<Tab>", "%")
 vim.keymap.set("v", "<Tab>", "%")
 vim.keymap.set("n", "Y", "y$")
 vim.keymap.set('n', 's', '<NOP>', { noremap = true }) -- for telescope
---
-
-vim.keymap.set("c", "<C-c>", "<C-f>")
+vim.keymap.set("n", "Y", "y$")
 
 vim.keymap.set("n", "Z", function()
     vim.opt_local.wrap = not vim.opt_local.wrap:get()
@@ -105,8 +103,6 @@ for _, char in ipairs {
 } do
     vim.keymap.set("n", "s" .. char, "<C-w>" .. char, {})
 end
-
-vim.keymap.set("n", "sq", util.cmdcr "tabclose")
 
 -- Section1 operator/text editing
 
