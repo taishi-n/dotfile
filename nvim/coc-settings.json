@@ -1,6 +1,4 @@
 {
-  "highlight.colorNames.enable": false,
-
   "python.formatting.blackPath": "black",
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length", "119"],
@@ -10,8 +8,6 @@
   "python.pythonPath": "python",
   "python.sortImports.path": "isort",
 
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.checkOnSave.target": [],
   "rust-analyzer.completion.privateEditable.enable": true,
   "rust-analyzer.lens.enable": false,
   "rust-analyzer.procMacro.enable": true,
@@ -28,7 +24,8 @@
     "efm": {
       "command": "efm-langserver",
       "args": [],
-      "filetypes": ["satysfi"]
+      "trace.server": "verbose",
+      "filetypes": ["tex", "markdown", "latex"]
     },
     "elmLS": {
       "command": "elm-language-server",
@@ -59,6 +56,8 @@
   "diagnostic.infoSign": "ℹ️ ",
   "diagnostic.hintSign": "ℹ️ ",
   "diagnostic.signLevel": "error",
+
+  "ltex.dictionary": {"en-US": ["TODO", "ILRMA", "ILRMA-Rep", "ICASSP", "AuxIVA"]}
 
   "suggest.floatConfig": {
     "winblend": 10
