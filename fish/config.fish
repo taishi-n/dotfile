@@ -10,7 +10,7 @@ set -x PATH $HOME/.nodebrew/current/bin $PATH
 
 # for python with uv
 source $HOME/.local/bin/env.fish
-echo 'uv generate-shell-completion fish | source' >> ~/.config/fish/config.fish
+uv generate-shell-completion fish | source
 
 # Alias
 alias ls='env COLUMNS=150 eza --icons --group-directories-first'
@@ -51,4 +51,3 @@ source /Users/taishi/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
 source (/opt/homebrew/bin/starship init fish --print-full-init | psub)
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-uv generate-shell-completion fish | source
