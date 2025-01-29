@@ -7,7 +7,7 @@ ln -s ~/dotfile/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfile/fish/functions/fish_prompt.fish  ~/.config/fish/functions/fish_prompt.fish
 
 echo "linking ~/.config/nvim"
-ln -s ~/dotfile/nvim/ ~/.config/nvim/
+ln -s ~/dotfile/nvim/ ~/.config/nvim
 
 echo "linking git settings..."
 ln -s ~/dotfile/.gitconfig ~/.gitconfig
