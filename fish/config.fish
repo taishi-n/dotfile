@@ -8,6 +8,9 @@ set -x PATH /opt/local/bin $PATH
 set -x PATH /opt/local/sbin $PATH
 set -x PATH $HOME/.nodebrew/current/bin $PATH
 
+# for python with uv
+source $HOME/.local/bin/env.fish
+
 # Alias
 alias ls='env COLUMNS=150 exa --icons --group-directories-first'
 alias vi=(which nvim)
@@ -36,11 +39,6 @@ function fish_user_key_bindings
    bind -M insert \cf forward-char
    bind \cd delete-char
 end
-
-# python
-set -Ux PYENV_ROOT $HOME/.pyenv
-set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
-pyenv init - | source
 
 # gpg
 set -x GPG_TTY (tty)
