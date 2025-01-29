@@ -12,7 +12,7 @@ set -x PATH $HOME/.nodebrew/current/bin $PATH
 source $HOME/.local/bin/env.fish
 
 # Alias
-alias ls='env COLUMNS=150 exa --icons --group-directories-first'
+alias ls='env COLUMNS=150 eza --icons --group-directories-first'
 alias vi=(which nvim)
 alias rm='trash'
 alias memo='vi ~/Downloads/memo.md'
@@ -45,9 +45,6 @@ set -x GPG_TTY (tty)
 
 # opam configuration
 source /Users/taishi/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-
-# exa
-set -x EXA_ICON_SPACING 1
 
 # starship
 source (/opt/homebrew/bin/starship init fish --print-full-init | psub)
