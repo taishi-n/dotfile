@@ -30,7 +30,7 @@
 [delta]
 	; syntax-theme = "base16"
 	features = "woolly-mammoth"
-	width = 170
+	width = 200
 	side-by-side = true
 
 [delta "woolly-mammoth"]

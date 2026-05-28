@@ -3,13 +3,8 @@
 
   "python.formatting.provider": "ruff",
   "python.linting.ruffEnabled": true,
-  "ruff.autoFixOnSave": true,
-
-  "python.linting.flake8Enabled": false,
-  "python.linting.mypyEnabled": true,
-  "python.linting.mypyPath": "mypy",
   "python.pythonPath": "python",
-  "python.sortImports.path": "isort",
+  "ruff.autoFixOnSave": true,
 
   "rust-analyzer.completion.privateEditable.enable": true,
   "rust-analyzer.lens.enable": false,
@@ -19,11 +14,6 @@
   "snippets.ultisnips.pythonPrompt": false,
 
   "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
-      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
-    },
     "efm": {
       "command": "efm-langserver",
       "args": [],
@@ -36,21 +26,18 @@
       "rootPatterns": ["elm.json"]
     },
     "satysfi-ls": {
-        "command": "satysfi-language-server",
-        "args": [],
-        "filetypes": ["satysfi"],
-        "trace.server": "verbose"
+      "command": "satysfi-language-server",
+      "args": [],
+      "filetypes": ["satysfi"],
+      "trace.server": "verbose"
     },
     "ruff-lsp": {
-        "command": "ruff-lsp",
-        "filetypes": ["python"]
+      "command": "ruff-lsp",
+      "filetypes": ["python"]
     }
   },
 
-  "[python]": {"coc.preferences.formatOnSave": true },
-  "[css]": {"coc.preferences.formatOnSave": true },
-  "[markdown]": {"coc.preferences.formatOnSave": true },
-  "[cpp]": {"coc.preferences.formatOnSave": true },
+  "coc.preferences.formatOnSave": true,
 
   "codeLens.enable": true,
   "codeLens.position": "right_align",
@@ -65,7 +52,9 @@
   "diagnostic.hintSign": "ℹ️ ",
   "diagnostic.signLevel": "error",
 
-  "ltex.dictionary": {"en-US": ["TODO", "ILRMA", "ILRMA-Rep", "ICASSP", "AuxIVA"]}
+  "ltex.dictionary": {
+    "en-US": ["TODO", "ILRMA", "ILRMA-Rep", "ICASSP", "AuxIVA"]
+  },
 
   "suggest.floatConfig": {
     "winblend": 10
@@ -80,19 +69,13 @@
     "shadow": false
   },
 
+  "prettier.enable": true,
   "prettier.trailingComma": "all",
 
   "suggest.snippetIndicator": "►",
   "suggest.acceptSuggestionOnCommitCharacter": false,
   "suggest.asciiCharactersOnly": true,
-  "suggest.invalidInsertCharacters": [
-      "(",
-      "<",
-      "{",
-      "[",
-      "\r",
-      "\n"
-  ],
+  "suggest.invalidInsertCharacters": ["(", "<", "{", "[", "\r", "\n"],
   "suggest.noselect": true,
   "suggest.enablePreselect": false,
 

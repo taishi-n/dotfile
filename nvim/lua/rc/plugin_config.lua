@@ -153,7 +153,6 @@ local function coc_config()
     vim.g["coc_global_extensions"] = {
         "coc-json",
         "coc-marketplace",
-        "coc-pyright",
         "coc-rust-analyzer",
         "coc-snippets",
         "coc-sumneko-lua",
@@ -422,81 +421,122 @@ function M.dial()
 end
 
 function M.treesitter()
-    local parser_install_dir = vim.fn.stdpath "data" .. "/treesitter"
-    vim.opt.runtimepath:prepend(parser_install_dir)
+    local install_dir = vim.fn.stdpath "data" .. "/treesitter"
+    local parsers = {
+        "bash",
+        "css",
+        "dot",
+        "html",
+        "html_tags",
+        "json",
+        "latex",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "rust",
+        "toml",
+        "yaml",
+    }
 
-    require("nvim-treesitter.configs").setup {
-        parser_install_dir = parser_install_dir,
-        ensure_installed = {
-            "bash",
+    local ft_to_parser = {
+        sh = "bash",
+        tex = "latex",
+        zsh = "bash",
+    }
+    for ft, parser in pairs(ft_to_parser) do
+        vim.treesitter.language.register(parser, ft)
+    end
+
+    local ok, treesitter = pcall(require, "nvim-treesitter")
+    if not ok then
+        util.print_error("nvim-treesitter is not available.", "WarningMsg")
+        return
+    end
+
+    treesitter.setup {
+        install_dir = install_dir,
+    }
+    if type(treesitter.install) == "function" then
+        treesitter.install(parsers)
+    else
+        vim.opt.runtimepath:prepend(install_dir)
+        util.print_error("nvim-treesitter is outdated; update plugins to enable parser installation.", "WarningMsg")
+    end
+
+    local indent_disabled = {
+        bash = true,
+        css = true,
+        html = true,
+        json = true,
+        lua = true,
+        python = true,
+        query = true,
+        toml = true,
+        typescript = true,
+        yaml = true,
+    }
+
+    local function large_file(buf)
+        local max_filesize = 256 * 1024 -- 256 KB
+        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            util.print_error("File too large: tree-sitter disabled.", "WarningMsg")
+            return true
+        end
+        return false
+    end
+
+    util.autocmd_vimrc "FileType" {
+        pattern = {
             "css",
             "dot",
             "html",
             "json",
-            "latex",
             "lua",
             "markdown",
-            "markdown_inline",
             "python",
             "query",
             "rust",
+            "sh",
+            "tex",
             "toml",
             "yaml",
+            "zsh",
         },
-        highlight = {
-            enable = true,
-            -- disable = { "help" },
-            disable = function(lang, buf)
-                if lang == "help" then
-                    return true
-                end
-                local max_filesize = 256 * 1024 -- 256 KB
-                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                if ok and stats and stats.size > max_filesize then
-                    util.print_error("File too large: tree-sitter disabled.", "WarningMsg")
-                    return true
-                end
-            end,
-            additional_vim_regex_highlighting = false,
-        },
-        indent = {
-            enable = true,
-            disable = {
-                "bash",
-                "css",
-                "html",
-                "json",
-                "lua",
-                "python",
-                "query",
-                "toml",
-                "typescript",
-                "yaml",
-            },
-        },
-        incremental_selection = {
-            enable = true,
-        },
-        query_linter = {
-            enable = true,
-            use_virtual_text = true,
-            lint_events = { "BufWrite", "CursorHold", "InsertLeave" },
-        },
+        callback = function(meta)
+            local buf = meta.buf
+            if large_file(buf) then
+                return
+            end
+
+            local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+            if not lang then
+                return
+            end
+
+            local ok = pcall(vim.treesitter.start, buf, lang)
+            if not ok then
+                return
+            end
+
+            if not indent_disabled[lang] then
+                vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            end
+        end,
     }
 
-    vim.keymap.set("x", "v", function()
-        if vim.fn.mode() == "v" then
-            return ":lua require'nvim-treesitter.incremental_selection'.node_incremental()<CR>"
-        else
-            return "v"
-        end
-    end, { expr = true })
+    util.autocmd_vimrc { "BufWrite", "CursorHold", "InsertLeave" } {
+        pattern = "*/queries/*/*.scm",
+        callback = function(meta)
+            pcall(vim.treesitter.query.lint, meta.buf)
+        end,
+    }
 
-    vim.keymap.set("x", "<C-o>", function()
-        return ":lua require'nvim-treesitter.incremental_selection'.node_decremental()<CR>"
-    end, { expr = true })
-
-    vim.keymap.set("n", "ts", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+    vim.keymap.set("x", "v", "an", { remap = true })
+    vim.keymap.set("x", "<C-o>", "in", { remap = true })
+    vim.keymap.set("n", "ts", "<Cmd>Inspect<CR>")
 end
 
 function M.everforest()

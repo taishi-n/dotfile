@@ -50,7 +50,8 @@ require("jetpack.packer").startup(function(use)
     add { "tani/vim-jetpack", commit = "c6ee097413951604c6719927f5e69a1b83b03759", opt = 1 }
 
     -- tree-sitter
-    add { "nvim-treesitter/nvim-treesitter", hook_after = config.treesitter }
+    add { "neovim-treesitter/treesitter-parser-registry" }
+    add { "neovim-treesitter/nvim-treesitter", hook_after = config.treesitter }
 
     -- color scheme
     add { "sainnhe/everforest", hook_after = config.everforest }

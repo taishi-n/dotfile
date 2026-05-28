@@ -23,11 +23,9 @@ alias g++='g++ -std=gnu++17'
 
 # Abbreviations
 abbr --add gits 'git status'
-abbr --add phd "cd ~/onolab/thesis.nosync/Nakashima2024PhDThesis/"
-abbr --add spl "cd ~/onolab/publications.nosync/Nakashima2023SPL/"
 abbr --add diary --set-cursor=1 'vi ~/diary/(date 1 "+%Y-%m-%d").md'
-abbr --add mtgphd --set-cursor=1 'vi ~/onolab/meeting/doctor/1'
 abbr --add todo 'vi ~/diary/00_todo.md'
+abbr --add idea 'vi ~/diary/01_idea.md'
 
 if test (uname) = Linux
    alias open xdg-open
