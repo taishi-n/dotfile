@@ -67,6 +67,61 @@ function M.lualine()
     }
 end
 
+function M.oil()
+    require("oil").setup {
+        default_file_explorer = true,
+        columns = {
+            "icon",
+        },
+        view_options = {
+            show_hidden = true,
+        },
+    }
+
+    vim.keymap.set("n", "<Space>e", "<Cmd>Oil<CR>", { desc = "Open parent directory" })
+end
+
+function M.gitsigns()
+    require("gitsigns").setup {
+        on_attach = function(bufnr)
+            local gs = package.loaded.gitsigns
+            local function map(mode, lhs, rhs, desc)
+                vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+            end
+
+            vim.keymap.set("n", "]c", function()
+                if vim.wo.diff then
+                    return "]c"
+                end
+                vim.schedule(gs.next_hunk)
+                return "<Ignore>"
+            end, { buffer = bufnr, desc = "Next git hunk", expr = true })
+            vim.keymap.set("n", "[c", function()
+                if vim.wo.diff then
+                    return "[c"
+                end
+                vim.schedule(gs.prev_hunk)
+                return "<Ignore>"
+            end, { buffer = bufnr, desc = "Previous git hunk", expr = true })
+
+            map({ "n", "v" }, "<Space>gs", gs.stage_hunk, "Stage git hunk")
+            map({ "n", "v" }, "<Space>gr", gs.reset_hunk, "Reset git hunk")
+            map("n", "<Space>gS", gs.stage_buffer, "Stage buffer")
+            map("n", "<Space>gu", gs.undo_stage_hunk, "Undo stage hunk")
+            map("n", "<Space>gR", gs.reset_buffer, "Reset buffer")
+            map("n", "<Space>gp", gs.preview_hunk, "Preview git hunk")
+            map("n", "<Space>gb", function()
+                gs.blame_line { full = true }
+            end, "Blame line")
+            map("n", "<Space>gd", gs.diffthis, "Diff against index")
+            map("n", "<Space>gD", function()
+                gs.diffthis "~"
+            end, "Diff against previous commit")
+            map("n", "<Space>gt", gs.toggle_current_line_blame, "Toggle line blame")
+        end,
+    }
+end
+
 -- §§1 paren
 function M.autopairs()
     local npairs = require "nvim-autopairs"

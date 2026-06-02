@@ -49,6 +49,10 @@ require("lazy").setup({
     -- general plugins
     { "lervag/vimtex", config = config.vimtex },
     { "mattn/vim-maketable" },
+    { "stevearc/oil.nvim", config = config.oil },
+
+    -- git
+    { "lewis6991/gitsigns.nvim", config = config.gitsigns },
 
     -- paren
     { "windwp/nvim-autopairs", config = config.autopairs },
