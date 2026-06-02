@@ -78,7 +78,7 @@ function M.oil()
         },
     }
 
-    vim.keymap.set("n", "<Space>e", "<Cmd>Oil<CR>", { desc = "Open parent directory" })
+    vim.keymap.set("n", "<Leader>e", "<Cmd>Oil<CR>", { desc = "Open parent directory" })
 end
 
 function M.gitsigns()
@@ -104,20 +104,20 @@ function M.gitsigns()
                 return "<Ignore>"
             end, { buffer = bufnr, desc = "Previous git hunk", expr = true })
 
-            map({ "n", "v" }, "<Space>gs", gs.stage_hunk, "Stage git hunk")
-            map({ "n", "v" }, "<Space>gr", gs.reset_hunk, "Reset git hunk")
-            map("n", "<Space>gS", gs.stage_buffer, "Stage buffer")
-            map("n", "<Space>gu", gs.undo_stage_hunk, "Undo stage hunk")
-            map("n", "<Space>gR", gs.reset_buffer, "Reset buffer")
-            map("n", "<Space>gp", gs.preview_hunk, "Preview git hunk")
-            map("n", "<Space>gb", function()
+            map({ "n", "v" }, "<Leader>gs", gs.stage_hunk, "Stage git hunk")
+            map({ "n", "v" }, "<Leader>gr", gs.reset_hunk, "Reset git hunk")
+            map("n", "<Leader>gS", gs.stage_buffer, "Stage buffer")
+            map("n", "<Leader>gu", gs.undo_stage_hunk, "Undo stage hunk")
+            map("n", "<Leader>gR", gs.reset_buffer, "Reset buffer")
+            map("n", "<Leader>gp", gs.preview_hunk, "Preview git hunk")
+            map("n", "<Leader>gb", function()
                 gs.blame_line { full = true }
             end, "Blame line")
-            map("n", "<Space>gd", gs.diffthis, "Diff against index")
-            map("n", "<Space>gD", function()
+            map("n", "<Leader>gd", gs.diffthis, "Diff against index")
+            map("n", "<Leader>gD", function()
                 gs.diffthis "~"
             end, "Diff against previous commit")
-            map("n", "<Space>gt", gs.toggle_current_line_blame, "Toggle line blame")
+            map("n", "<Leader>gt", gs.toggle_current_line_blame, "Toggle line blame")
         end,
     }
 end

@@ -9,6 +9,9 @@ _G.vimrc = {
     debug = {},
 }
 
+vim.g.mapleader = vim.keycode "<C-;>"
+vim.g.maplocalleader = vim.g.mapleader
+
 vim.cmd [[
   filetype plugin indent on
   syntax enable
