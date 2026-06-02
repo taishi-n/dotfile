@@ -250,3 +250,84 @@ zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
+
+#######################################
+# fish config parity
+#######################################
+
+# PATH
+path=(
+    /opt/homebrew/bin(N-/)
+    /opt/local/bin(N-/)
+    /opt/local/sbin(N-/)
+    "$HOME/.nodebrew/current/bin"(N-/)
+    ${path}
+)
+if [[ "$(uname)" == "Linux" ]]; then
+    path=(/home/linuxbrew/.linuxbrew/bin(N-/) ${path})
+fi
+typeset -U path
+export PATH
+
+# Homebrew environment
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# uv
+if [[ -r "$HOME/.local/bin/env" ]]; then
+    source "$HOME/.local/bin/env"
+fi
+if command -v uv >/dev/null 2>&1; then
+    eval "$(uv generate-shell-completion zsh)"
+fi
+
+# Alias
+if command -v eza >/dev/null 2>&1; then
+    alias ls='env COLUMNS=150 eza --icons --group-directories-first'
+fi
+if command -v nvim >/dev/null 2>&1; then
+    alias vi='nvim'
+fi
+if command -v trash >/dev/null 2>&1; then
+    alias rm='trash'
+fi
+alias memo='vi ~/Downloads/memo.md'
+alias mv='mv -in'
+alias vitex='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
+alias g++='g++ -std=gnu++17'
+alias gits='git status'
+alias d='vi ~/diary/$(date "+%Y-%m-%d").md'
+alias todo='vi ~/diary/00_todo.md'
+alias idea='vi ~/diary/01_idea.md'
+if [[ "$(uname)" == "Linux" ]]; then
+    alias open='xdg-open'
+fi
+
+function urlenc() {
+    find -E . -regex "^.+%[0-9A-Z][0-9A-Z]+.*" -exec bash -c 'mv "$1" "$(echo "$1" | nkf --url-input)"' _ {} \;
+}
+
+# Key bindings
+bindkey -v
+bindkey -M viins '^F' forward-char
+bindkey '^D' delete-char
+
+# gpg
+if tty -s; then
+    export GPG_TTY="$(tty)"
+fi
+
+# opam configuration
+if [[ -r "$HOME/.opam/opam-init/init.zsh" ]]; then
+    source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>/dev/null
+fi
+
+# starship
+if [[ -x /opt/homebrew/bin/starship ]]; then
+    eval "$(/opt/homebrew/bin/starship init zsh)"
+elif command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi

@@ -6,6 +6,9 @@ echo "linking config files of fish..."
 ln -s ~/dotfile/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfile/fish/functions/fish_prompt.fish  ~/.config/fish/functions/fish_prompt.fish
 
+echo "linking zsh settings..."
+ln -s ~/dotfile/.zshrc ~/.zshrc
+
 echo "linking ~/.config/nvim"
 ln -s ~/dotfile/nvim/ ~/.config/nvim
 

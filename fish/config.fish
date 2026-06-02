@@ -23,7 +23,7 @@ alias g++='g++ -std=gnu++17'
 
 # Abbreviations
 abbr --add gits 'git status'
-abbr --add diary --set-cursor=1 'vi ~/diary/(date 1 "+%Y-%m-%d").md'
+abbr --add d --set-cursor=1 'vi ~/diary/(date 1 "+%Y-%m-%d").md'
 abbr --add todo 'vi ~/diary/00_todo.md'
 abbr --add idea 'vi ~/diary/01_idea.md'
 
