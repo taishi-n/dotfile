@@ -1,4 +1,3 @@
-local util = require "rc.util"
 local config = require "rc.plugin_config"
 
 local disable_plugins = {
@@ -12,96 +11,91 @@ for _, name in ipairs(disable_plugins) do
     vim.g["loaded_" .. name] = 1
 end
 
-vim.cmd [[
-    packadd vim-jetpack
-]]
-
-local callbacks = {}
-require("jetpack.packer").startup(function(use)
-    ---`use` 関数を wrap して、hook 系が渡せるようにする。
-    --- * hook_before: プラグインをロードする前に読み込む。ほとんど使わない。
-    --- * hook_after: プラグインをロードした後に読み込む。
-    --- * unless_cwd: 特定のディレクトリ上で Vim を開いたときは、そのプラグインを読み込まない。
-    ---@param t {hook_before?: fun(), hook_after?: fun(), unless_cwd?: string}
-    local function add(t)
-        local packname = vim.fn.fnamemodify(t[1], ":t")
-        if t.hook_before ~= nil then
-            t.hook_before()
-        end
-        if t.unless_cwd ~= nil then
-            t.opt = true
-            table.insert(callbacks, function()
-                if vim.fn.expand(t.unless_cwd) ~= vim.fn.getcwd() then
-                    vim.cmd.packadd(packname)
-                    if t.hook_after ~= nil then
-                        t.hook_after()
-                    end
-                else
-                    util.print_error(([[WARNING: package '%s' is not loaded.]]):format(packname), "WarningMsg")
-                end
-            end)
-        elseif t.hook_after ~= nil then
-            table.insert(callbacks, t.hook_after)
-        end
-        use(t)
-    end
-
-    -- bootstrap
-    add { "tani/vim-jetpack", commit = "c6ee097413951604c6719927f5e69a1b83b03759", opt = 1 }
-
-    -- tree-sitter
-    add { "neovim-treesitter/treesitter-parser-registry" }
-    add { "neovim-treesitter/nvim-treesitter", hook_after = config.treesitter }
-
-    -- color scheme
-    add { "sainnhe/everforest", hook_after = config.everforest }
-
-    -- old
-    add { "dkarter/bullets.vim", hook_after = config.bullets }
-    add { "tpope/vim-commentary" }
-    add { "tpope/vim-surround" }
-    add { "tpope/vim-repeat" }
-    add { "nvim-lualine/lualine.nvim", hook_after = config.lualine }
-
-    -- general plugins
-    add { "lervag/vimtex", hook_after = config.vimtex }
-    add { "mattn/vim-maketable" }
-
-    -- paren
-    add { "windwp/nvim-autopairs", hook_after = config.autopairs }
-
-    -- coc
-    add { "neoclide/coc.nvim", branch = "release", hook_after = config.coc, opt = 1 }
-    add { "fannheyward/telescope-coc.nvim", opt = 1 }
-
-    -- lsp/format
-    add { "folke/lazydev.nvim", hook_after = config.lua_lsp }
-    add { "stevearc/conform.nvim", hook_after = config.conform }
-
-    -- filetype
-    add { "justinmk/vim-syntax-extra" }
-    add { "vim-python/python-syntax", hook_after = config.python }
-
-    -- telescope
-    add { "nvim-telescope/telescope.nvim", hook_after = config.telescope }
-    add { "nvim-lua/plenary.nvim" }
-
-    -- misc
-    add { "monaqa/dial.nvim", hook_after = config.dial }
-    add { "johmsalas/text-case.nvim", hook_after = config.textcase }
-    add { "lambdalisue/pastefix.vim" }
-    add { "wakatime/vim-wakatime" }
-end)
-
-for _, name in ipairs(vim.fn["jetpack#names"]()) do
-    if not util.to_bool(vim.fn["jetpack#tap"](name)) then
-        vim.fn["jetpack#sync"]()
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+    local out = vim.fn.system {
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--branch=stable",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    }
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+        }, true, {})
         return false
     end
 end
+vim.opt.runtimepath:prepend(lazypath)
 
-for _, callback in ipairs(callbacks) do
-    callback()
-end
+require("lazy").setup({
+    -- tree-sitter
+    { "neovim-treesitter/treesitter-parser-registry" },
+    { "neovim-treesitter/nvim-treesitter", config = config.treesitter },
+
+    -- color scheme
+    { "sainnhe/everforest", config = config.everforest },
+
+    -- old
+    { "dkarter/bullets.vim", config = config.bullets },
+    { "tpope/vim-commentary" },
+    { "tpope/vim-surround" },
+    { "tpope/vim-repeat" },
+    { "nvim-lualine/lualine.nvim", config = config.lualine },
+
+    -- general plugins
+    { "lervag/vimtex", config = config.vimtex },
+    { "mattn/vim-maketable" },
+
+    -- paren
+    { "windwp/nvim-autopairs", config = config.autopairs },
+
+    -- telescope
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "fannheyward/telescope-coc.nvim",
+        },
+        config = config.telescope,
+    },
+
+    -- coc
+    {
+        "neoclide/coc.nvim",
+        branch = "release",
+        dependencies = {
+            "fannheyward/telescope-coc.nvim",
+        },
+        config = config.coc,
+    },
+
+    -- lsp/format
+    { "folke/lazydev.nvim", config = config.lua_lsp },
+    { "stevearc/conform.nvim", config = config.conform },
+
+    -- filetype
+    { "justinmk/vim-syntax-extra" },
+    { "vim-python/python-syntax", config = config.python },
+
+    -- misc
+    { "monaqa/dial.nvim", config = config.dial },
+    { "johmsalas/text-case.nvim", config = config.textcase },
+    { "lambdalisue/pastefix.vim" },
+    { "wakatime/vim-wakatime" },
+}, {
+    defaults = {
+        lazy = false,
+    },
+    install = {
+        missing = true,
+    },
+    checker = {
+        enabled = false,
+    },
+})
 
 return true

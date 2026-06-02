@@ -232,9 +232,10 @@ function M.coc()
     if util.to_bool(vim.fn.filereadable ".local_ignore_use_nvim_lsp") then
         return
     end
-    vim.cmd.packadd "coc.nvim"
-    vim.cmd.packadd "telescope-coc.nvim"
-    require('telescope').load_extension "coc"
+    local ok, telescope = pcall(require, "telescope")
+    if ok then
+        telescope.load_extension "coc"
+    end
     coc_config()
 end
 
