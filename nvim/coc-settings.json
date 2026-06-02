@@ -20,6 +20,31 @@
       "trace.server": "verbose",
       "filetypes": ["tex", "markdown", "latex"]
     },
+    "harper": {
+      "command": "harper-ls",
+      "args": ["--stdio"],
+      "filetypes": ["markdown", "text", "tex", "latex", "typst"],
+      "rootPatterns": [".git"],
+      "settings": {
+        "harper-ls": {
+          "diagnosticSeverity": "hint",
+          "isolateEnglish": true,
+          "dialect": "American",
+          "linters": {
+            "SpellCheck": true,
+            "SpelledNumbers": false,
+            "AnA": true,
+            "SentenceCapitalization": true,
+            "UnclosedQuotes": true,
+            "WrongApostrophe": false,
+            "LongSentences": true,
+            "RepeatedWords": true,
+            "Spaces": true,
+            "CorrectNumberSuffix": true
+          }
+        }
+      }
+    },
     "elmLS": {
       "command": "elm-language-server",
       "filetypes": ["elm"],
@@ -52,6 +77,7 @@
   "diagnostic.hintSign": "ℹ️ ",
   "diagnostic.signLevel": "error",
 
+  "ltex.enabled": false,
   "ltex.dictionary": {
     "en-US": ["TODO", "ILRMA", "ILRMA-Rep", "ICASSP", "AuxIVA"]
   },

@@ -76,14 +76,11 @@ require("jetpack.packer").startup(function(use)
     add { "fannheyward/telescope-coc.nvim", opt = 1 }
 
     -- filetype
-    add { "cespare/vim-toml" }
-    add { "ekalinin/Dockerfile.vim" }
     add { "justinmk/vim-syntax-extra" }
     add { "vim-python/python-syntax", hook_after = config.python }
 
     -- telescope
     add { "nvim-telescope/telescope.nvim", hook_after = config.telescope }
-    add { "nvim-lua/popup.nvim" }
     add { "nvim-lua/plenary.nvim" }
 
     -- misc
