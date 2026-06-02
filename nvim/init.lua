@@ -15,7 +15,6 @@ vim.g.maplocalleader = vim.g.mapleader
 vim.cmd [[
   filetype plugin indent on
   syntax enable
-  let g:coc_filetype_map = {'tex': 'latex'}
 ]]
 
 require "rc.plugin_loader"

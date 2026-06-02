@@ -4,6 +4,55 @@ local util = require "rc.util"
 
 function M.vimtex()
     vim.g.tex_flavor = "latex"
+    vim.g.vimtex_view_method = "sioyek"
+    vim.g.vimtex_view_sioyek_exe = "sioyek"
+    vim.g.vimtex_compiler_method = "latexmk"
+    vim.g.vimtex_compiler_latexmk = {
+        executable = "latexmk",
+        options = {
+            "-pdf",
+            "-interaction=nonstopmode",
+            "-synctex=1",
+        },
+    }
+
+    vim.lsp.config("texlab", {
+        cmd = { "texlab" },
+        filetypes = { "tex", "bib" },
+        root_markers = {
+            ".latexmkrc",
+            "latexmkrc",
+            ".git",
+        },
+        settings = {
+            texlab = {
+                build = {
+                    executable = "latexmk",
+                    args = {
+                        "-pdf",
+                        "-interaction=nonstopmode",
+                        "-synctex=1",
+                        "%f",
+                    },
+                    onSave = false,
+                    forwardSearchAfter = false,
+                },
+                forwardSearch = {
+                    executable = "sioyek",
+                    args = {
+                        "--reuse-window",
+                        "--forward-search-file",
+                        "%f",
+                        "--forward-search-line",
+                        "%l",
+                        "%p",
+                    },
+                },
+                latexFormatter = "latexindent",
+            },
+        },
+    })
+    vim.lsp.enable "texlab"
 end
 
 --  old
@@ -486,7 +535,6 @@ function M.treesitter()
         "html",
         "html_tags",
         "json",
-        "latex",
         "lua",
         "markdown",
         "markdown_inline",
@@ -499,7 +547,6 @@ function M.treesitter()
 
     local ft_to_parser = {
         sh = "bash",
-        tex = "latex",
         zsh = "bash",
     }
     for ft, parser in pairs(ft_to_parser) do
@@ -557,7 +604,6 @@ function M.treesitter()
             "query",
             "rust",
             "sh",
-            "tex",
             "toml",
             "yaml",
             "zsh",
