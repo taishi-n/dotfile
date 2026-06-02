@@ -68,69 +68,23 @@ function M.lualine()
 end
 
 -- §§1 paren
-function M.lexima()
-    vim.g["lexima_enable_endwise_rules"] = 1
-    vim.g["lexima_enable_space_rules"] = 0
-    vim.g["lexima_no_default_rules"] = 1
-    vim.fn["lexima#set_default_rules"]()
+function M.autopairs()
+    local npairs = require "nvim-autopairs"
+    local Rule = require "nvim-autopairs.rule"
+    local cond = require "nvim-autopairs.conds"
 
-    -- シングルクォート補完の無効化
-    vim.fn["lexima#add_rule"] {
-        filetype = { "latex", "tex", "satysfi" },
-        char = "'",
-        input = "'",
+    npairs.setup {
+        check_ts = true,
+        enable_check_bracket_line = false,
+        ignored_next_char = "[%w%.%-_]",
     }
 
-    vim.fn["lexima#add_rule"] {
-        char = "{",
-        at = [=[\%#[-0-9a-zA-Z_]]=],
-        input = "{",
-    }
+    npairs.remove_rule "'"
 
-    -- TeX/LaTeX
-    vim.fn["lexima#add_rule"] {
-        filetype = { "latex", "tex" },
-        char = "{",
-        input = "{",
-        at = [[\%#\\]],
-    }
-    vim.fn["lexima#add_rule"] {
-        filetype = { "latex", "tex" },
-        char = "$",
-        input_after = "$",
-    }
-    vim.fn["lexima#add_rule"] {
-        filetype = { "latex", "tex" },
-        char = "$",
-        at = [[$\%#\$]],
-        leave = 1,
-    }
-    vim.fn["lexima#add_rule"] {
-        filetype = { "latex", "tex" },
-        char = "<BS>",
-        at = [[\$\%#\$]],
-        leave = 1,
-    }
-
-    -- SATySFi
-    vim.fn["lexima#add_rule"] {
-        filetype = { "satysfi" },
-        char = "$",
-        input = "${",
-        input_after = "}",
-    }
-    vim.fn["lexima#add_rule"] {
-        filetype = { "satysfi" },
-        char = "$",
-        at = [[\\\%#]],
-        leave = 1,
-    }
-
-    -- reST
-    vim.fn["lexima#add_rule"] {
-        filetype = { "rst" },
-        char = "``",
-        input_after = "``",
+    npairs.add_rules {
+        Rule("$", "$", { "latex", "tex" })
+            :with_pair(cond.not_before_regex [[\\]]),
+        Rule("`", "`", { "rst" }),
     }
 end
 
@@ -155,7 +109,6 @@ local function coc_config()
         "coc-marketplace",
         "coc-rust-analyzer",
         "coc-snippets",
-        "coc-sumneko-lua",
         "coc-toml",
         "coc-yaml",
     }
@@ -179,7 +132,7 @@ local function coc_config()
     -- coc#_select_confirm などは Lua 上では動かないので、 <Plug> にマッピングして使えるようにする
     vim.cmd [[
         inoremap <expr> <Plug>(vimrc-coc-select-confirm) coc#_select_confirm()
-        inoremap <expr> <Plug>(vimrc-lexima-expand-cr) lexima#expand('<LT>CR>', 'i')
+        inoremap <expr> <Plug>(vimrc-insert-cr) "\<CR>"
     ]]
 
     vim.keymap.set("i", "<CR>", function()
@@ -189,9 +142,9 @@ local function coc_config()
             if vim.fn["coc#pum#info"]()["index"] >= 0 then
                 return "<Plug>(vimrc-coc-select-confirm)"
             end
-            return "<C-y><Plug>(vimrc-lexima-expand-cr)"
+            return "<C-y><Plug>(vimrc-insert-cr)"
         end
-        return "<Plug>(vimrc-lexima-expand-cr)"
+        return "<Plug>(vimrc-insert-cr)"
     end, { expr = true, remap = true })
 
     vim.cmd [[
@@ -280,10 +233,58 @@ function M.coc()
         return
     end
     vim.cmd.packadd "coc.nvim"
-    vim.cmd.packadd "coc-nvim-lua"
     vim.cmd.packadd "telescope-coc.nvim"
     require('telescope').load_extension "coc"
     coc_config()
+end
+
+function M.lua_lsp()
+    require("lazydev").setup {}
+
+    vim.lsp.config("lua_ls", {
+        cmd = { "lua-language-server" },
+        filetypes = { "lua" },
+        root_markers = {
+            ".luarc.json",
+            ".luarc.jsonc",
+            ".luacheckrc",
+            ".stylua.toml",
+            "stylua.toml",
+            "selene.toml",
+            "selene.yml",
+            ".git",
+        },
+        settings = {
+            Lua = {
+                runtime = {
+                    version = "LuaJIT",
+                },
+                workspace = {
+                    checkThirdParty = false,
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
+    })
+    vim.lsp.enable "lua_ls"
+end
+
+function M.conform()
+    require("conform").setup {
+        formatters_by_ft = {
+            tex = { "latexindent" },
+            latex = { "latexindent" },
+        },
+        format_on_save = function(bufnr)
+            local ft = vim.bo[bufnr].filetype
+            if ft == "tex" or ft == "latex" then
+                return { timeout_ms = 3000, lsp_format = "fallback" }
+            end
+            return nil
+        end,
+    }
 end
 
 function M.dial()

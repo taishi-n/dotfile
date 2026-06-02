@@ -14,12 +14,6 @@
   "snippets.ultisnips.pythonPrompt": false,
 
   "languageserver": {
-    "efm": {
-      "command": "efm-langserver",
-      "args": [],
-      "trace.server": "verbose",
-      "filetypes": ["tex", "markdown", "latex"]
-    },
     "harper": {
       "command": "harper-ls",
       "args": ["--stdio"],
@@ -56,8 +50,9 @@
       "filetypes": ["satysfi"],
       "trace.server": "verbose"
     },
-    "ruff-lsp": {
-      "command": "ruff-lsp",
+    "ruff": {
+      "command": "ruff",
+      "args": ["server"],
       "filetypes": ["python"]
     }
   },

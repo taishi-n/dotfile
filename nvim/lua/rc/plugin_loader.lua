@@ -68,12 +68,15 @@ require("jetpack.packer").startup(function(use)
     add { "mattn/vim-maketable" }
 
     -- paren
-    add { "cohama/lexima.vim", hook_after = config.lexima }
+    add { "windwp/nvim-autopairs", hook_after = config.autopairs }
 
     -- coc
     add { "neoclide/coc.nvim", branch = "release", hook_after = config.coc, opt = 1 }
-    add { "rafcamlet/coc-nvim-lua", opt = 1 }
     add { "fannheyward/telescope-coc.nvim", opt = 1 }
+
+    -- lsp/format
+    add { "folke/lazydev.nvim", hook_after = config.lua_lsp }
+    add { "stevearc/conform.nvim", hook_after = config.conform }
 
     -- filetype
     add { "justinmk/vim-syntax-extra" }
