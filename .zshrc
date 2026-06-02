@@ -2,8 +2,6 @@ export EDITOR=vim
 export LANG=ja_JP.UTF-8
 export KCODE=u
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
 p=$PATH;PATH=;/usr/libexec/path_helper -s >> ~/.zprofile;PATH=$p
 
 ## 重複パスを登録しない
@@ -34,10 +32,6 @@ if [ ${UID} -eq 0 ]; then
 	tmp_rprompt="%B%U${tmp_rprompt}%u%b"
 	tmp_sprompt="%B%U${tmp_sprompt}%u%b"
 fi
-#==============
-
-###viAlias###
-alias vi='/usr/local/bin/vim'
 #==============
 
 ###currentDirectry###
@@ -184,7 +178,6 @@ alias mv='mv -i'
 alias mkdir='mkdir -p'
 alias dxrp='dxrp5 --nojruby run'
 alias rp5='rp5 --nojruby run'
-# alias ls='ls -GFlt'
 
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
@@ -204,37 +197,10 @@ zstyle ':completion:*' list-colors \
 
 export CLICOLOR=1
 
-######################################
-#rbenv PATH
-#####################################
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 export PATH=/usr/local/bin:$PATH
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init - zsh)"
-export CC=/usr/bin/gcc
-
-####################################
-#pyenv PATH
-###################################
-#pyenvさんに~/.pyenvではなく/usr/local/var/pyenvを使うようにお願いする
-export PYENV_ROOT=/usr/local/var/pyenv
-#pyenvさんに自動補完機能を提供してもらう
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-export CC=/usr/bin/gcc
 
 #jman
 alias jman='env LANG=ja_JP.UTF-8 man'
-
-#if (which zprof > /dev/null) ;then
-#	zprof | less
-#fi
-
-source ~/.rbenv_init #rbenvのrehash無効化。ときどき自分でrbenv rehashしてあげよう
-
-#Hadoop のエイリアス
-alias hstart="/usr/local/Cellar/hadoop/2.8.0/sbin/start-dfs.sh;/usr/local/Cellar/hadoop/2.8.0/sbin/start-yarn.sh"
-alias hstop="/usr/local/Cellar/hadoop/2.8.0/sbin/stop-yarn.sh;/usr/local/Cellar/hadoop/2.8.0/sbin/stop-dfs.sh"
 
 # Mycommands
 alias urlenc='find -E . -regex "^.+%[0-9A-Z][0-9A-Z]+.*" -exec bash -c "mv {} \`echo {} | nkf --url-input \`" \;'
