@@ -62,23 +62,14 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "fannheyward/telescope-coc.nvim",
         },
         config = config.telescope,
     },
 
-    -- coc
-    {
-        "neoclide/coc.nvim",
-        branch = "release",
-        dependencies = {
-            "fannheyward/telescope-coc.nvim",
-        },
-        config = config.coc,
-    },
-
-    -- lsp/format
-    { "folke/lazydev.nvim", config = config.lua_lsp },
+    -- lsp/completion/format
+    { "neovim/nvim-lspconfig" },
+    { "saghen/blink.cmp", version = "1.*", config = config.blink },
+    { "folke/lazydev.nvim", config = config.lsp },
     { "stevearc/conform.nvim", config = config.conform },
 
     -- filetype

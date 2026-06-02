@@ -42,19 +42,9 @@ local function make_abbrev(rules)
 end
 
 make_abbrev {
-    { from = "c",                to = "CocCommand" },
-    { from = "cc",               to = "CocConfig" },
-    { from = "cl",               to = "CocList" },
-    { from = "clc",              to = "CocLocalConfig" },
-    { from = "cq",               to = "CocQuickfix" },
-    { from = "cr",               to = "CocRestart" },
-    { from = "fmt",              to = 'call CocActionAsync("format")' },
+    { from = "lq",               to = "LspQuickfix" },
     { from = "open",             to = "!open" },
     { from = "ssf",              to = "syntax sync fromstart" },
-    { from = "sfs",              to = "setfiletype satysfi" },
-    { prepose = "CocCommand",    from = "s",                          to = "snippets.editSnippets" },
-    { prepose = "CocCommand",    from = "r",                          to = "rust-analyzer.reload" },
-    { prepose = "CocList",       from = "e",                          to = "extensions" },
     { prepose_nospace = "'<,'>", from = "m",                          to = "MakeTable" },
     { from = "isort",            to = "!isort --profile black %" },
 }

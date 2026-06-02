@@ -77,11 +77,6 @@ function M.lualine()
                     return [[%f %m]]
                 end,
             },
-            lualine_c = {
-                function()
-                    return (vim.fn["coc#status"]()):gsub("%%", "%%%%")
-                end,
-            },
             lualine_y = {
                 function()
                     local branch = vim.fn["gina#component#repo#branch"]()
@@ -194,157 +189,58 @@ end
 
 -- §§1 textedit
 
--- §§1 coc
-local function coc_config()
-    local function coc_service_names(arglead, cmdline, cursorpos)
-        return vim.tbl_map(function(service)
-            return service["id"]
-        end, vim.fn.CocAction "services")
-    end
-
-    util.create_cmd("CocToggleService", function(meta)
-        vim.fn.CocAction("toggleService", meta.args)
-    end, { nargs = 1, complete = coc_service_names })
-
-    vim.opt.tagfunc = "CocTagFunc"
-
-    vim.g["coc_global_extensions"] = {
-        "coc-json",
-        "coc-marketplace",
-        "coc-rust-analyzer",
-        "coc-snippets",
-        "coc-toml",
-        "coc-yaml",
-    }
-
-    vim.keymap.set("n", "gd", "<C-]>")
-
-    vim.keymap.set("n", "t", "<Nop>")
-
-    vim.keymap.set("i", "<C-l>", "<Plug>(coc-snippets-expand)")  -- old
-
-    vim.keymap.set("n", "td", util.cmdcr "Telescope coc definitions")
-    vim.keymap.set("n", "ti", util.cmdcr "Telescope coc implementations")
-    vim.keymap.set("n", "tr", util.cmdcr "Telescope coc references")
-    vim.keymap.set("n", "ty", util.cmdcr "Telescope coc type_definitions")
-    vim.keymap.set("n", "tn", "<Plug>(coc-rename)")
-    vim.keymap.set("n", "ta", "<Plug>(coc-codeaction-cursor)")
-    vim.keymap.set("x", "ta", "<Plug>(coc-codeaction-selected)")
-    vim.keymap.set("n", "tw", "<Plug>(coc-float-jump)")
-    vim.keymap.set("n", "K", util.cmdcr "call CocActionAsync('doHover')")
-
-    -- coc#_select_confirm などは Lua 上では動かないので、 <Plug> にマッピングして使えるようにする
-    vim.cmd [[
-        inoremap <expr> <Plug>(vimrc-coc-select-confirm) coc#_select_confirm()
-        inoremap <expr> <Plug>(vimrc-insert-cr) "\<CR>"
-    ]]
-
-    vim.keymap.set("i", "<CR>", function()
-        if util.to_bool(vim.fn["coc#pum#visible"]()) then
-            -- 補完候補をセレクトしていたときのみ、補完候補の内容で確定する
-            -- （意図せず補完候補がセレクトされてしまうのを抑止）
-            if vim.fn["coc#pum#info"]()["index"] >= 0 then
-                return "<Plug>(vimrc-coc-select-confirm)"
-            end
-            return "<C-y><Plug>(vimrc-insert-cr)"
-        end
-        return "<Plug>(vimrc-insert-cr)"
-    end, { expr = true, remap = true })
-
-    vim.cmd [[
-      function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~ '\s'
-      endfunction
-
-      " Insert <tab> when previous text is space, refresh completion if not.
-      inoremap <silent><expr> <TAB>
-        \ coc#pum#visible() ? coc#pum#next(1):
-        \ pumvisible() ? "\<C-n>":
-        \ <SID>check_back_space() ? "\<Tab>" :
-        \ coc#refresh()
-      inoremap <expr><S-TAB>
-        \ coc#pum#visible() ? coc#pum#prev(1) :
-        \ pumvisible() ? "\<C-p>":
-        \ "\<C-h>"
-    ]]
-
-    vim.g.coc_snippet_next = "<C-g><C-j>"
-    vim.g.coc_snippet_prev = "<C-g><C-k>"
-
-    -- coc の diagnostics の内容を QuiciFix に流し込む。
-    local function coc_diag_to_quickfix()
-        local diags = vim.fn["CocAction"] "diagnosticList"
-        ---@type any[]
-        local entries = vim.tbl_map(function(diag)
-            return {
-                filename = diag.file,
-                lnum = diag.lnum,
-                end_lnum = diag.end_lnum,
-                col = diag.col,
-                end_col = diag.end_col,
-                text = diag.message,
-                type = diag.severity:sub(1, 1),
-            }
-        end, diags)
-
-        vim.fn.setqflist(entries)
-        vim.fn.setqflist({}, "a", { title = "Coc diagnostics" })
-    end
-
-    util.create_cmd("CocQuickfix", function()
-        coc_diag_to_quickfix()
-        vim.cmd [[cwindow]]
-    end)
-
-    ---diagnostics のある位置にジャンプする。ただし種類に応じて優先順位を付ける。
-    ---つまり、エラーがあればまずエラーにジャンプする。
-    ---エラーがなく警告があれば、警告にジャンプする。みたいな。
-    ---@param forward boolean
-    local function jump_diag(forward)
-        local action_name = util.ifexpr(forward, "diagnosticNext", "diagnosticPrevious")
-        util.motion_autoselect {
-            function()
-                vim.fn.CocAction(action_name, "error")
-            end,
-            function()
-                vim.fn.CocAction(action_name, "warning")
-            end,
-            function()
-                vim.fn.CocAction(action_name, "information")
-            end,
-            function()
-                vim.fn.CocAction(action_name, "hint")
-            end,
-        }
-    end
-
-    vim.keymap.set("n", ")", function()
-        jump_diag(true)
-    end)
-    vim.keymap.set("n", "(", function()
-        jump_diag(false)
-    end)
-end
-
 function M.python()
     vim.g.python_highlight_all = 1
 end
 
-function M.coc()
-    -- nvim_lsp を明示的に読み込む場合のみ skip
-    if util.to_bool(vim.fn.filereadable ".local_ignore_use_nvim_lsp") then
-        return
-    end
-    local ok, telescope = pcall(require, "telescope")
-    if ok then
-        telescope.load_extension "coc"
-    end
-    coc_config()
+function M.blink()
+    require("blink.cmp").setup {
+        keymap = {
+            preset = "default",
+        },
+        completion = {
+            list = {
+                selection = {
+                    preselect = false,
+                    auto_insert = false,
+                },
+            },
+        },
+        sources = {
+            default = { "lsp", "path", "snippets", "buffer" },
+        },
+    }
 end
 
-function M.lua_lsp()
+function M.lsp()
     require("lazydev").setup {}
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local ok, blink = pcall(require, "blink.cmp")
+    if ok then
+        capabilities = blink.get_lsp_capabilities(capabilities)
+    end
+
+    vim.diagnostic.config {
+        virtual_text = {
+            prefix = " ",
+        },
+        float = {
+            border = "single",
+        },
+        signs = {
+            text = {
+                [vim.diagnostic.severity.ERROR] = "E",
+                [vim.diagnostic.severity.WARN] = "W",
+                [vim.diagnostic.severity.INFO] = "I",
+                [vim.diagnostic.severity.HINT] = "H",
+            },
+        },
+    }
+
+    vim.lsp.config("*", {
+        capabilities = capabilities,
+    })
 
     vim.lsp.config("lua_ls", {
         cmd = { "lua-language-server" },
@@ -373,7 +269,124 @@ function M.lua_lsp()
             },
         },
     })
-    vim.lsp.enable "lua_ls"
+
+    vim.lsp.config("rust_analyzer", {
+        cmd = { "rust-analyzer" },
+        filetypes = { "rust" },
+        root_markers = {
+            "Cargo.toml",
+            "rust-project.json",
+            ".git",
+        },
+        settings = {
+            ["rust-analyzer"] = {
+                completion = {
+                    privateEditable = {
+                        enable = true,
+                    },
+                },
+                lens = {
+                    enable = false,
+                },
+                procMacro = {
+                    enable = true,
+                },
+                updates = {
+                    channel = "stable",
+                },
+            },
+        },
+    })
+
+    vim.lsp.config("ruff", {
+        cmd = { "ruff", "server" },
+        filetypes = { "python" },
+        root_markers = {
+            "pyproject.toml",
+            "ruff.toml",
+            ".ruff.toml",
+            ".git",
+        },
+    })
+
+    vim.lsp.config("harper_ls", {
+        cmd = { "harper-ls", "--stdio" },
+        filetypes = { "markdown", "text", "tex", "latex", "typst" },
+        root_markers = { ".git" },
+        settings = {
+            ["harper-ls"] = {
+                diagnosticSeverity = "hint",
+                isolateEnglish = true,
+                dialect = "American",
+                linters = {
+                    SpellCheck = true,
+                    SpelledNumbers = false,
+                    AnA = true,
+                    SentenceCapitalization = true,
+                    UnclosedQuotes = true,
+                    WrongApostrophe = false,
+                    LongSentences = true,
+                    RepeatedWords = true,
+                    Spaces = true,
+                    CorrectNumberSuffix = true,
+                },
+            },
+        },
+    })
+
+    vim.lsp.config("jsonls", {
+        cmd = { "vscode-json-language-server", "--stdio" },
+        filetypes = { "json", "jsonc" },
+        root_markers = { ".git" },
+    })
+
+    vim.lsp.config("yamlls", {
+        cmd = { "yaml-language-server", "--stdio" },
+        filetypes = { "yaml", "yaml.docker-compose" },
+        root_markers = { ".git" },
+    })
+
+    vim.lsp.config("taplo", {
+        cmd = { "taplo", "lsp", "--no-auto-config", "stdio" },
+        filetypes = { "toml" },
+        root_markers = {
+            ".taplo.toml",
+            "taplo.toml",
+            ".git",
+        },
+    })
+
+    vim.lsp.enable {
+        "lua_ls",
+        "rust_analyzer",
+        "ruff",
+        "harper_ls",
+        "jsonls",
+        "yamlls",
+        "taplo",
+    }
+
+    util.create_cmd("LspQuickfix", function()
+        vim.diagnostic.setqflist()
+        vim.cmd [[cwindow]]
+    end)
+
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+    vim.keymap.set("n", "t", "<Nop>")
+    vim.keymap.set("n", "td", util.cmdcr "Telescope lsp_definitions")
+    vim.keymap.set("n", "ti", util.cmdcr "Telescope lsp_implementations")
+    vim.keymap.set("n", "tr", util.cmdcr "Telescope lsp_references")
+    vim.keymap.set("n", "ty", util.cmdcr "Telescope lsp_type_definitions")
+    vim.keymap.set("n", "tn", vim.lsp.buf.rename)
+    vim.keymap.set({ "n", "x" }, "ta", vim.lsp.buf.code_action)
+    vim.keymap.set("n", "tw", vim.diagnostic.open_float)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover)
+    vim.keymap.set("n", ")", function()
+        vim.diagnostic.jump { count = 1, float = true }
+    end)
+    vim.keymap.set("n", "(", function()
+        vim.diagnostic.jump { count = -1, float = true }
+    end)
 end
 
 function M.conform()
@@ -381,10 +394,15 @@ function M.conform()
         formatters_by_ft = {
             tex = { "latexindent" },
             latex = { "latexindent" },
+            markdown = { "prettier" },
+            json = { "prettier" },
+            jsonc = { "prettier" },
+            yaml = { "prettier" },
+            toml = { "taplo" },
         },
         format_on_save = function(bufnr)
             local ft = vim.bo[bufnr].filetype
-            if ft == "tex" or ft == "latex" then
+            if ft == "tex" or ft == "latex" or ft == "markdown" or ft == "json" or ft == "jsonc" or ft == "yaml" or ft == "toml" then
                 return { timeout_ms = 3000, lsp_format = "fallback" }
             end
             return nil
