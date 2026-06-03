@@ -116,11 +116,11 @@ util.autocmd_vimrc "CmdwinEnter" {
         vim.wo.relativenumber = false
         vim.wo.signcolumn = "no"
         vim.wo.foldcolumn = "0"
-        vim.api.nvim_buf_set_keymap(buf, "n", "<C-f>", "<C-f>", {})
-        vim.api.nvim_buf_set_keymap(buf, "n", "<C-u>", "<C-u>", {})
-        vim.api.nvim_buf_set_keymap(buf, "n", "<C-b>", "<C-b>", {})
-        vim.api.nvim_buf_set_keymap(buf, "n", "<C-d>", "<C-d>", {})
-        vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", ":q<CR>", {})
-        vim.api.nvim_buf_set_keymap(buf, "n", "<CR>", "<CR>", { nowait = true })
+        vim.keymap.set("n", "<C-f>", "<C-f>", { buffer = buf })
+        vim.keymap.set("n", "<C-u>", "<C-u>", { buffer = buf })
+        vim.keymap.set("n", "<C-b>", "<C-b>", { buffer = buf })
+        vim.keymap.set("n", "<C-d>", "<C-d>", { buffer = buf })
+        vim.keymap.set("n", "<Esc>", ":q<CR>", { buffer = buf })
+        vim.keymap.set("n", "<CR>", "<CR>", { buffer = buf, nowait = true })
     end,
 }

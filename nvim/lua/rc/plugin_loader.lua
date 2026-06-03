@@ -40,22 +40,29 @@ require("lazy").setup({
     { "sainnhe/everforest", config = config.everforest },
 
     -- old
-    { "dkarter/bullets.vim", config = config.bullets },
+    { "dkarter/bullets.vim", ft = { "markdown", "text", "gitcommit" }, config = config.bullets },
     { "tpope/vim-commentary" },
     { "tpope/vim-surround" },
     { "tpope/vim-repeat" },
-    { "nvim-lualine/lualine.nvim", config = config.lualine },
+    { "nvim-lualine/lualine.nvim", event = "VeryLazy", config = config.lualine },
 
     -- general plugins
-    { "lervag/vimtex", config = config.vimtex },
+    { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
     { "mattn/vim-maketable" },
-    { "stevearc/oil.nvim", config = config.oil },
+    {
+        "stevearc/oil.nvim",
+        cmd = { "Oil" },
+        keys = {
+            { "<Leader>e", desc = "Open parent directory" },
+        },
+        config = config.oil,
+    },
 
     -- git
-    { "lewis6991/gitsigns.nvim", config = config.gitsigns },
+    { "lewis6991/gitsigns.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.gitsigns },
 
     -- paren
-    { "windwp/nvim-autopairs", config = config.autopairs },
+    { "windwp/nvim-autopairs", event = "InsertEnter", config = config.autopairs },
 
     -- telescope
     {
@@ -63,22 +70,44 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
+        cmd = { "Telescope" },
+        keys = {
+            { "so", desc = "Telescope git files" },
+            { "sO", desc = "Telescope find files" },
+            { "sb", desc = "Telescope buffers" },
+            { "sg", desc = "Telescope live grep" },
+            { "tq", desc = "Telescope quickfix" },
+        },
         config = config.telescope,
     },
 
     -- lsp/completion/format
-    { "neovim/nvim-lspconfig" },
-    { "saghen/blink.cmp", version = "1.*", config = config.blink },
+    { "saghen/blink.cmp", version = "1.*", event = "InsertEnter", config = config.blink },
     { "folke/lazydev.nvim", config = config.lsp },
-    { "stevearc/conform.nvim", config = config.conform },
+    { "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.conform },
 
     -- filetype
     { "justinmk/vim-syntax-extra" },
-    { "vim-python/python-syntax", config = config.python },
+    { "vim-python/python-syntax", ft = { "python" }, config = config.python },
 
     -- misc
-    { "monaqa/dial.nvim", config = config.dial },
-    { "johmsalas/text-case.nvim", config = config.textcase },
+    {
+        "monaqa/dial.nvim",
+        keys = {
+            { "<C-a>", mode = { "n", "v" }, desc = "Increment number" },
+            { "<C-x>", mode = { "n", "v" }, desc = "Decrement number" },
+            { "g<C-a>", mode = "v", desc = "Increment number by gvisual" },
+            { "g<C-x>", mode = "v", desc = "Decrement number by gvisual" },
+        },
+        config = config.dial,
+    },
+    {
+        "johmsalas/text-case.nvim",
+        keys = {
+            { "gat", mode = { "n", "v" }, desc = "Quick change to title case" },
+        },
+        config = config.textcase,
+    },
     { "lambdalisue/pastefix.vim" },
     { "wakatime/vim-wakatime" },
 }, {

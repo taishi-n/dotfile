@@ -57,8 +57,9 @@ function M.bullets()
 end
 
 function M.textcase()
-    vim.api.nvim_set_keymap('n', 'gat', "<cmd>lua require('textcase').quick_replace('to_title_case')<CR>", { desc = "Telescope Quick Change" })
-    vim.api.nvim_set_keymap('v', 'gat', "<cmd>lua require('textcase').quick_replace('to_title_case')<CR>", { desc = "Telescope Quick Change" })
+    vim.keymap.set({ "n", "v" }, "gat", function()
+        require("textcase").quick_replace("to_title_case")
+    end, { desc = "Quick change to title case" })
 end
 
 function M.lualine()
@@ -405,6 +406,7 @@ end
 
 function M.dial()
     local augend = require "dial.augend"
+    local dial_map = require "dial.map"
 
     local function concat(tt)
         local v = {}
@@ -517,22 +519,22 @@ function M.dial()
         },
     }
 
-    vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-    vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-    vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual "visual", { noremap = true })
-    vim.api.nvim_set_keymap("v", "<C-x>", require("dial.map").dec_visual "visual", { noremap = true })
-    vim.api.nvim_set_keymap("v", "g<C-a>", require("dial.map").inc_gvisual "visual", { noremap = true })
-    vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual "visual", { noremap = true })
+    vim.keymap.set("n", "<C-a>", dial_map.inc_normal())
+    vim.keymap.set("n", "<C-x>", dial_map.dec_normal())
+    vim.keymap.set("v", "<C-a>", dial_map.inc_visual "visual")
+    vim.keymap.set("v", "<C-x>", dial_map.dec_visual "visual")
+    vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "visual")
+    vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "visual")
 
     util.autocmd_vimrc { "FileType" } {
         pattern = "markdown",
         callback = function()
-            vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal "markdown", { noremap = true })
-            vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal "markdown", { noremap = true })
-            vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual "markdown", { noremap = true })
-            vim.api.nvim_set_keymap("v", "<C-x>", require("dial.map").dec_visual "markdown", { noremap = true })
-            vim.api.nvim_set_keymap("v", "g<C-a>", require("dial.map").inc_gvisual "markdown", { noremap = true })
-            vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual "markdown", { noremap = true })
+            vim.keymap.set("n", "<C-a>", dial_map.inc_normal "markdown", { buffer = true })
+            vim.keymap.set("n", "<C-x>", dial_map.dec_normal "markdown", { buffer = true })
+            vim.keymap.set("v", "<C-a>", dial_map.inc_visual "markdown", { buffer = true })
+            vim.keymap.set("v", "<C-x>", dial_map.dec_visual "markdown", { buffer = true })
+            vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "markdown", { buffer = true })
+            vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "markdown", { buffer = true })
         end,
     }
 end

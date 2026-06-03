@@ -4,21 +4,6 @@ vim.cmd [[
 ]]
 
 -- TODO: temporal
-vim.cmd[[
-    augroup texfile
-       autocmd BufRead,BufNewFile *.tex set filetype=tex
-    augroup END
-
-    augroup bibfile
-      autocmd Filetype bib let &formatprg="bibclean --max-width 180 -no-check-values"
-    augroup END
-
-    augroup pdfpc
-      autocmd BufRead,BufNewFile *.pdfpc set filetype=pdfpc
-      autocmd Filetype pdfpc let &formatprg="jq"
-    augroup END
-]]
-
 vim.opt.belloff = "all"
 vim.opt.lazyredraw = true
 vim.opt.ttyfast = true
