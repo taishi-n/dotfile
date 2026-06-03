@@ -45,6 +45,6 @@ make_abbrev {
     { from = "lq",               to = "LspQuickfix" },
     { from = "open",             to = "!open" },
     { from = "ssf",              to = "syntax sync fromstart" },
-    { prepose_nospace = "'<,'>", from = "m",                          to = "MakeTable" },
+    { prepose_nospace = "'<,'>", from = "m",                          to = "Tableize" },
     { from = "isort",            to = "!isort --profile black %" },
 }

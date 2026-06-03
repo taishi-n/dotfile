@@ -48,12 +48,43 @@ function M.vimtex()
     vim.lsp.enable "texlab"
 end
 
---  old
---  TODO: translate into lua
+-- list editing
 function M.bullets()
     vim.g.bullets_enabled_file_types = {'markdown', 'text', 'gitcommit'}
     vim.g.bullets_checkbox_markers = ' x'
     vim.g.bullets_outline_levels = {}
+end
+
+function M.comment()
+    local ok_ctx, ts_context_commentstring = pcall(require, "ts_context_commentstring")
+    if ok_ctx then
+        ts_context_commentstring.setup {}
+    end
+
+    local ok, comment = pcall(require, "Comment")
+    if not ok then
+        util.print_error("Comment.nvim is not available.", "WarningMsg")
+        return
+    end
+
+    comment.setup {
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+    }
+end
+
+function M.surround()
+    require("nvim-surround").setup {}
+end
+
+function M.render_markdown()
+    require("render-markdown").setup {
+        file_types = { "markdown" },
+    }
+end
+
+function M.table_mode()
+    vim.g.table_mode_corner = "|"
+    vim.g.table_mode_fillchar = "-"
 end
 
 function M.textcase()
@@ -182,10 +213,6 @@ function M.autopairs()
 end
 
 -- §§1 textedit
-
-function M.python()
-    vim.g.python_highlight_all = 1
-end
 
 function M.blink()
     require("blink.cmp").setup {
@@ -553,23 +580,31 @@ end
 function M.treesitter()
     local install_dir = vim.fn.stdpath "data" .. "/treesitter"
     local parsers = {
+        "c",
         "bash",
         "css",
         "dot",
         "html",
         "html_tags",
+        "javascript",
+        "tsx",
+        "typescript",
         "json",
         "lua",
         "markdown",
         "markdown_inline",
         "python",
+        "svelte",
         "query",
         "rust",
         "toml",
+        "vue",
         "yaml",
     }
 
     local ft_to_parser = {
+        javascriptreact = "tsx",
+        typescriptreact = "tsx",
         sh = "bash",
         zsh = "bash",
     }
@@ -599,7 +634,6 @@ function M.treesitter()
         html = true,
         json = true,
         lua = true,
-        python = true,
         query = true,
         toml = true,
         typescript = true,
@@ -618,9 +652,12 @@ function M.treesitter()
 
     util.autocmd_vimrc "FileType" {
         pattern = {
+            "c",
             "css",
             "dot",
             "html",
+            "javascript",
+            "javascriptreact",
             "json",
             "lua",
             "markdown",
@@ -628,8 +665,13 @@ function M.treesitter()
             "query",
             "rust",
             "sh",
+            "svelte",
             "toml",
+            "tsx",
+            "typescript",
+            "typescriptreact",
             "yaml",
+            "vue",
             "zsh",
         },
         callback = function(meta)
@@ -648,6 +690,11 @@ function M.treesitter()
                 return
             end
 
+            if lang == "python" then
+                vim.wo.foldmethod = "expr"
+                vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            end
+
             if not indent_disabled[lang] then
                 vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
             end
@@ -664,6 +711,29 @@ function M.treesitter()
     vim.keymap.set("x", "v", "an", { remap = true })
     vim.keymap.set("x", "<C-o>", "in", { remap = true })
     vim.keymap.set("n", "ts", "<Cmd>Inspect<CR>")
+end
+
+function M.treesitter_textobjects()
+    local move = require "nvim-treesitter-textobjects.move"
+
+    vim.keymap.set({ "n", "x", "o" }, "]m", function()
+        move.goto_next_start("@function.outer", "textobjects")
+    end, { desc = "Next function" })
+    vim.keymap.set({ "n", "x", "o" }, "[m", function()
+        move.goto_previous_start("@function.outer", "textobjects")
+    end, { desc = "Previous function" })
+    vim.keymap.set({ "n", "x", "o" }, "]]", function()
+        move.goto_next_start("@class.outer", "textobjects")
+    end, { desc = "Next class" })
+    vim.keymap.set({ "n", "x", "o" }, "[[", function()
+        move.goto_previous_start("@class.outer", "textobjects")
+    end, { desc = "Previous class" })
+    vim.keymap.set({ "n", "x", "o" }, "]o", function()
+        move.goto_next_start("@loop.outer", "textobjects")
+    end, { desc = "Next loop" })
+    vim.keymap.set({ "n", "x", "o" }, "[o", function()
+        move.goto_previous_start("@loop.outer", "textobjects")
+    end, { desc = "Previous loop" })
 end
 
 function M.everforest()

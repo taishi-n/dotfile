@@ -40,15 +40,7 @@ util.autocmd_vimrc "VimResized" {
     command = [[Normal! <C-w>=]],
 }
 
-
 -- §§1 editor の機能
-
-util.autocmd_vimrc "InsertLeave" {
-    desc = "挿入モードを抜けたら paste モードを off にする",
-    callback = function()
-        vim.o.paste = false
-    end,
-}
 
 local function auto_mkdir()
     local dir = vim.fn.expand("<afile>:p:h", nil, nil)

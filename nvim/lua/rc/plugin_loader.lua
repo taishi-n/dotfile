@@ -39,47 +39,56 @@ require("lazy").setup({
     -- color scheme
     { "sainnhe/everforest", config = config.everforest },
 
-    -- old
+    -- editing
     { "dkarter/bullets.vim", ft = { "markdown", "text", "gitcommit" }, config = config.bullets },
     { "nvim-lualine/lualine.nvim", event = "VeryLazy", config = config.lualine },
     {
-        "tpope/vim-commentary",
+        "numToStr/Comment.nvim",
         keys = {
             { "gc", mode = { "n", "x", "o" } },
+            { "gb", mode = { "n", "x", "o" } },
             { "gcc", mode = "n" },
             { "gcu", mode = "n" },
         },
         dependencies = {
-            "tpope/vim-repeat",
+            "JoosepAlviste/nvim-ts-context-commentstring",
         },
+        config = config.comment,
     },
     {
-        "tpope/vim-surround",
+        "kylechui/nvim-surround",
         keys = {
-            { "ds", mode = "n" },
             { "cs", mode = "n" },
+            { "ds", mode = "n" },
             { "cS", mode = "n" },
+            { "gS", mode = "x" },
+            { "S", mode = "x" },
             { "ys", mode = "n" },
             { "yS", mode = "n" },
             { "yss", mode = "n" },
             { "ySs", mode = "n" },
             { "ySS", mode = "n" },
-            { "S", mode = "x" },
-            { "gS", mode = "x" },
         },
-        dependencies = {
-            "tpope/vim-repeat",
-        },
+        config = config.surround,
+    },
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown" },
+        config = config.render_markdown,
     },
 
     -- general plugins
     { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
     {
-        "mattn/vim-maketable",
+        "dhruvasagar/vim-table-mode",
+        ft = { "markdown" },
         cmd = {
-            "MakeTable",
-            "UnmakeTable",
+            "Tableize",
+            "TableModeEnable",
+            "TableModeDisable",
+            "TableModeToggle",
         },
+        config = config.table_mode,
     },
     {
         "stevearc/oil.nvim",
@@ -117,17 +126,12 @@ require("lazy").setup({
     { "saghen/blink.cmp", version = "1.*", event = "InsertEnter", config = config.blink },
     { "folke/lazydev.nvim", config = config.lsp },
     { "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.conform },
-
-    -- filetype
     {
-        "justinmk/vim-syntax-extra",
-        ft = {
-            "c",
-            "lex",
-            "yacc",
-        },
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        config = config.treesitter_textobjects,
     },
-    { "vim-python/python-syntax", ft = { "python" }, config = config.python },
+
+    -- tree-sitter / filetype
 
     -- misc
     {
@@ -146,13 +150,6 @@ require("lazy").setup({
             { "gat", mode = { "n", "v" }, desc = "Quick change to title case" },
         },
         config = config.textcase,
-    },
-    {
-        "lambdalisue/pastefix.vim",
-        keys = {
-            { "p", mode = "n" },
-            { "P", mode = "n" },
-        },
     },
     { "wakatime/vim-wakatime" },
 }, {
