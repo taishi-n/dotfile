@@ -27,17 +27,6 @@ function M.vimtex()
         },
         settings = {
             texlab = {
-                build = {
-                    executable = "latexmk",
-                    args = {
-                        "-pdf",
-                        "-interaction=nonstopmode",
-                        "-synctex=1",
-                        "%f",
-                    },
-                    onSave = false,
-                    forwardSearchAfter = false,
-                },
                 forwardSearch = {
                     executable = "sioyek",
                     args = {
@@ -64,7 +53,6 @@ end
 function M.bullets()
     vim.g.bullets_enabled_file_types = {'markdown', 'text', 'gitcommit'}
     vim.g.bullets_checkbox_markers = ' x'
-    vim.g.bullets_mapping_leader = '<leader>'
     vim.g.bullets_outline_levels = {}
 end
 
@@ -395,20 +383,10 @@ function M.lsp()
 end
 
 function M.conform()
-    local latexindent_settings = vim.fn.expand "~/.config/latexindent/settings.yaml"
     require("conform").setup {
-        formatters = {
-            latexindent = {
-                append_args = {
-                    "--local=" .. latexindent_settings,
-                },
-            },
-        },
         formatters_by_ft = {
             html = { "prettierd" },
             css = { "prettierd" },
-            tex = { "latexindent" },
-            latex = { "latexindent" },
             markdown = { "prettier" },
             json = { "prettier" },
             jsonc = { "prettier" },
@@ -417,7 +395,7 @@ function M.conform()
         },
         format_on_save = function(bufnr)
             local ft = vim.bo[bufnr].filetype
-            if ft == "html" or ft == "css" or ft == "tex" or ft == "latex" or ft == "markdown" or ft == "json" or ft == "jsonc" or ft == "yaml" or ft == "toml" then
+            if ft == "html" or ft == "css" or ft == "markdown" or ft == "json" or ft == "jsonc" or ft == "yaml" or ft == "toml" then
                 return { timeout_ms = 3000, lsp_format = "fallback" }
             end
             return nil
