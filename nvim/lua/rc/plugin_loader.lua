@@ -41,14 +41,46 @@ require("lazy").setup({
 
     -- old
     { "dkarter/bullets.vim", ft = { "markdown", "text", "gitcommit" }, config = config.bullets },
-    { "tpope/vim-commentary" },
-    { "tpope/vim-surround" },
-    { "tpope/vim-repeat" },
     { "nvim-lualine/lualine.nvim", event = "VeryLazy", config = config.lualine },
+    {
+        "tpope/vim-commentary",
+        keys = {
+            { "gc", mode = { "n", "x", "o" } },
+            { "gcc", mode = "n" },
+            { "gcu", mode = "n" },
+        },
+        dependencies = {
+            "tpope/vim-repeat",
+        },
+    },
+    {
+        "tpope/vim-surround",
+        keys = {
+            { "ds", mode = "n" },
+            { "cs", mode = "n" },
+            { "cS", mode = "n" },
+            { "ys", mode = "n" },
+            { "yS", mode = "n" },
+            { "yss", mode = "n" },
+            { "ySs", mode = "n" },
+            { "ySS", mode = "n" },
+            { "S", mode = "x" },
+            { "gS", mode = "x" },
+        },
+        dependencies = {
+            "tpope/vim-repeat",
+        },
+    },
 
     -- general plugins
     { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
-    { "mattn/vim-maketable" },
+    {
+        "mattn/vim-maketable",
+        cmd = {
+            "MakeTable",
+            "UnmakeTable",
+        },
+    },
     {
         "stevearc/oil.nvim",
         cmd = { "Oil" },
@@ -87,7 +119,14 @@ require("lazy").setup({
     { "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.conform },
 
     -- filetype
-    { "justinmk/vim-syntax-extra" },
+    {
+        "justinmk/vim-syntax-extra",
+        ft = {
+            "c",
+            "lex",
+            "yacc",
+        },
+    },
     { "vim-python/python-syntax", ft = { "python" }, config = config.python },
 
     -- misc
@@ -108,12 +147,15 @@ require("lazy").setup({
         },
         config = config.textcase,
     },
-    { "lambdalisue/pastefix.vim" },
+    {
+        "lambdalisue/pastefix.vim",
+        keys = {
+            { "p", mode = "n" },
+            { "P", mode = "n" },
+        },
+    },
     { "wakatime/vim-wakatime" },
 }, {
-    defaults = {
-        lazy = false,
-    },
     install = {
         missing = true,
     },
