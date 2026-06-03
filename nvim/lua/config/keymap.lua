@@ -4,7 +4,7 @@
 
 local M = {}
 
-local util = require "rc.util"
+local util = require "utils.util"
 
 -- local
 vim.keymap.set("n", "<Tab>", "%", { desc = "Jump to matching pair" })
@@ -262,7 +262,7 @@ vim.keymap.set("x", "k", function()
     end
 end, { expr = true, desc = "Move up by screen line in visual mode" })
 
--- Vertical WORD (vWORD) 単位での移動
+-- Paragraph motion
 _G.vimrc.state.par_motion_continuous = false
 util.autocmd_vimrc "CursorMoved" {
     callback = function()
@@ -294,144 +294,7 @@ vim.keymap.set(
     { desc = "Move up by paragraph" }
 )
 
--- vertical f motion
--- TODO: プラグイン化したくなってきたのう
-local vertical_f_char
-local vertical_f_pattern
-
-local ns_id = vim.api.nvim_create_namespace "verticalf"
-
-local function vertical_f(ctx, forward)
-    local pattern
-    if forward then
-        pattern = [[^\%>.l\s*\zs]]
-    else
-        pattern = [[^\%<.l\s*\zs]]
-    end
-
-    local delta = util.ifexpr(forward, 1, -1)
-    local start_line = vim.fn.line "." + delta
-    local end_line = vim.fn.line(util.ifexpr(forward, "w$", "w0"))
-    local chars = {}
-    for line = start_line, end_line, delta do
-        ---@type string
-        local linestr = vim.fn.getline(line)
-        if #linestr ~= 0 then
-            local _, e = linestr:find "^%s*"
-            local char = linestr:sub(e + 1, e + 1)
-
-            if chars[char] == nil then
-                chars[char] = 1
-            else
-                chars[char] = chars[char] + 1
-            end
-            if chars[char] == ctx.count1 then
-                vim.api.nvim_buf_add_highlight(0, ns_id, "VisualBlue", line - 1, e, e + 1)
-            end
-        end
-    end
-
-    vim.opt_local.cursorline = true
-    vim.cmd "redraw"
-    local char
-    if ctx.repeated then
-        char = vertical_f_char
-    else
-        char = vim.fn.nr2char(vim.fn.getchar())
-        vertical_f_char = char
-    end
-
-    vertical_f_pattern = pattern .. [[\V]] .. vim.fn.escape(char, [[\/]])
-
-    vim.api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
-    vim.opt_local.cursorline = false
-
-    local flag = "W"
-    if not forward then
-        flag = flag .. "b"
-    end
-    for _ = 1, ctx.count1, 1 do
-        vim.fn.search(vertical_f_pattern, flag)
-    end
-end
-
-local function get_initial_ctx()
-    return {
-        repeated = false,
-        count = vim.v.count,
-        count1 = vim.v.count1,
-        set_count = vim.v.count == vim.v.count1,
-    }
-end
-
--- Section1 Macros
-
--- マクロの記録レジスタは "aq のような一般のレジスタを指定するのと同様の
--- インターフェースで変更するようにし、デフォルトレジスタを q とする。
--- マクロ自己再帰呼出しによるループや、マクロの中でマクロを呼び出すことは簡単にはできないようにしてある。
--- （もちろんレジスタを直に書き換えれば可能）
--- デフォルトのレジスタ @q は Vim の開始ごとに初期化される。
-
-local function keymap_toggle_macro()
-    if util.to_bool(vim.fn.reg_recording()) then
-        -- 既に記録中の時は止める
-        return "q"
-    end
-    -- 無名レジスタには格納できないようにする & デフォルトを q にする
-
-    local register = vim.v.register
-    if register == [["]] then
-        register = "q"
-    end
-    return "q" .. register
-end
-
-_G.vimrc.state.last_played_macro_register = "q"
-
-local function keymap_play_macro()
-    -- 無名レジスタには格納できないようにする
-    -- & デフォルトを前回再生したマクロにする
-    local register = vim.v.register
-    if register == [["]] then
-        register = _G.vimrc.state.last_played_macro_register
-    end
-    _G.vimrc.state.last_played_macro_register = register
-    if vim.fn.getreg(register, nil, nil) == "" then
-        vim.api.nvim_echo({ { ("Register @%s is empty."):format(register), "Error" } }, true, {})
-        return ""
-    end
-
-    vim.api.nvim_echo({ { ("Playing macro: @%s"):format(register), "Error" } }, false, {})
-    return "@" .. register
-end
-
-local function keymap_cancel_macro()
-    local register = vim.fn.reg_recording()
-    if register == "" then
-        return ""
-    end
-    return table.concat {
-        -- 現在のレジスタに入っているコマンド列を一旦 reg_content に退避
-        util.cmdcr(("let reg_content = @%s"):format(register)),
-        -- マクロの記録を停止
-        "q",
-        -- 対象としていたレジスタの中身を先程退避したものに入れ替える
-        util.cmdcr(("let @%s = reg_content"):format(register)),
-        -- キャンセルした旨を表示
-        util.cmdcr(("echo 'Recording cancelled: @%s'"):format(register)),
-    }
-end
-
-vim.keymap.set("n", "Q", keymap_toggle_macro, { expr = true, desc = "Start or stop macro recording" })
-vim.keymap.set("n", "<C-q>", function()
-    if vim.fn.reg_recording() == "" then
-        return keymap_play_macro()
-    else
-        return keymap_cancel_macro()
-    end
-end, { expr = true, desc = "Play or cancel macro recording" })
-vim.keymap.set("n", "@", "<Nop>", { desc = "Disable macro replay prefix" })
-vim.keymap.set("n", "@:", "@:", { desc = "Repeat last ex command" })
+require "config.keymap.macro"
 
 -- Section1 特殊キー
 for i = 1, 12, 1 do

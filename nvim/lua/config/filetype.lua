@@ -1,5 +1,5 @@
 -- vim:fdm=marker:fmr=§§,■■
-local util = require "rc.util"
+local util = require "utils.util"
 
 vim.filetype.add {
     extension = {

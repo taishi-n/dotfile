@@ -1,6 +1,6 @@
 -- vim:fdm=marker:fmr=§§,■■
 
-local util = require "rc.util"
+local util = require "utils.util"
 
 -- §§1 表示設定
 

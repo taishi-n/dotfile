@@ -14,9 +14,9 @@ vim.g.maplocalleader = vim.g.mapleader
 
 vim.loader.enable()
 
-require "rc.plugin_loader"
-require "rc.autocmd"
-require "rc.option"
-require "rc.abbr"
-require "rc.keymap"
-require "rc.filetype"
+require "plugins.bootstrap"
+require "config.autocmd"
+require "config.option"
+require "config.abbr"
+require "config.keymap"
+require "config.filetype"

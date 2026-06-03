@@ -1,45 +1,9 @@
-local config = require "rc.plugin_config"
+local config = require "plugins.setup"
 
-local disable_plugins = {
-    "netrw",
-    "netrwPlugin",
-    "netrwSettings",
-    "netrwFileHandlers",
-}
-
-for _, name in ipairs(disable_plugins) do
-    vim.g["loaded_" .. name] = 1
-end
-
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
-    local out = vim.fn.system {
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--branch=stable",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-    }
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({
-            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out, "WarningMsg" },
-        }, true, {})
-        return false
-    end
-end
-vim.opt.runtimepath:prepend(lazypath)
-
-require("lazy").setup({
-    -- tree-sitter
+return {
     { "neovim-treesitter/treesitter-parser-registry" },
     { "neovim-treesitter/nvim-treesitter", config = config.treesitter },
-
-    -- color scheme
     { "sainnhe/everforest", config = config.everforest },
-
-    -- editing
     { "dkarter/bullets.vim", ft = { "markdown", "text", "gitcommit" }, config = config.bullets },
     { "nvim-lualine/lualine.nvim", event = "VeryLazy", config = config.lualine },
     {
@@ -82,8 +46,6 @@ require("lazy").setup({
         },
         config = config.table_mode,
     },
-
-    -- general plugins
     { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
     {
         "stevearc/oil.nvim",
@@ -93,14 +55,8 @@ require("lazy").setup({
         },
         config = config.oil,
     },
-
-    -- git
     { "lewis6991/gitsigns.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.gitsigns },
-
-    -- paren
     { "windwp/nvim-autopairs", event = "InsertEnter", config = config.autopairs },
-
-    -- telescope
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
@@ -116,19 +72,10 @@ require("lazy").setup({
         },
         config = config.telescope,
     },
-
-    -- lsp/completion/format
     { "saghen/blink.cmp", version = "1.*", event = "InsertEnter", config = config.blink },
     { "folke/lazydev.nvim", config = config.lsp },
     { "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.conform },
-    {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        config = config.treesitter_textobjects,
-    },
-
-    -- tree-sitter / filetype
-
-    -- misc
+    { "nvim-treesitter/nvim-treesitter-textobjects", config = config.treesitter_textobjects },
     {
         "monaqa/dial.nvim",
         keys = {
@@ -147,13 +94,4 @@ require("lazy").setup({
         config = config.textcase,
     },
     { "wakatime/vim-wakatime" },
-}, {
-    install = {
-        missing = true,
-    },
-    checker = {
-        enabled = false,
-    },
-})
-
-return true
+}
