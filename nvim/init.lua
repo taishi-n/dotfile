@@ -12,6 +12,8 @@ _G.vimrc = {
 vim.g.mapleader = " "
 vim.g.maplocalleader = vim.g.mapleader
 
+vim.loader.enable()
+
 require "rc.plugin_loader"
 require "rc.autocmd"
 require "rc.option"
