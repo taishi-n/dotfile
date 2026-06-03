@@ -328,6 +328,16 @@ function M.lsp()
         },
     })
 
+    vim.lsp.config("tinymist", {
+        cmd = { "tinymist" },
+        filetypes = { "typst" },
+        single_file_support = true,
+        root_markers = {
+            "typst.toml",
+            ".git",
+        },
+    })
+
     vim.lsp.config("jsonls", {
         cmd = { "vscode-json-language-server", "--stdio" },
         filetypes = { "json", "jsonc" },
@@ -355,6 +365,7 @@ function M.lsp()
         "rust_analyzer",
         "ruff",
         "harper_ls",
+        "tinymist",
         "jsonls",
         "yamlls",
         "taplo",
