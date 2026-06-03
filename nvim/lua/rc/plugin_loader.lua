@@ -72,14 +72,6 @@ require("lazy").setup({
         config = config.surround,
     },
     {
-        "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown" },
-        config = config.render_markdown,
-    },
-
-    -- general plugins
-    { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
-    {
         "dhruvasagar/vim-table-mode",
         ft = { "markdown" },
         cmd = {
@@ -90,6 +82,9 @@ require("lazy").setup({
         },
         config = config.table_mode,
     },
+
+    -- general plugins
+    { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
     {
         "stevearc/oil.nvim",
         cmd = { "Oil" },

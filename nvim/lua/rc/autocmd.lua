@@ -108,11 +108,11 @@ util.autocmd_vimrc "CmdwinEnter" {
         vim.wo.relativenumber = false
         vim.wo.signcolumn = "no"
         vim.wo.foldcolumn = "0"
-        vim.keymap.set("n", "<C-f>", "<C-f>", { buffer = buf })
-        vim.keymap.set("n", "<C-u>", "<C-u>", { buffer = buf })
-        vim.keymap.set("n", "<C-b>", "<C-b>", { buffer = buf })
-        vim.keymap.set("n", "<C-d>", "<C-d>", { buffer = buf })
-        vim.keymap.set("n", "<Esc>", ":q<CR>", { buffer = buf })
-        vim.keymap.set("n", "<CR>", "<CR>", { buffer = buf, nowait = true })
+        vim.keymap.set("n", "<C-f>", "<C-f>", { buffer = buf, desc = "Scroll forward" })
+        vim.keymap.set("n", "<C-u>", "<C-u>", { buffer = buf, desc = "Scroll up" })
+        vim.keymap.set("n", "<C-b>", "<C-b>", { buffer = buf, desc = "Scroll backward" })
+        vim.keymap.set("n", "<C-d>", "<C-d>", { buffer = buf, desc = "Scroll down" })
+        vim.keymap.set("n", "<Esc>", ":q<CR>", { buffer = buf, desc = "Close command-line window" })
+        vim.keymap.set("n", "<CR>", "<CR>", { buffer = buf, nowait = true, desc = "Confirm command-line window" })
     end,
 }

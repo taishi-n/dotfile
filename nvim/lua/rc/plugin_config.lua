@@ -439,22 +439,22 @@ function M.lsp()
         vim.cmd [[cwindow]]
     end)
 
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-    vim.keymap.set("n", "t", "<Nop>")
-    vim.keymap.set("n", "td", util.cmdcr "Telescope lsp_definitions")
-    vim.keymap.set("n", "ti", util.cmdcr "Telescope lsp_implementations")
-    vim.keymap.set("n", "tr", util.cmdcr "Telescope lsp_references")
-    vim.keymap.set("n", "ty", util.cmdcr "Telescope lsp_type_definitions")
-    vim.keymap.set("n", "tn", vim.lsp.buf.rename)
-    vim.keymap.set({ "n", "x" }, "ta", vim.lsp.buf.code_action)
-    vim.keymap.set("n", "tw", vim.diagnostic.open_float)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to LSP definition" })
+    vim.keymap.set("n", "t", "<Nop>", { desc = "Disable t prefix for LSP mappings" })
+    vim.keymap.set("n", "td", util.cmdcr "Telescope lsp_definitions", { desc = "Search LSP definitions" })
+    vim.keymap.set("n", "ti", util.cmdcr "Telescope lsp_implementations", { desc = "Search LSP implementations" })
+    vim.keymap.set("n", "tr", util.cmdcr "Telescope lsp_references", { desc = "Search LSP references" })
+    vim.keymap.set("n", "ty", util.cmdcr "Telescope lsp_type_definitions", { desc = "Search LSP type definitions" })
+    vim.keymap.set("n", "tn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+    vim.keymap.set({ "n", "x" }, "ta", vim.lsp.buf.code_action, { desc = "Code action" })
+    vim.keymap.set("n", "tw", vim.diagnostic.open_float, { desc = "Show diagnostics float" })
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover documentation" })
     vim.keymap.set("n", ")", function()
         vim.diagnostic.jump { count = 1, float = true }
-    end)
+    end, { desc = "Next diagnostic" })
     vim.keymap.set("n", "(", function()
         vim.diagnostic.jump { count = -1, float = true }
-    end)
+    end, { desc = "Previous diagnostic" })
 end
 
 function M.conform()
@@ -593,22 +593,22 @@ function M.dial()
         },
     }
 
-    vim.keymap.set("n", "<C-a>", dial_map.inc_normal())
-    vim.keymap.set("n", "<C-x>", dial_map.dec_normal())
-    vim.keymap.set("v", "<C-a>", dial_map.inc_visual "visual")
-    vim.keymap.set("v", "<C-x>", dial_map.dec_visual "visual")
-    vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "visual")
-    vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "visual")
+    vim.keymap.set("n", "<C-a>", dial_map.inc_normal(), { desc = "Increment number" })
+    vim.keymap.set("n", "<C-x>", dial_map.dec_normal(), { desc = "Decrement number" })
+    vim.keymap.set("v", "<C-a>", dial_map.inc_visual "visual", { desc = "Increment number in visual selection" })
+    vim.keymap.set("v", "<C-x>", dial_map.dec_visual "visual", { desc = "Decrement number in visual selection" })
+    vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "visual", { desc = "Increment number by gvisual selection" })
+    vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "visual", { desc = "Decrement number by gvisual selection" })
 
     util.autocmd_vimrc { "FileType" } {
         pattern = "markdown",
         callback = function()
-            vim.keymap.set("n", "<C-a>", dial_map.inc_normal "markdown", { buffer = true })
-            vim.keymap.set("n", "<C-x>", dial_map.dec_normal "markdown", { buffer = true })
-            vim.keymap.set("v", "<C-a>", dial_map.inc_visual "markdown", { buffer = true })
-            vim.keymap.set("v", "<C-x>", dial_map.dec_visual "markdown", { buffer = true })
-            vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "markdown", { buffer = true })
-            vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "markdown", { buffer = true })
+            vim.keymap.set("n", "<C-a>", dial_map.inc_normal "markdown", { buffer = true, desc = "Increment number" })
+            vim.keymap.set("n", "<C-x>", dial_map.dec_normal "markdown", { buffer = true, desc = "Decrement number" })
+            vim.keymap.set("v", "<C-a>", dial_map.inc_visual "markdown", { buffer = true, desc = "Increment number in visual selection" })
+            vim.keymap.set("v", "<C-x>", dial_map.dec_visual "markdown", { buffer = true, desc = "Decrement number in visual selection" })
+            vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "markdown", { buffer = true, desc = "Increment number by gvisual selection" })
+            vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "markdown", { buffer = true, desc = "Decrement number by gvisual selection" })
         end,
     }
 end
@@ -744,9 +744,9 @@ function M.treesitter()
         end,
     }
 
-    vim.keymap.set("x", "v", "an", { remap = true })
-    vim.keymap.set("x", "<C-o>", "in", { remap = true })
-    vim.keymap.set("n", "ts", "<Cmd>Inspect<CR>")
+    vim.keymap.set("x", "v", "an", { remap = true, desc = "Select around node" })
+    vim.keymap.set("x", "<C-o>", "in", { remap = true, desc = "Select inside node" })
+    vim.keymap.set("n", "ts", "<Cmd>Inspect<CR>", { desc = "Inspect tree-sitter node" })
 end
 
 function M.treesitter_textobjects()
@@ -823,11 +823,11 @@ function M.telescope()
         },
     }
 
-    vim.keymap.set("n", "so", "<Cmd>Telescope git_files<cr>")
-    vim.keymap.set("n", "sO", "<Cmd>Telescope find_files<cr>")
-    vim.keymap.set("n", "sb", "<Cmd>Telescope buffers<cr>")
-    vim.keymap.set("n", "sg", "<Cmd>Telescope live_grep<cr>")
-    vim.keymap.set("n", "tq", "<Cmd>Telescope quickfix<cr>")
+    vim.keymap.set("n", "so", "<Cmd>Telescope git_files<cr>", { desc = "Telescope git files" })
+    vim.keymap.set("n", "sO", "<Cmd>Telescope find_files<cr>", { desc = "Telescope find files" })
+    vim.keymap.set("n", "sb", "<Cmd>Telescope buffers<cr>", { desc = "Telescope buffers" })
+    vim.keymap.set("n", "sg", "<Cmd>Telescope live_grep<cr>", { desc = "Telescope live grep" })
+    vim.keymap.set("n", "tq", "<Cmd>Telescope quickfix<cr>", { desc = "Telescope quickfix" })
 end
 
 return M
