@@ -64,6 +64,7 @@ end
 function M.bullets()
     vim.g.bullets_enabled_file_types = {'markdown', 'text', 'gitcommit'}
     vim.g.bullets_checkbox_markers = ' x'
+    vim.g.bullets_mapping_leader = '<leader>'
     vim.g.bullets_outline_levels = {}
 end
 
