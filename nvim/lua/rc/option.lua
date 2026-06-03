@@ -10,7 +10,6 @@ vim.cmd[[
     augroup END
 
     augroup bibfile
-      autocmd BufRead,BufNewFile *.bib set filetype=bib
       autocmd Filetype bib let &formatprg="bibclean --max-width 180 -no-check-values"
     augroup END
 
@@ -68,7 +67,7 @@ vim.opt.diffopt:append { "vertical", "algorithm:histogram" }
 -- §§1 編集関係
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
-vim.cmd [[ colorscheme everforest ]]
+pcall(vim.cmd.colorscheme, "everforest")
 vim.cmd [[ hi Whitespace gui=undercurl guifg=#fefefe ]]
 
 vim.opt.expandtab = true

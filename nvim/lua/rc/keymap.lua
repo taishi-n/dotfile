@@ -7,15 +7,10 @@ local M = {}
 local util = require "rc.util"
 
 -- local
-vim.keymap.set("n", "j", "gj")
-vim.keymap.set("n", "k", "gj")
-vim.keymap.set("v", "j", "gj")
-vim.keymap.set("v", "k", "gj")
 vim.keymap.set("n", "<Tab>", "%")
 vim.keymap.set("v", "<Tab>", "%")
 vim.keymap.set("n", "Y", "y$")
 vim.keymap.set('n', 's', '<NOP>', { noremap = true }) -- for telescope
-vim.keymap.set("n", "Y", "y$")
 
 vim.keymap.set("n", "Z", function()
     vim.opt_local.wrap = not vim.opt_local.wrap:get()
@@ -450,9 +445,6 @@ vim.keymap.set({ "n", "x", "o" }, "<CR>", "<Nop>")
 -- Section1 その他
 vim.keymap.set("n", "<C-h>", "g;")
 vim.keymap.set("n", "<C-g>", "g,")
-
-vim.keymap.set("v", "<C-a>", "<C-a>gv")
-vim.keymap.set("v", "<C-x>", "<C-x>gv")
 
 -- 直前の単語の upper/lower case を入れ替える。
 -- vimrc 読書会より。
