@@ -392,6 +392,8 @@ end
 function M.conform()
     require("conform").setup {
         formatters_by_ft = {
+            html = { "prettierd" },
+            css = { "prettierd" },
             tex = { "latexindent" },
             latex = { "latexindent" },
             markdown = { "prettier" },
@@ -402,7 +404,7 @@ function M.conform()
         },
         format_on_save = function(bufnr)
             local ft = vim.bo[bufnr].filetype
-            if ft == "tex" or ft == "latex" or ft == "markdown" or ft == "json" or ft == "jsonc" or ft == "yaml" or ft == "toml" then
+            if ft == "html" or ft == "css" or ft == "tex" or ft == "latex" or ft == "markdown" or ft == "json" or ft == "jsonc" or ft == "yaml" or ft == "toml" then
                 return { timeout_ms = 3000, lsp_format = "fallback" }
             end
             return nil
