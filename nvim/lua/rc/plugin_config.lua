@@ -7,6 +7,7 @@ function M.vimtex()
     vim.g.vimtex_view_method = "sioyek"
     vim.g.vimtex_view_sioyek_exe = "sioyek"
     vim.g.vimtex_compiler_method = "latexmk"
+    local latexindent_settings = vim.fn.expand "~/.config/latexindent/settings.yaml"
     vim.g.vimtex_compiler_latexmk = {
         executable = "latexmk",
         options = {
@@ -49,6 +50,9 @@ function M.vimtex()
                     },
                 },
                 latexFormatter = "latexindent",
+                latexindent = {
+                    ["local"] = latexindent_settings,
+                },
             },
         },
     })
@@ -390,7 +394,15 @@ function M.lsp()
 end
 
 function M.conform()
+    local latexindent_settings = vim.fn.expand "~/.config/latexindent/settings.yaml"
     require("conform").setup {
+        formatters = {
+            latexindent = {
+                append_args = {
+                    "--local=" .. latexindent_settings,
+                },
+            },
+        },
         formatters_by_ft = {
             html = { "prettierd" },
             css = { "prettierd" },
