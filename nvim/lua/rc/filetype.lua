@@ -1,23 +1,45 @@
 -- vim:fdm=marker:fmr=§§,■■
 local util = require "rc.util"
 
--- Markdown
-util.autocmd_vimrc { "BufRead", "BufNewFile" } {
-    pattern = "*.md",
-    callback = function()
-        vim.opt.tabstop = 2
-        vim.opt.softtabstop = 2
-        vim.opt.shiftwidth = 2
-        vim.opt.smartindent = true
+vim.filetype.add {
+    extension = {
+        tex = "tex",
+        bib = "bib",
+    },
+}
+
+local function set_buffer_options(buf, opts)
+    for key, value in pairs(opts) do
+        vim.bo[buf][key] = value
+    end
+end
+
+util.autocmd_vimrc { "FileType" } {
+    pattern = "markdown",
+    callback = function(meta)
+        set_buffer_options(meta.buf, {
+            tabstop = 2,
+            softtabstop = 2,
+            shiftwidth = 2,
+            smartindent = true,
+        })
     end,
 }
 
--- LaTeX
-util.autocmd_vimrc { "BufRead", "BufNewFile" } {
-    pattern = "*.tex",
-    callback = function()
-        vim.opt.tabstop = 2
-        vim.opt.softtabstop = 2
-        vim.opt.shiftwidth = 2
+util.autocmd_vimrc { "FileType" } {
+    pattern = "tex",
+    callback = function(meta)
+        set_buffer_options(meta.buf, {
+            tabstop = 2,
+            softtabstop = 2,
+            shiftwidth = 2,
+        })
+    end,
+}
+
+util.autocmd_vimrc { "FileType" } {
+    pattern = "bib",
+    callback = function(meta)
+        vim.bo[meta.buf].formatprg = "bibclean --max-width 180 -no-check-values"
     end,
 }
