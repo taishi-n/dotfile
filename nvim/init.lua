@@ -12,11 +12,6 @@ _G.vimrc = {
 vim.g.mapleader = " "
 vim.g.maplocalleader = vim.g.mapleader
 
-vim.cmd [[
-  filetype plugin indent on
-  syntax enable
-]]
-
 require "rc.plugin_loader"
 require "rc.autocmd"
 require "rc.option"

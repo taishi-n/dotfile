@@ -5,8 +5,6 @@ vim.cmd [[
 
 -- TODO: temporal
 vim.opt.belloff = "all"
-vim.opt.lazyredraw = true
-vim.opt.ttyfast = true
 vim.opt.ambiwidth = "single"
 vim.opt.wrap = true
 -- vim.opt.colorcolumn = "80"
@@ -68,8 +66,8 @@ vim.opt.swapfile = false
 
 vim.opt.autoread = true
 vim.opt.confirm = true
-vim.opt.modeline = true
-vim.opt.modelines = 3
+vim.opt.modeline = false
+vim.opt.modelines = 0
 
 vim.opt.hidden = true
 vim.opt.spelllang = { "en", "cjk" }
@@ -89,5 +87,4 @@ vim.opt.hlsearch = true
 vim.opt.inccommand = "split"
 
 -- clipboard
-vim.opt.clipboard:append{"unnamed"}
-vim.opt.clipboard:append{"unnamedplus"}
+vim.opt.clipboard = "unnamedplus"
