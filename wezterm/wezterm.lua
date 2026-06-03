@@ -15,6 +15,9 @@ config.tab_bar_at_bottom = true
 
 -- config.color_scheme = 'Material Dark'
 config.color_scheme = 'Everforest Dark Hard (Gogh)'
+config.set_environment_variables = {
+    WEZTERM_COLOR_SCHEME = config.color_scheme,
+}
 
 -- fonts
 config.font = wezterm.font_with_fallback({

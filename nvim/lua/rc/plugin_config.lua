@@ -667,7 +667,22 @@ function M.treesitter()
 end
 
 function M.everforest()
-    -- 色の微調整など
+    local wezterm_color_scheme = vim.env.WEZTERM_COLOR_SCHEME or ""
+    if wezterm_color_scheme == "" then
+        return
+    end
+
+    if wezterm_color_scheme:find("Everforest", 1, true) == nil then
+        return
+    end
+
+    if wezterm_color_scheme:find("Hard", 1, true) then
+        vim.g.everforest_background = "hard"
+    elseif wezterm_color_scheme:find("Medium", 1, true) then
+        vim.g.everforest_background = "medium"
+    elseif wezterm_color_scheme:find("Soft", 1, true) then
+        vim.g.everforest_background = "soft"
+    end
 end
 
 function M.telescope()
