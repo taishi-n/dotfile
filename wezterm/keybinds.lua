@@ -13,6 +13,9 @@ end)
 return {
   keys = {
     -- Tab移動
+    { key = "h", mods = "SUPER", action = act.ActivateTabRelative(-1) },
+    { key = "l", mods = "SUPER", action = act.ActivateTabRelative(1) },
+    -- Tab移動
     { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
     { key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
     -- Tab入れ替え
