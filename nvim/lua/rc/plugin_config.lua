@@ -76,12 +76,6 @@ function M.surround()
     require("nvim-surround").setup {}
 end
 
-function M.render_markdown()
-    require("render-markdown").setup {
-        file_types = { "markdown" },
-    }
-end
-
 function M.table_mode()
     vim.g.table_mode_corner = "|"
     vim.g.table_mode_fillchar = "-"
@@ -218,6 +212,41 @@ function M.blink()
     require("blink.cmp").setup {
         keymap = {
             preset = "default",
+            ["<Tab>"] = {
+                function(cmp)
+                    if cmp.is_visible() then
+                        return cmp.select_next({ on_ghost_text = true })
+                    end
+                    if cmp.snippet_active() then
+                        return nil
+                    end
+                    return cmp.show_and_insert()
+                end,
+                "snippet_forward",
+                "fallback",
+            },
+            ["<S-Tab>"] = {
+                function(cmp)
+                    if cmp.is_visible() then
+                        return cmp.select_prev({ on_ghost_text = true })
+                    end
+                    if cmp.snippet_active() then
+                        return nil
+                    end
+                    return false
+                end,
+                "snippet_backward",
+                "fallback",
+            },
+            ["<CR>"] = {
+                function(cmp)
+                    if cmp.is_visible() then
+                        return cmp.select_and_accept()
+                    end
+                    return false
+                end,
+                "fallback",
+            },
         },
         completion = {
             list = {
@@ -225,6 +254,13 @@ function M.blink()
                     preselect = false,
                     auto_insert = false,
                 },
+            },
+            ghost_text = {
+                enabled = true,
+                show_with_selection = true,
+                show_without_selection = true,
+                show_with_menu = true,
+                show_without_menu = true,
             },
         },
         sources = {
