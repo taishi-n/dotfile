@@ -33,7 +33,7 @@ config.disable_default_key_bindings = true
 
 -- 日本語入力
 config.use_ime = true
-config.macos_forward_to_ime_modifier_mask = 'SHIFT|CTRL'
+config.macos_forward_to_ime_modifier_mask = 'SHIFT'
 
 config.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 2000 }
 
