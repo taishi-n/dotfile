@@ -179,6 +179,15 @@ function M.dial()
         },
     }
 
+    local function setup_markdown_keymaps(buf)
+        vim.keymap.set("n", "<C-a>", dial_map.inc_normal "markdown", { buffer = buf, desc = "Increment markdown heading level" })
+        vim.keymap.set("n", "<C-x>", dial_map.dec_normal "markdown", { buffer = buf, desc = "Decrement markdown heading level" })
+        vim.keymap.set("v", "<C-a>", dial_map.inc_visual "markdown", { buffer = buf, desc = "Increment number in visual selection" })
+        vim.keymap.set("v", "<C-x>", dial_map.dec_visual "markdown", { buffer = buf, desc = "Decrement number in visual selection" })
+        vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "markdown", { buffer = buf, desc = "Increment number by gvisual selection" })
+        vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "markdown", { buffer = buf, desc = "Decrement number by gvisual selection" })
+    end
+
     vim.keymap.set("n", "<C-a>", dial_map.inc_normal(), { desc = "Increment number" })
     vim.keymap.set("n", "<C-x>", dial_map.dec_normal(), { desc = "Decrement number" })
     vim.keymap.set("v", "<C-a>", dial_map.inc_visual "visual", { desc = "Increment number in visual selection" })
@@ -188,15 +197,16 @@ function M.dial()
 
     util.autocmd_vimrc { "FileType" } {
         pattern = "markdown",
-        callback = function()
-            vim.keymap.set("n", "<C-a>", dial_map.inc_normal "markdown", { buffer = true, desc = "Increment number" })
-            vim.keymap.set("n", "<C-x>", dial_map.dec_normal "markdown", { buffer = true, desc = "Decrement number" })
-            vim.keymap.set("v", "<C-a>", dial_map.inc_visual "markdown", { buffer = true, desc = "Increment number in visual selection" })
-            vim.keymap.set("v", "<C-x>", dial_map.dec_visual "markdown", { buffer = true, desc = "Decrement number in visual selection" })
-            vim.keymap.set("v", "g<C-a>", dial_map.inc_gvisual "markdown", { buffer = true, desc = "Increment number by gvisual selection" })
-            vim.keymap.set("v", "g<C-x>", dial_map.dec_gvisual "markdown", { buffer = true, desc = "Decrement number by gvisual selection" })
+        callback = function(meta)
+            setup_markdown_keymaps(meta.buf)
         end,
     }
+
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.bo[buf].filetype == "markdown" then
+            setup_markdown_keymaps(buf)
+        end
+    end
 end
 
 return M

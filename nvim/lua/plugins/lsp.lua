@@ -43,11 +43,24 @@ function M.blink()
             },
         },
         completion = {
+            menu = {
+                auto_show = false,
+            },
             list = {
                 selection = {
                     preselect = false,
                     auto_insert = false,
                 },
+            },
+            trigger = {
+                show_on_backspace = false,
+                show_on_backspace_in_keyword = false,
+                show_on_backspace_after_accept = false,
+                show_on_backspace_after_insert_enter = false,
+                show_on_keyword = false,
+                show_on_trigger_character = false,
+                show_on_insert_on_trigger_character = false,
+                show_on_accept_on_trigger_character = false,
             },
             ghost_text = {
                 enabled = true,
