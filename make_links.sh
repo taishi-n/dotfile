@@ -5,16 +5,6 @@ SCRIPT_DIR=$(
     CDPATH= cd -- "$(dirname -- "$0")" && pwd
 )
 DOTFILES_DIR="${DOTFILES_DIR:-$SCRIPT_DIR}"
-TIMESTAMP="$(date +%Y%m%d%H%M%S)"
-
-backup_path() {
-    path=$1
-    if [ -e "$path" ] || [ -L "$path" ]; then
-        backup="${path}.bak.${TIMESTAMP}"
-        echo "backing up $path -> $backup"
-        mv "$path" "$backup"
-    fi
-}
 
 ensure_parent_dir() {
     parent_dir=$(dirname -- "$1")
@@ -28,15 +18,13 @@ link_path() {
     ensure_parent_dir "$dest"
 
     if [ -L "$dest" ]; then
-        current_target=$(readlink "$dest")
-        if [ "$current_target" = "$src" ]; then
-            echo "keeping existing link $dest"
-            return
-        fi
+        echo "skipping existing symlink $dest"
+        return
     fi
 
-    if [ -e "$dest" ] || [ -L "$dest" ]; then
-        backup_path "$dest"
+    if [ -e "$dest" ]; then
+        echo "skipping existing file $dest"
+        return
     fi
 
     ln -s "$src" "$dest"
