@@ -57,6 +57,10 @@ link_path "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
 echo "linking wezterm config"
 link_path "$DOTFILES_DIR/wezterm" "$HOME/.config/wezterm"
 
+echo "linking karabiner config"
+mkdir -p "$HOME/.config/karabiner"
+link_path "$DOTFILES_DIR/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+
 echo "linking git settings"
 link_path "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 link_path "$DOTFILES_DIR/.gitignore_global" "$HOME/.gitignore_global"
