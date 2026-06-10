@@ -78,8 +78,9 @@ end
 
 function M.telescope()
     local actions = require "telescope.actions"
+    local telescope = require "telescope"
 
-    require("telescope").setup {
+    telescope.setup {
         defaults = {
             vimgrep_arguments = {
                 "rg",
@@ -105,6 +106,8 @@ function M.telescope()
             },
         },
     }
+
+    pcall(telescope.load_extension, "bibtex")
 
     vim.keymap.set("n", "so", "<Cmd>Telescope git_files<cr>", { desc = "Telescope git files" })
     vim.keymap.set("n", "sO", "<Cmd>Telescope find_files<cr>", { desc = "Telescope find files" })

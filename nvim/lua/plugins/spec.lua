@@ -66,6 +66,7 @@ return {
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope-bibtex.nvim",
         },
         cmd = { "Telescope" },
         keys = {
@@ -77,7 +78,15 @@ return {
         },
         config = config.telescope,
     },
-    { "saghen/blink.cmp", version = "1.*", event = "InsertEnter", config = config.blink },
+    {
+        "saghen/blink.cmp",
+        version = "1.*",
+        event = "InsertEnter",
+        dependencies = {
+            "krissen/blink-cmp-bibtex",
+        },
+        config = config.blink,
+    },
     { "folke/lazydev.nvim", config = config.lsp },
     { "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" }, config = config.conform },
     { "nvim-treesitter/nvim-treesitter-textobjects", config = config.treesitter_textobjects },

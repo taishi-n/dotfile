@@ -1,4 +1,18 @@
 local M = {}
+local util = require "utils.util"
+
+local function setup_tex_buffer(buf)
+    vim.bo[buf].omnifunc = "vimtex#complete#omnifunc"
+
+    vim.keymap.set(
+        "n",
+        "<LocalLeader>cb",
+        function()
+            require("telescope").extensions.bibtex.bibtex()
+        end,
+        { buffer = buf, desc = "Search bibliography entries" }
+    )
+end
 
 function M.vimtex()
     vim.g.tex_flavor = "latex"
@@ -44,6 +58,19 @@ function M.vimtex()
         },
     })
     vim.lsp.enable "texlab"
+
+    util.autocmd_vimrc { "FileType" } {
+        pattern = { "tex", "bib" },
+        callback = function(meta)
+            setup_tex_buffer(meta.buf)
+        end,
+    }
+
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.tbl_contains({ "tex", "bib" }, vim.bo[buf].filetype) then
+            setup_tex_buffer(buf)
+        end
+    end
 end
 
 return M

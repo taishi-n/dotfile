@@ -105,7 +105,16 @@ function M.blink()
             },
         },
         sources = {
-            default = { "lsp", "path", "snippets", "buffer" },
+            default = { "lsp", "path", "snippets", "buffer", "omni", "bibtex" },
+            providers = {
+                bibtex = {
+                    module = "blink-cmp-bibtex",
+                    name = "BibTeX",
+                    min_keyword_length = 2,
+                    score_offset = 10,
+                    async = true,
+                },
+            },
         },
     }
 end
@@ -139,6 +148,12 @@ function M.lsp()
         capabilities = blink.get_lsp_capabilities(capabilities)
     end
 
+    local ok_bibtex, blink_bibtex = pcall(require, "blink-cmp-bibtex")
+    if ok_bibtex then
+        blink_bibtex.setup {
+            filetypes = { "tex", "plaintex", "markdown", "rmd", "typst" },
+        }
+    end
 
     local markdownlint_ns = vim.api.nvim_create_namespace "markdownlint-cli2"
     local markdownlint_formatter = vim.fs.normalize(
