@@ -28,6 +28,13 @@ function M.blink()
         return true
     end
 
+    local ok_bibtex, blink_bibtex = pcall(require, "blink-cmp-bibtex")
+    if ok_bibtex then
+        blink_bibtex.setup {
+            filetypes = { "tex", "plaintex", "markdown", "rmd", "typst" },
+        }
+    end
+
     require("blink.cmp").setup {
         keymap = {
             preset = "default",
@@ -105,7 +112,13 @@ function M.blink()
             },
         },
         sources = {
-            default = { "lsp", "path", "snippets", "buffer", "omni", "bibtex" },
+            default = function(list)
+                if not vim.tbl_contains(list, "omni") then
+                    table.insert(list, "omni")
+                end
+                table.insert(list, "bibtex")
+                return list
+            end,
             providers = {
                 bibtex = {
                     module = "blink-cmp-bibtex",
@@ -113,6 +126,7 @@ function M.blink()
                     min_keyword_length = 2,
                     score_offset = 10,
                     async = true,
+                    opts = {},
                 },
             },
         },
@@ -146,13 +160,6 @@ function M.lsp()
     local ok, blink = pcall(require, "blink.cmp")
     if ok then
         capabilities = blink.get_lsp_capabilities(capabilities)
-    end
-
-    local ok_bibtex, blink_bibtex = pcall(require, "blink-cmp-bibtex")
-    if ok_bibtex then
-        blink_bibtex.setup {
-            filetypes = { "tex", "plaintex", "markdown", "rmd", "typst" },
-        }
     end
 
     local markdownlint_ns = vim.api.nvim_create_namespace "markdownlint-cli2"
@@ -196,8 +203,8 @@ function M.lsp()
         end
 
         for line in (output or ""):gmatch "[^\r\n]+" do
-            local ok_json, item = pcall(vim.json.decode, line)
-            if ok_json and type(item) == "table" then
+            local ok, item = pcall(vim.json.decode, line)
+            if ok and type(item) == "table" then
                 local severity = vim.diagnostic.severity.ERROR
                 if item.severity == "warning" then
                     severity = vim.diagnostic.severity.WARN

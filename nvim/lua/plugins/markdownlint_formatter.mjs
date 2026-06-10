@@ -1,27 +1,16 @@
-function toText(value) {
-  if (value == null) {
-    return ""
-  }
-  return String(value)
-}
-
-function toNumber(value, fallback) {
-  const n = Number(value)
-  return Number.isFinite(n) ? n : fallback
-}
-
-export function formatter(results) {
-  for (const result of results ?? []) {
-    const output = {
-      lineNumber: toNumber(result.lineNumber, 1),
-      columnNumber: toNumber(result.columnNumber, 1),
-      severity: toText(result.severity) || "error",
-      ruleName: toText(result.ruleName ?? result.ruleNames?.[0] ?? "markdownlint"),
-      ruleDescription: toText(result.ruleDescription ?? result.description ?? "markdownlint violation"),
-      errorDetail: toText(result.errorDetail ?? result.errorContext ?? ""),
+export default function markdownlintFormatter(options) {
+    const { logMessage, results = [] } = options
+    for (const result of results) {
+        logMessage(
+            JSON.stringify({
+                fileName: result.fileName,
+                lineNumber: result.lineNumber,
+                columnNumber: result.columnNumber ?? null,
+                ruleName: result.ruleName ?? result.ruleNames?.join("/") ?? "markdownlint",
+                ruleDescription: result.ruleDescription ?? "markdownlint violation",
+                errorDetail: result.errorDetail ?? result.errorContext ?? "",
+                severity: result.severity ?? "error",
+            })
+        )
     }
-    console.log(JSON.stringify(output))
-  }
 }
-
-export default formatter

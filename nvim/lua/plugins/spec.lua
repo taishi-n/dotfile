@@ -38,9 +38,7 @@ return {
     {
         "Kicamon/markdown-table-mode.nvim",
         ft = { "markdown" },
-        cmd = {
-            "Mtm",
-        },
+        cmd = { "Mtm" },
         config = config.markdown_table_mode,
     },
     { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },

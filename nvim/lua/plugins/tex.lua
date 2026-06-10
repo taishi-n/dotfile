@@ -1,20 +1,15 @@
 local M = {}
-local util = require "utils.util"
-
-local function setup_tex_buffer(buf)
-    vim.bo[buf].omnifunc = "vimtex#complete#omnifunc"
-
-    vim.keymap.set(
-        "n",
-        "<LocalLeader>cb",
-        function()
-            require("telescope").extensions.bibtex.bibtex()
-        end,
-        { buffer = buf, desc = "Search bibliography entries" }
-    )
-end
 
 function M.vimtex()
+    local util = require "utils.util"
+
+    local function setup_tex_buffer(buf)
+        vim.bo[buf].omnifunc = "vimtex#complete#omnifunc"
+        vim.keymap.set("n", "<LocalLeader>cb", function()
+            require("telescope").extensions.bibtex.bibtex()
+        end, { buffer = buf, desc = "Search BibTeX citations" })
+    end
+
     vim.g.tex_flavor = "latex"
     vim.g.vimtex_view_method = "sioyek"
     vim.g.vimtex_view_sioyek_exe = "sioyek"
