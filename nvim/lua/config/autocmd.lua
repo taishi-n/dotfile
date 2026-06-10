@@ -8,9 +8,21 @@ util.autocmd_vimrc "StdinReadPost" {
     command = "set nomodified",
 }
 
-util.autocmd_vimrc { "WinLeave", "FocusLost", "InsertEnter" } {
+util.autocmd_vimrc { "WinLeave", "FocusLost" } {
     desc = "temporal attention の設定初期化",
     callback = function()
+        vim.opt_local.cursorline = false
+        vim.opt_local.cursorcolumn = false
+        vim.opt_local.relativenumber = false
+    end,
+}
+
+util.autocmd_vimrc "InsertEnter" {
+    desc = "insert 時の temporal attention を markdown では抑制する",
+    callback = function(meta)
+        if vim.bo[meta.buf].filetype == "markdown" then
+            return
+        end
         vim.opt_local.cursorline = false
         vim.opt_local.cursorcolumn = false
         vim.opt_local.relativenumber = false

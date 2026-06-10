@@ -3,10 +3,37 @@ local M = {}
 local util = require "utils.util"
 
 -- list editing
-function M.bullets()
-    vim.g.bullets_enabled_file_types = { "markdown", "text", "gitcommit" }
-    vim.g.bullets_checkbox_markers = " x"
-    vim.g.bullets_outline_levels = {}
+function M.autolist()
+    local ok, autolist = pcall(require, "autolist")
+    if not ok then
+        util.print_error("autolist.nvim is not available.", "WarningMsg")
+        return
+    end
+
+    autolist.setup()
+
+    local function setup_autolist_keymaps(buf)
+        vim.keymap.set("i", "<Tab>", "<cmd>AutolistTab<CR>", { buffer = buf, desc = "Indent markdown list item" })
+        vim.keymap.set("i", "<S-Tab>", "<cmd>AutolistShiftTab<CR>", { buffer = buf, desc = "Dedent markdown list item" })
+        vim.keymap.set("i", "<CR>", "<cmd>AutolistNewBullet<CR>", { buffer = buf, desc = "Continue markdown list" })
+        vim.keymap.set("n", "o", "<cmd>AutolistNewBullet<CR>", { buffer = buf, desc = "Continue markdown list" })
+        vim.keymap.set("n", "O", "<cmd>AutolistNewBulletBefore<CR>", { buffer = buf, desc = "Insert markdown list item above" })
+        vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<CR>", { buffer = buf, desc = "Toggle markdown checkbox" })
+        vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<CR>", { buffer = buf, desc = "Recalculate markdown list" })
+    end
+
+    util.autocmd_vimrc { "FileType" } {
+        pattern = { "markdown", "text", "gitcommit" },
+        callback = function(meta)
+            setup_autolist_keymaps(meta.buf)
+        end,
+    }
+
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.tbl_contains({ "markdown", "text", "gitcommit" }, vim.bo[buf].filetype) then
+            setup_autolist_keymaps(buf)
+        end
+    end
 end
 
 function M.comment()
@@ -30,9 +57,24 @@ function M.surround()
     require("nvim-surround").setup {}
 end
 
-function M.table_mode()
-    vim.g.table_mode_corner = "|"
-    vim.g.table_mode_fillchar = "-"
+function M.markdown_table_mode()
+    local ok, markdown_table_mode = pcall(require, "markdown-table-mode")
+    if not ok then
+        util.print_error("markdown-table-mode.nvim is not available.", "WarningMsg")
+        return
+    end
+
+    markdown_table_mode.setup {
+        filetype = {
+            "*.md",
+        },
+        options = {
+            insert = true,
+            insert_leave = true,
+            pad_separator_line = false,
+            alig_style = "default",
+        },
+    }
 end
 
 function M.textcase()

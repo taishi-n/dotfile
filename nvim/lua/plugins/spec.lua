@@ -4,7 +4,7 @@ return {
     { "neovim-treesitter/treesitter-parser-registry" },
     { "neovim-treesitter/nvim-treesitter", config = config.treesitter },
     { "sainnhe/everforest", config = config.everforest },
-    { "dkarter/bullets.vim", ft = { "markdown", "text", "gitcommit" }, config = config.bullets },
+    { "gaoDean/autolist.nvim", ft = { "markdown", "text", "gitcommit" }, config = config.autolist },
     { "nvim-lualine/lualine.nvim", event = "VeryLazy", config = config.lualine },
     {
         "numToStr/Comment.nvim",
@@ -36,15 +36,12 @@ return {
         config = config.surround,
     },
     {
-        "dhruvasagar/vim-table-mode",
+        "Kicamon/markdown-table-mode.nvim",
         ft = { "markdown" },
         cmd = {
-            "Tableize",
-            "TableModeEnable",
-            "TableModeDisable",
-            "TableModeToggle",
+            "Mtm",
         },
-        config = config.table_mode,
+        config = config.markdown_table_mode,
     },
     { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
     { "williamboman/mason.nvim", config = config.mason },

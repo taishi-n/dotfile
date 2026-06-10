@@ -119,6 +119,9 @@ end
 function M.mason_tools()
     require("mason-tool-installer").setup {
         ensure_installed = {
+            "harper-ls",
+            "markdownlint-cli2",
+            "prettier",
             "ty",
             "ruff",
         },
@@ -134,6 +137,153 @@ function M.lsp()
     local ok, blink = pcall(require, "blink.cmp")
     if ok then
         capabilities = blink.get_lsp_capabilities(capabilities)
+    end
+
+
+    local markdownlint_ns = vim.api.nvim_create_namespace "markdownlint-cli2"
+    local markdownlint_formatter = vim.fs.normalize(
+        vim.fn.stdpath "config" .. "/lua/plugins/markdownlint_formatter.mjs"
+    )
+    local markdownlint_state = {}
+
+    local function markdownlint_message(result)
+        local function as_text(value, fallback)
+            if value == nil then
+                return fallback
+            end
+            local text = tostring(value)
+            if text == "" or text == "nil" then
+                return fallback
+            end
+            return text
+        end
+
+        local rule_name = as_text(result.ruleName, "markdownlint")
+        local message = as_text(result.ruleDescription, "markdownlint violation")
+        local error_detail = as_text(result.errorDetail, "")
+        if error_detail ~= "" then
+            message = message .. ": " .. error_detail
+        end
+        return ("[%s] %s"):format(rule_name, message)
+    end
+
+    local function markdownlint_diagnostics(output, bufnr)
+        local diagnostics = {}
+        local function to_index(value, default)
+            if type(value) == "number" then
+                return value
+            end
+            local n = tonumber(value)
+            if n ~= nil then
+                return n
+            end
+            return default
+        end
+
+        for line in (output or ""):gmatch "[^\r\n]+" do
+            local ok_json, item = pcall(vim.json.decode, line)
+            if ok_json and type(item) == "table" then
+                local severity = vim.diagnostic.severity.ERROR
+                if item.severity == "warning" then
+                    severity = vim.diagnostic.severity.WARN
+                end
+                table.insert(diagnostics, {
+                    bufnr = bufnr,
+                    lnum = math.max(to_index(item.lineNumber, 1) - 1, 0),
+                    col = math.max(to_index(item.columnNumber, 1) - 1, 0),
+                    severity = severity,
+                    source = "markdownlint-cli2",
+                    message = markdownlint_message(item),
+                })
+            end
+        end
+        return diagnostics
+    end
+
+    local function run_markdownlint(bufnr)
+        if not vim.api.nvim_buf_is_valid(bufnr) or vim.bo[bufnr].filetype ~= "markdown" then
+            return
+        end
+
+        local filename = vim.api.nvim_buf_get_name(bufnr)
+        if filename == "" or vim.fn.filereadable(filename) ~= 1 then
+            vim.diagnostic.reset(markdownlint_ns, bufnr)
+            return
+        end
+
+        if vim.fn.executable "markdownlint-cli2" ~= 1 then
+            return
+        end
+
+        local stat = vim.uv.fs_stat(filename)
+        if stat and stat.size > 256 * 1024 then
+            return
+        end
+
+        local state = markdownlint_state[bufnr] or { generation = 0 }
+        state.generation = state.generation + 1
+        markdownlint_state[bufnr] = state
+        local generation = state.generation
+
+        local config_path = vim.fn.tempname() .. ".json"
+        local config = {
+            noBanner = true,
+            noProgress = true,
+            outputFormatters = {
+                { markdownlint_formatter },
+            },
+        }
+        vim.fn.writefile({ vim.json.encode(config) }, config_path)
+
+        vim.system(
+            {
+                "markdownlint-cli2",
+                "--config",
+                config_path,
+                "--no-globs",
+                filename,
+            },
+            { cwd = vim.fs.dirname(filename), text = true },
+            function(result)
+                vim.schedule(function()
+                    pcall(vim.fn.delete, config_path)
+
+                    if not vim.api.nvim_buf_is_valid(bufnr) then
+                        return
+                    end
+                    if markdownlint_state[bufnr] == nil or markdownlint_state[bufnr].generation ~= generation then
+                        return
+                    end
+
+                    if result.code == 0 or result.code == 1 then
+                        vim.diagnostic.set(markdownlint_ns, bufnr, markdownlint_diagnostics(result.stdout, bufnr))
+                        return
+                    end
+
+                    vim.diagnostic.reset(markdownlint_ns, bufnr)
+                    local stderr = vim.trim(result.stderr or "")
+                    if stderr ~= "" then
+                        util.print_error("markdownlint-cli2: " .. stderr, "WarningMsg")
+                    end
+                end)
+            end
+        )
+    end
+
+    local function setup_markdownlint(bufnr)
+        if vim.b[bufnr].markdownlint_cli2_enabled then
+            return
+        end
+        vim.b[bufnr].markdownlint_cli2_enabled = true
+
+        vim.api.nvim_create_autocmd({ "BufWritePost", "CursorHold", "InsertLeave" }, {
+            group = vim.api.nvim_create_augroup("markdownlint_cli2_" .. bufnr, { clear = true }),
+            buffer = bufnr,
+            callback = function()
+                run_markdownlint(bufnr)
+            end,
+        })
+        run_markdownlint(bufnr)
     end
 
     vim.diagnostic.config {
@@ -308,6 +458,19 @@ function M.lsp()
         table.insert(enabled_lsp, "tinymist")
     end
     vim.lsp.enable(enabled_lsp)
+
+    util.autocmd_vimrc { "FileType" } {
+        pattern = "markdown",
+        callback = function(meta)
+            setup_markdownlint(meta.buf)
+        end,
+    }
+
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.bo[buf].filetype == "markdown" then
+            setup_markdownlint(buf)
+        end
+    end
 
     util.create_cmd("LspQuickfix", function()
         vim.diagnostic.setqflist()
