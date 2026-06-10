@@ -113,10 +113,13 @@ function M.blink()
         },
         sources = {
             default = function(list)
+                list = list or { "lsp", "path", "snippets", "buffer" }
                 if not vim.tbl_contains(list, "omni") then
                     table.insert(list, "omni")
                 end
-                table.insert(list, "bibtex")
+                if not vim.tbl_contains(list, "bibtex") then
+                    table.insert(list, "bibtex")
+                end
                 return list
             end,
             providers = {
