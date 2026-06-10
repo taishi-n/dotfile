@@ -3,9 +3,40 @@ local M = {}
 local util = require "utils.util"
 
 function M.blink()
+    local function should_trigger_completion()
+        local ft = vim.bo.filetype
+        local col = vim.api.nvim_win_get_cursor(0)[2]
+        if col == 0 then
+            return false
+        end
+
+        local line = vim.api.nvim_get_current_line()
+        local before_cursor = line:sub(1, col)
+        if before_cursor:match "^%s*$" then
+            return false
+        end
+
+        if ft == "markdown" then
+            if before_cursor:match "^%s*[%-%*+]%s*$" then
+                return false
+            end
+            if before_cursor:match "^%s*%d+%.%s*$" then
+                return false
+            end
+        end
+
+        return true
+    end
+
     require("blink.cmp").setup {
         keymap = {
             preset = "default",
+            ["<C-Space>"] = {
+                function(cmp)
+                    return cmp.show()
+                end,
+                "fallback",
+            },
             ["<Tab>"] = {
                 function(cmp)
                     if cmp.is_visible() then
@@ -14,7 +45,10 @@ function M.blink()
                     if cmp.snippet_active() then
                         return nil
                     end
-                    return cmp.show_and_insert()
+                    if should_trigger_completion() then
+                        return cmp.show_and_insert()
+                    end
+                    return false
                 end,
                 "snippet_forward",
                 "fallback",
