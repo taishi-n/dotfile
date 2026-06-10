@@ -47,6 +47,14 @@ return {
         config = config.table_mode,
     },
     { "lervag/vimtex", ft = { "tex", "bib" }, config = config.vimtex },
+    { "williamboman/mason.nvim", config = config.mason },
+    {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = {
+            "williamboman/mason.nvim",
+        },
+        config = config.mason_tools,
+    },
     {
         "stevearc/oil.nvim",
         cmd = { "Oil" },

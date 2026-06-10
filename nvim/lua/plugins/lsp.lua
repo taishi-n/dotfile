@@ -76,6 +76,23 @@ function M.blink()
     }
 end
 
+function M.mason()
+    require("mason").setup {
+        PATH = "prepend",
+    }
+end
+
+function M.mason_tools()
+    require("mason-tool-installer").setup {
+        ensure_installed = {
+            "ty",
+            "ruff",
+        },
+        auto_update = false,
+        run_on_start = true,
+    }
+end
+
 function M.lsp()
     require("lazydev").setup {}
 
@@ -162,6 +179,17 @@ function M.lsp()
         },
     })
 
+    vim.lsp.config("ty", {
+        cmd = { "ty", "server" },
+        filetypes = { "python" },
+        root_markers = {
+            "pyproject.toml",
+            "uv.lock",
+            "ty.toml",
+            ".git",
+        },
+    })
+
     vim.lsp.config("ruff", {
         cmd = { "ruff", "server" },
         filetypes = { "python" },
@@ -233,6 +261,7 @@ function M.lsp()
     vim.lsp.enable {
         "lua_ls",
         "rust_analyzer",
+        "ty",
         "ruff",
         "harper_ls",
         "tinymist",
