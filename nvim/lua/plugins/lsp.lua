@@ -203,7 +203,7 @@ function M.lsp()
 
     vim.lsp.config("harper_ls", {
         cmd = { "harper-ls", "--stdio" },
-        filetypes = { "markdown", "text", "tex", "latex", "typst" },
+        filetypes = { "markdown", "text", "tex", "typst" },
         root_markers = { ".git" },
         settings = {
             ["harper-ls"] = {
@@ -226,15 +226,17 @@ function M.lsp()
         },
     })
 
-    vim.lsp.config("tinymist", {
-        cmd = { "tinymist" },
-        filetypes = { "typst" },
-        single_file_support = true,
-        root_markers = {
-            "typst.toml",
-            ".git",
-        },
-    })
+    if vim.fn.executable "tinymist" == 1 then
+        vim.lsp.config("tinymist", {
+            cmd = { "tinymist" },
+            filetypes = { "typst" },
+            single_file_support = true,
+            root_markers = {
+                "typst.toml",
+                ".git",
+            },
+        })
+    end
 
     vim.lsp.config("jsonls", {
         cmd = { "vscode-json-language-server", "--stdio" },
@@ -244,7 +246,7 @@ function M.lsp()
 
     vim.lsp.config("yamlls", {
         cmd = { "yaml-language-server", "--stdio" },
-        filetypes = { "yaml", "yaml.docker-compose" },
+        filetypes = { "yaml" },
         root_markers = { ".git" },
     })
 
@@ -258,17 +260,20 @@ function M.lsp()
         },
     })
 
-    vim.lsp.enable {
+    local enabled_lsp = {
         "lua_ls",
         "rust_analyzer",
         "ty",
         "ruff",
         "harper_ls",
-        "tinymist",
         "jsonls",
         "yamlls",
         "taplo",
     }
+    if vim.fn.executable "tinymist" == 1 then
+        table.insert(enabled_lsp, "tinymist")
+    end
+    vim.lsp.enable(enabled_lsp)
 
     util.create_cmd("LspQuickfix", function()
         vim.diagnostic.setqflist()

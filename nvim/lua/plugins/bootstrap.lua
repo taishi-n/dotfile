@@ -36,6 +36,9 @@ require("lazy").setup(require "plugins.spec", {
     checker = {
         enabled = false,
     },
+    rocks = {
+        enabled = false,
+    },
 })
 
 return true
